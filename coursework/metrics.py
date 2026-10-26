@@ -10,7 +10,7 @@ def normal_threshold(scores,alpha=.05):
  k=math.ceil((len(s)+1)*(1-alpha))
  return float(s[k-1]) if k<=len(s) else float('inf')
 
-def aupro(maps,masks,limit=.3):
+def aupro(maps,masks,limit=.3,order=None,ends=None):
  weights=np.zeros(masks.shape,dtype=np.float32); regions=0
  for i,mask in enumerate(masks):
   labs,n=label(mask)
@@ -18,9 +18,11 @@ def aupro(maps,masks,limit=.3):
   for j in range(1,n+1): weights[i][labs==j]=1./sizes[j]
   regions+=n
  if regions==0 or (~masks).sum()==0: raise ValueError('AUPRO requires positive regions and background')
- scores=maps.ravel();order=np.argsort(-scores,kind='stable')
- s=scores[order]
- ends=np.r_[np.flatnonzero(s[1:]!=s[:-1]),len(s)-1]
+ scores=maps.ravel()
+ if order is None: order=np.argsort(-scores,kind='stable')
+ if ends is None:
+  s=scores[order]
+  ends=np.r_[np.flatnonzero(s[1:]!=s[:-1]),len(s)-1]
  fpr=np.r_[0.,np.cumsum((~masks).ravel()[order],dtype=np.float64)[ends]/(~masks).sum()]
  pro=np.r_[0.,np.cumsum(weights.ravel()[order],dtype=np.float64)[ends]/regions]
  # Preserve vertical steps (same FPR, increasing PRO); interpolate only the crossing segment.
@@ -31,13 +33,27 @@ def aupro(maps,masks,limit=.3):
   x=np.r_[x,limit];y=np.r_[y,yend]
  return float(np.trapz(y,x)/limit)
 
+def pixel_statistics(maps,masks):
+ scores=maps.ravel();labels=masks.ravel();positives=int(labels.sum());negatives=len(labels)-positives
+ if positives==0 or negatives==0:raise ValueError('Pixel metrics require both labels')
+ order=np.argsort(-scores,kind='stable');sorted_scores=scores[order]
+ ends=np.r_[np.flatnonzero(sorted_scores[1:]!=sorted_scores[:-1]),len(scores)-1]
+ del sorted_scores
+ tp=np.cumsum(labels[order],dtype=np.float64)[ends];fp=ends+1-tp
+ roc=float(np.trapz(np.r_[0.,tp/positives],np.r_[0.,fp/negatives]))
+ ap=float(np.sum(np.diff(np.r_[0.,tp])*(tp/(ends+1)))/positives)
+ del tp,fp
+ pro=aupro(maps,masks,order=order,ends=ends)
+ return roc,ap,pro
+
 def evaluate(maps,masks,scores,threshold):
  maps=np.asarray(maps,dtype=np.float32);masks=np.asarray(masks,dtype=bool);scores=np.asarray(scores)
  assert maps.shape==masks.shape and len(scores)==len(maps)
  if not np.isfinite(maps).all() or not np.isfinite(scores).all(): raise ValueError('Nonfinite predictions')
  y=masks.reshape(len(masks),-1).any(1);pred=scores>threshold
+ pixel_roc,pixel_ap,pro=pixel_statistics(maps,masks)
  return {'image_auroc':float(roc_auc_score(y,scores)),'image_ap':float(average_precision_score(y,scores)),
  'image_fpr':float(pred[~y].mean()),'image_fnr':float((~pred[y]).mean()),
- 'pixel_auroc':float(roc_auc_score(masks.ravel(),maps.ravel())),
- 'pixel_ap':float(average_precision_score(masks.ravel(),maps.ravel())),
- 'aupro_03':aupro(maps,masks),'image_threshold':float(threshold),'n_test':len(scores)}
+ 'pixel_auroc':pixel_roc,
+ 'pixel_ap':pixel_ap,
+ 'aupro_03':pro,'image_threshold':float(threshold),'n_test':len(scores)}

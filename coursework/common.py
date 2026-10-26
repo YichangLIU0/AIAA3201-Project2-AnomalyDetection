@@ -44,7 +44,7 @@ def masks_for(paths):
    out.append(np.asarray(Image.open(m).resize((SIZE,SIZE),Image.Resampling.NEAREST))>0)
  return np.stack(out)
 
-def load_backbone():
+def load_backbone(size=SIZE):
  import torch
  sys.path.insert(0,str(ROOT/'third_party/AnomalyDINO'))
  from src.backbones import DINOv2Wrapper
@@ -56,7 +56,7 @@ def load_backbone():
    self.transform=transforms.Compose([transforms.Resize(self.smaller_edge_size,interpolation=transforms.InterpolationMode.BICUBIC,antialias=True),transforms.ToTensor(),transforms.Normalize((.485,.456,.406),(.229,.224,.225))])
    return m.eval().to(self.device)
  torch.set_num_threads(4)
- return LocalWrapper('dinov2_vits14','cuda',SIZE)
+ return LocalWrapper('dinov2_vits14','cuda',size)
 
 def features(model,path,rotate=False):
  import torch

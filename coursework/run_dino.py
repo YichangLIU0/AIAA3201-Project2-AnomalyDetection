@@ -50,7 +50,7 @@ def run(category,model):
   for shots in [1,2,4,8]:
    for method in (['full','random25','pooled25'] if shots==8 else ['full']):
     folder=OUT/'dinov2'/category/f'{shots}shot_seed{seed}_{method}'
-    if (folder/'metrics.json').exists(): continue
+    if all((folder/name).exists() for name in ['metrics.json','predictions.npz','calibration.npz']) and (seed!=0 or shots!=8 or (folder/'demo_bank.npz').exists()): continue
     start=time.perf_counter();bank=bank_from(reference_features[:shots],method,seed)
     index=faiss.IndexFlatL2(bank.shape[1]);index.add(bank)
     bank_time=time.perf_counter()-start

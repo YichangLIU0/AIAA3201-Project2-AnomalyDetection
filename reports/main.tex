@@ -6,185 +6,195 @@
 \usepackage[breaklinks,colorlinks,citecolor=blue,linkcolor=blue,urlcolor=blue]{hyperref}
 \def\cvprPaperID{Course Project 2}
 \def\confName{AIAA3201}\def\confYear{2027}
-\title{Few-Shot Industrial Anomaly Detection on Six VisA Categories:\\Accuracy, Calibration, and Memory Reduction}
+\makeatletter\newcommand{\tablecaption}[1]{\def\@captype{table}\caption{#1}}\makeatother
+\title{Reducing Missed Small Defects in Few-Shot Industrial Inspection:\\A Controlled Study across Twelve VisA Categories}
 \author{Project Contributors}
 \hypersetup{pdfauthor={Project Contributors},pdftitle={Few-Shot Industrial Anomaly Detection}}
 \begin{document}
 \maketitle
 \begingroup\renewcommand\thefootnote{}\footnotetext{Anonymous public coursework release. No arXiv identifier has been assigned.}\endgroup
 \begin{abstract}
-We evaluate few-shot industrial anomaly detection under a shared, resource-constrained protocol on six required VisA categories. A frozen DINOv2 patch detector is compared with aligned template differences and a compact reconstruction autoencoder. The reference budget varies over 1, 2, 4, and 8 normal images with three independent reference draws. An additional, disjoint set of 40 normal images per category calibrates operating thresholds without test labels. At eight shots, the full patch memory achieves a macro image AUROC of 0.9277. Uniformly retaining one quarter of memory features reduces the bank from 24 to 6 MiB and matching-plus-map time from approximately 149 to 41 ms, with image AUROC decreasing to 0.9208. Spatial pooling at the same memory budget gives 0.8880, demonstrating a less favorable tradeoff in this setting.  A coverage-based coreset at the same 6 MiB budget obtains image AUROC 0.9294; its benefits and costs are evaluated using reference coverage and paired decision errors. The report includes pixel metrics, operating-point errors, and 24 inspected failure examples. These experiments support a practical classroom prototype rather than a claim of state-of-the-art performance. Code: \url{https://github.com/YichangLIU0/AIAA3201-Project2-AnomalyDetection}.
+We study few-shot industrial anomaly detection on all twelve VisA categories, using three reference draws and 1, 2, 4, and 8 normal reference images. Forty additional disjoint normal images per category calibrate decisions without test-label threshold tuning. We compare aligned templates, a compact autoencoder, a released AnomalyCLIP checkpoint, and frozen DINOv2 patch matching. Our concrete failure diagnosis is that small defects are frequently missed despite usable ranking metrics. We test a 448-pixel input, fixed-budget two-scale fusion, and an exploratory image-score aggregation ablation. At the same 6 MiB stored-bank budget, changing from 224 to 448 gives macro FNR 45.36\% versus 31.56\%, with FPR 4.84\% versus 5.56\%. We report both repaired and newly introduced errors, localization metrics, reference variation, resource costs, and selective review without counting deferred decisions as detections. These are controlled coursework adaptations of existing methods, not a new anomaly-detection algorithm or a deployment guarantee. Code: \url{https://github.com/YichangLIU0/AIAA3201-Project2-AnomalyDetection}.
 \end{abstract}
 \section{Introduction}
-Industrial inspection must distinguish a defective item from normal variation in appearance. With only a few normal reference images, the reference set may not cover object orientation, arrangement, surface texture, or illumination. A detector can therefore respond strongly to an unfamiliar normal boundary while missing a small defect. This project studies that problem using the six categories specified by the course: candle, capsules, cashew, chewinggum, fryum, and pipe\_fryum.
+A useful inspection system must avoid passing defective products while controlling false alarms on normal appearance variation. A high ranking score does not establish a low missed-defect rate at a deployed threshold. In few-shot inspection, a small reference set may fail to represent normal geometry, orientation and texture; small defects can also be weakly represented by a coarse patch grid.
 
-The experimental question has two parts. First, how do simple appearance and reconstruction baselines compare with frozen pretrained patch features under a common data split? Second, how much memory can be removed before detection and localization deteriorate? The comparison emphasizes reproducible reference sampling and a threshold chosen entirely from normal calibration data. A ranking metric alone does not establish useful OK/NG decisions.
+Our initial six-category study exposed this distinction. Coverage-preserving memory selection improved ranking over random compression but increased the calibrated miss rate. We therefore investigate a specific question: can finer input resolution reduce missed small defects without enlarging the stored memory bank? A two-scale control tests whether combining resolutions helps at the same total budget, and a separate scoring ablation tests the choice of image-level aggregation.
 
-We provide an auditable implementation, compare three quarter-size memory variants, and report the loss from pooling. Numerical experimental results are measured locally, not copied from published papers.
+We extend the evaluation to the six other VisA categories to include materially different appearances, including printed circuit boards. The extension is a generalization check, not a blinded holdout: development decisions were informed by earlier results. We contribute a reproducible protocol, controlled comparisons and inspectable error evidence. All experimental numbers are measured locally rather than copied from papers.
 \section{Related Work}
-MVTec AD established a benchmark for unsupervised industrial anomaly detection with normal training images and pixel annotations for evaluation~\cite{mvtec}. VisA provides the data used here~\cite{visa}. Their category distributions differ, so published MVTec performance is not a direct baseline for this VisA experiment.
+MVTec AD established an industrial anomaly benchmark with pixel annotations~\cite{mvtec}; VisA supplies this project's data~\cite{visa}. PaDiM models pretrained patch distributions~\cite{padim}, while PatchCore uses nominal patch memory and coverage-based selection~\cite{patchcore}. Our greedy selection adapts an existing principle rather than proposing a novel coreset algorithm.
 
-PaDiM models distributions of pretrained patch representations~\cite{padim}; PatchCore uses a memory of nominal patch features~\cite{patchcore}. These approaches motivate local feature comparisons but are not reproduced in this project. Random sampling is a budget control; our projected greedy coreset borrows PatchCore's coverage objective, but is not a reproduction of its complete detector.
-
-DRAEM combines reconstruction with discriminative learning~\cite{draem}, whereas CutPaste uses synthetic transformations for self-supervised anomaly representation learning~\cite{cutpaste}. Our plain reconstruction autoencoder does not implement either method and should not be interpreted as their measured performance.
+DRAEM combines reconstruction and discriminative learning~\cite{draem}; CutPaste uses synthetic transformations for representation learning~\cite{cutpaste}. Our plain autoencoder implements neither method. DINOv2 provides pretrained visual features~\cite{dinov2}, and AnomalyDINO applies them to few-shot patch matching~\cite{anomalydino}. AnomalyCLIP learns object-agnostic prompts for anomaly detection~\cite{anomalyclip}; its released checkpoint is an additional comparison with different pretraining resources. EfficientAD motivates measuring computation~\cite{efficientad}, but published latency is not transferable to this laptop. MVTec AD 2 highlights challenging acquisition conditions~\cite{mvtec2}; it is not evaluated here.
 \clearpage
 \section{Data and Evaluation Protocol}
-\subsection{Dataset and reference sampling}
-We use the official VisA one-class split produced by the released preparation script. All test images in the six required categories are evaluated: 200 candle images, 160 capsules images, and 150 images in each remaining category, totaling 960. Test masks are used exclusively for evaluation and failure inspection. All images are resized to $224\times224$ with bicubic interpolation; masks use nearest-neighbor interpolation. This resolution reduces computational cost, but can hide very small defects and changes the localization task relative to native resolution.
+\subsection{All categories and fixed reference draws}
+We use the official VisA one-class split, evaluating all 2162 test images across candle, capsules, cashew, chewinggum, fryum, pipe\_fryum, macaroni1, macaroni2, and pcb1--pcb4. The first six are the required course subset; the remaining six extend coverage. No test image is omitted for speed or appearance. Separate results for the two groups prevent a change in category composition from masquerading as an improvement.
 
-For each category, a fixed random permutation with seed 20261024 reserves 40 normal training images for calibration. These images are excluded from every reference bank and autoencoder training set. For each of seeds 0, 1, and 2, eight images are sampled without replacement from the remaining pool. The 1-, 2-, and 4-shot reference sets are prefixes of the corresponding eight-image draw. Thus budgets are paired within a seed. Seeds may share references with one another; they are not disjoint datasets.
+For each category, seed 20261024 reserves 40 normal training images for calibration. They are excluded from the reference pool and autoencoder training. Seeds 0, 1 and 2 draw eight distinct references from the remaining normals. The 1-, 2- and 4-shot sets are nested prefixes of the same eight-reference draw. Draws may overlap; they are not independent datasets. Manifests record all paths and the audit checks reference/calibration separation.
 
-This is a few-reference protocol with extra calibration data, not a strict $K$-total-normal-image protocol. The distinction matters: even the one-shot detector uses 40 additional normal images to set a decision threshold. Image and pixel ranking metrics are threshold-independent, while FPR and FNR describe this particular calibrated operating point. Manifests record every reference, calibration image, and test path.
-\subsection{Image and pixel metrics}
-We report image AUROC and average precision (AP), pixel AUROC and AP, and area under the per-region overlap curve (AUPRO). Pixel metrics are evaluated on the resized masks. An image is anomalous when its mask contains any positive pixel; an audit checks this against the official good/bad folder label.
+This is a few-reference protocol with additional normal calibration data, not a strict $K$-total-image protocol. Test labels are used for evaluation and retrospective diagnosis only. We do not optimize a threshold using test F1, learn fusion weights from test labels, or select a training epoch on test metrics.
+\subsection{Resolution and labels}
+The original pipeline uses square bicubic resizing to $224\times224$. The higher-resolution variant reads the original image and resizes directly to $448\times448$; it does not enlarge a cached 224 image. All pixel metrics use the same $224\times224$ ground-truth masks resized by nearest neighbor. A 448 map is interpolated back to this common evaluation grid. Thus the comparison tests feature resolution while keeping metric resolution fixed; it does not measure native-resolution segmentation quality.
 
-For AUPRO, each four-connected ground-truth region receives equal weight. At a score threshold, region overlap is the fraction of that region predicted positive; the mean is plotted against the fraction of all background pixels predicted positive. We integrate only up to background FPR 0.3, interpolate at that boundary, and divide by 0.3. Background pixels include those from defect-free images. This explicitly stated implementation avoids treating differently normalized AUPRO values as interchangeable.
+An image is anomalous if its resized mask has any positive pixel. A separate audit checks agreement with the official good/bad folders. Defect-size analysis uses the fraction of positive pixels in this common mask. Its bins, at most 0.5\%, 0.5--2\%, and above 2\%, are descriptive and do not establish a causal role for defect size independent of category or defect type.
+\subsection{Metrics and averaging}
+Image AUROC and average precision measure ranking. Pixel AUROC, pixel AP, and AUPRO measure localization. AUPRO gives equal weight to four-connected ground-truth regions, plots mean region overlap against background-pixel FPR, integrates to FPR 0.3 with boundary interpolation, and divides by 0.3. Background pixels include normal images. Pixel AP is reported because background dominance can make pixel AUROC look reassuring even when localization is weak.
 
-AP complements pixel AUROC because the defect area may occupy a small fraction of an image. We do not infer good localization from a high pixel AUROC alone. All categories have equal weight in the reported macro average. For each seed we average over the six categories, then report the mean and sample standard deviation over the three seed-level macro averages. This measures reference-selection variation, not uncertainty over a population of industrial products.
-\subsection{Threshold calibration}
-Let $c_{(1)}\leq\cdots\leq c_{(n)}$ be the sorted normal calibration scores, with $n=40$ and target $\alpha=0.05$. The image threshold is
+Every category has equal weight. For each reference seed, we average category metrics, then report the mean and sample standard deviation of the three seed means. This describes reference-draw sensitivity on a fixed benchmark, not population uncertainty or a statistical significance test. The fixed AnomalyCLIP checkpoint has one evaluation, not artificial variation from repeated deterministic runs.
+\subsection{Normal-only operating thresholds}
+For sorted calibration image scores $c_{(1)}\leq\cdots\leq c_{(40)}$, the nominal 5\% false-positive target uses
 \begin{equation}
- \tau=c_{(\lceil(n+1)(1-\alpha)\rceil)}=c_{(39)}.
+\tau=c_{(\lceil(40+1)(1-0.05)\rceil)}=c_{(39)}.
 \end{equation}
-The decision is NG exactly when $s(x)>\tau$. Ties are accepted as normal. With distinct calibration scores this rejects one of the 40 calibration images; it does not guarantee a particular test FPR under distribution shift. No test-set F1 maximization is used to choose the operating point.
+A score strictly above $\tau$ is NG; equality is OK. Each method uses its own normal scores under the same rule. The actual held-out FPR need not be 5\%: finite calibration data and score-distribution shifts matter. We report FPR and FNR together rather than claiming equal empirical FPR across methods.
 
-For display, a separate pixel threshold is the 99.5th percentile of calibration-map pixel scores. This is a pooled normal-pixel quantile, not a calibrated guarantee for every image or connected component. Image OK/NG decisions use the image threshold, not the area of the thresholded display mask.
-\subsection{Remaining related approaches}
-DINOv2 supplies the self-supervised visual features~\cite{dinov2}. AnomalyDINO applies these features to few-shot patch matching~\cite{anomalydino}. AnomalyCLIP learns object-agnostic normal/abnormal prompts using auxiliary data~\cite{anomalyclip}; our separate comparison uses released weights rather than target-category prompt training. EfficientAD is relevant to latency-oriented inspection~\cite{efficientad}, but its published latency cannot be transferred to this laptop. The challenging acquisition settings in MVTec AD 2 motivate testing beyond clean benchmark images~\cite{mvtec2}; we do not evaluate on that dataset.
+The pixel display threshold is the 99.5th percentile of normal calibration-map pixels. It is separate from image decisions and does not control image-level false alarms. All ranking metrics are computed from continuous scores.
+\subsection{Development scope}
+The resolution, fixed memory budgets, reference-only fusion scales, and review quantiles were documented before the main resolution comparison. Peak-of-smoothed-map aggregation was added during development on the original categories and is explicitly exploratory. Neither the additional classes nor the whole study should be described as a preregistered independent confirmation. A separate brightness supplement uses 54 settings on the first ten good and ten bad images per original category, RGB factors 0.8/1.0/1.2, and seed-0 full/random/pooled banks with unchanged clean thresholds. It does not test the new methods or establish real acquisition robustness.
 \clearpage
-\section{Methods and Controlled Ablations}
-\subsection{Aligned template differences}
-For each eight-image reference set, we create eight rotations per reference at increments of $45^\circ$. A test image is compared against the resulting 64 templates using mean squared RGB difference at $28\times28$ resolution to select a candidate. We then estimate a Euclidean alignment with OpenCV ECC, using up to 40 iterations and a $10^{-4}$ convergence criterion. A failed alignment falls back to the unaligned template, and failures are recorded.
+\section{Methods and Controlled Comparisons}
+\subsection{Appearance and reconstruction baselines}
+The template baseline generates eight rotations per reference at $45^\circ$ increments. It selects a template using RGB squared difference at $28\times28$, then estimates Euclidean alignment with ECC, at most 40 iterations and tolerance $10^{-4}$. Failed alignment falls back to the unaligned template. The map is mean absolute RGB residual divided by 255, smoothed with $\sigma=2$; the image score averages its highest one percent of pixels.
 
-The anomaly map is the mean absolute RGB residual, scaled by 255 and Gaussian-smoothed with $\sigma=2$. The image score is the mean of its largest one percent of pixel values. This baseline is inexpensive, but assumes that a normal reference can be aligned meaningfully with the query. Layout changes and multiple independently oriented objects can violate this assumption even if all items are normal.
-\subsection{Compact reconstruction autoencoder}
-The normal-only autoencoder uses three stride-two convolutional layers with 16, 32, and 64 channels, followed by three transposed-convolution layers and a sigmoid output. It is trained from scratch with MSE loss, Adam at learning rate 0.001, batch size 8, and 15 fixed epochs. Its training set is the same 64 rotated reference images. No anomalous example is used for optimization or stopping.
+The autoencoder has three stride-two convolutions with 16, 32 and 64 channels, followed by three transposed convolutions and a sigmoid. It uses the same 64 augmented eight-shot reference views, MSE, Adam at 0.001, batch size eight, and 15 fixed epochs. No anomaly labels or test-based stopping are used. Its smoothed residual map and top-one-percent score parallel the template baseline. It is deliberately small; poor results do not establish that reconstruction methods generally fail.
+\subsection{Frozen patch matching}
+We use official DINOv2 ViT-S/14 weights with the released AnomalyDINO feature and PCA query-mask routines. The model is frozen, inference is FP32, and 224/448 inputs produce $16\times16$/$32\times32$ grids of 384-dimensional vectors. An empty PCA foreground mask falls back to all patches. Both references and query vectors are normalized. Exact CPU FAISS nearest-neighbor search gives half the squared distance, equivalent to cosine distance for normalized vectors.
 
-The map is the smoothed mean absolute reconstruction residual and the image score again averages its largest one percent of pixels. Initialization and training order follow the reference seed. This is a deliberately compact baseline with a fixed training budget. Low performance may reflect insufficient representation or training; it does not establish that reconstruction-based methods generally fail.
-\subsection{Frozen DINO patch detector}
-We load the official DINOv2 ViT-S/14 pretrained weights and use the official AnomalyDINO feature and background-mask routines. At input resolution 224, each image produces a $16\times16$ grid of 384-dimensional patch features. The backbone is frozen and inference uses FP32. Each reference contributes eight rotated views. Query features use the official PCA-based background mask; an empty mask falls back to retaining every patch.
+Masked-out query patches have zero score. The standard image score averages the largest one percent of patch distances, rounded down with a minimum of one. Patch maps are interpolated to 224 and Gaussian-smoothed with $\sigma=4$. Our implementation adapts sampling, loading, calibration and evaluation; it is not an exact reproduction of the published paper's full protocol.
+\subsection{Memory selection and fair budgets}
+Eight references with eight rotations contain 16,384 vectors at 224, occupying 24 MiB in FP32. Random25 retains 4096 original vectors; Pooled25 averages each $2\times2$ group before normalization. Coreset224 also retains 4096 original vectors, selected by greedy coverage in a fixed Gaussian projection from 384 to 128 dimensions, seeded by reference seed plus 2000. The first center is furthest from the projected mean; subsequent centers maximize distance to the nearest selected center. Selection sees references only.
 
-Reference and query features are $\ell_2$ normalized. FAISS performs exact nearest-neighbor search on the CPU. Since normalized vectors satisfy $\|u-v\|_2^2=2-2u^Tv$, half the returned squared distance is the cosine-distance anomaly score. Excluded background query locations receive zero score. The image score averages the highest one percent of patch scores, with at least one patch retained. Patch scores are interpolated to $224\times224$ and Gaussian-smoothed with $\sigma=4$ for pixel evaluation.
-
-We adapt data loading, random reference selection, caching, metrics, and normal-only threshold calibration. This is a resource-constrained adaptation, not an exact reproduction of the paper's full protocol. In particular, upstream filename slicing is replaced by explicit random draws and the evaluation resolution is fixed at 224.
-\subsection{Quarter-size memory variants}
-At eight shots, the full bank contains $8\times8\times256=16384$ feature vectors, or 24 MiB in float32. We evaluate three variants with 4096 vectors and 6 MiB per category:
-\begin{itemize}
-\item \textbf{Random25}: sample one quarter of the full vectors without replacement, with a deterministic seed derived from the reference seed. The original local feature vectors are retained.
-\item \textbf{Pooled25}: average each non-overlapping $2\times2$ spatial group within a reference feature map, then normalize the resulting vector. Every rotated reference contributes a coarser $8\times8$ grid.
-\item \textbf{Coreset25}: retain original vectors selected by projected greedy coverage; the algorithm and diagnosis are detailed in Section~\ref{sec:coverage}.
-\end{itemize}
-The same reference images, query features, calibration images, test images, distance computation, and score aggregation are used. All compressed variants therefore have the same bank size. Pooling changes representation as well as count, whereas random sampling only changes which original features are kept. The comparison tests representation averaging and coverage-based selection at the same budget; it does not establish optimal compression.
-\begin{figure}[h]
-\centering\includegraphics[width=\linewidth]{figures/pipeline.pdf}
-\caption{Shared frozen-feature pipeline. Only bank construction changes; reference draws, query processing, calibration and evaluation stay fixed.}
+At 448, the pool contains 65,536 vectors. Coreset448 selects 4096 by the same rule. Both single-scale compressed banks occupy 6 MiB. Two-scale fusion stores the first 2048 vectors of each scale's greedy order, again 4096 vectors and 6 MiB in total. Equal stored size does not imply equal feature-extraction or bank-building cost.
+\subsection{Reference-only two-scale fusion}
+Distances at different scales need not have comparable magnitudes. For each scale, we hold out one reference image at a time, remove all selected vectors originating from any rotation of that image, and score its unrotated view. The scale factor is the median of these eight leave-one-image-out scores, floored at $10^{-6}$. Each half-bank map and score is divided by its scale factor, then combined by elementwise maximum. The final threshold is independently fitted on the same 40 calibration normals. Low-only and high-only half-bank score controls are saved to separate fusion effects from reduced per-scale capacity.
+\subsection{Exploratory score aggregation}
+For both Coreset224 and Coreset448, a peak variant uses the maximum of the final smoothed map as its image score. Its normal calibration scores are recomputed the same way. Maps, banks and all localization metrics remain identical to the parent. This comparison tests aggregation without training another model; it also changes the score's sensitivity to smoothing. We do not interpret it as a pure causal test of averaging alone.
+\begin{figure}[h]\centering\includegraphics[width=\linewidth]{figures/lowmiss_pipeline.pdf}
+\caption{Single-scale path. Fusion runs both resolutions with half-size banks; peak aggregation changes only the image score. Calibration normals are excluded from reference construction.}
 \end{figure}
+\subsection{AnomalyCLIP comparison}
+The released checkpoint intended for VisA evaluation and ViT-L/14 backbone are evaluated with 224 inputs, the released selected feature layer, and common pixel metrics. There is no target-category gradient update, but normal calibration uses target data. Different backbone capacity and auxiliary learning prevent interpreting this as an equal-pretraining-resource comparison.
 \clearpage
+\twocolumn[{
 \section{Quantitative Results}
 \input{results_tables.tex}
-\subsection{Baseline comparison}
-Template ECC reaches macro image AUROC 0.663, and the compact autoencoder reaches 0.621. The fixed AnomalyCLIP checkpoint obtains 0.842, compared with 0.928 for eight-shot full-memory DINO. These are measured results under the present 224-resolution adaptation, not the published performance of these methods. The gap cannot be attributed solely to model architecture because pretrained data, model size, and target fitting differ.
-
-\subsection{Effect of reference budget}
-Increasing the number of normal references improves aggregate ranking in this experiment. Image AUROC rises from approximately 0.903 at one shot to 0.928 at eight shots. Pixel AP and AUPRO also improve on average. These aggregate trends do not imply monotonic gains for every category or every sampled reference set. The plotted error bars show variation across reference draws for a fixed benchmark.
-\begin{figure*}[t]
-\centering\includegraphics[width=.95\textwidth]{figures/shot_curves.pdf}
-\caption{Full-memory DINO detector across reference budgets. Curves are category means over three draws; error bars are sample standard deviations. The same seeded draw is nested across shot counts.}
-\end{figure*}
-\subsection{Compression tradeoff}
-Random25 retains most of the measured ranking performance at one quarter of the memory. The mean matching-plus-map time drops by about 3.6 times, but this excludes feature extraction, image decoding, and application overhead. It is therefore not a claim of a 3.6-times end-to-end speedup.
-
-Pooled25 gives lower image AUROC than Random25 at the same bank size. A plausible explanation is that averaging neighboring features blends normal structures whose distinct representations are useful for matching. The ablation supports the performance difference, but does not isolate that mechanism causally. No alternate pooling scale or learned pooling was tuned on the test set.
-\subsection{Operating point versus ranking}
-The normal-calibrated threshold makes the prototype conservative about declaring defects in some categories. A strong image AUROC can coexist with substantial FNR at this operating point. Threshold adjustment for a production application would require an appropriate validation protocol and an explicit cost tradeoff; selecting a threshold that maximizes test F1 would give an optimistic estimate of deployment performance.
-
-The baseline and pretrained comparisons share test images and calibration rules, but their pretraining resources differ. DINOv2 and the released AnomalyCLIP model encode external training information, whereas the autoencoder learns from the small target reference set. The comparison describes available approaches under these resource choices, not a controlled test of architecture alone.
-\subsection{Resource measurements}
-The mean DINO query-feature time is 71.9 ms, separately measured from the 149.0 ms full-memory matching and map stage. Random25 and Pooled25 matching take 41.0 and 40.0 ms respectively. Adding the measured feature component gives approximately 220.9 versus 112.9 ms for full and Random25, before image loading and application overhead. Cached component measurements are not a direct wall-clock demo benchmark.
-
-Template ECC, autoencoder, and AnomalyCLIP inference components average 47.2, 6.6, and 193.8 ms. Inputs are loaded before these timing regions. The compact autoencoder takes 2.5 seconds to train on average under its small fixed budget. Peak allocated GPU memory is approximately 97 MiB for DINO, 53.5 MiB for the autoencoder including training, and 1692 MiB for AnomalyCLIP. These are different execution scopes; the values document resource use rather than an equal-architecture efficiency ranking. The template baseline is CPU-only.
-\subsection{Bounded brightness stress test}
-We additionally select the first ten good and ten bad test images by filename from each category, giving a fixed 120-image subset. RGB values are multiplied by 0.8, 1.0, or 1.2 and clipped to the valid range. Seed-0 eight-shot banks and clean calibration thresholds remain unchanged. This gives 54 category--brightness--method evaluations, separate from the 168 main runs.
-
-For full memory, macro image AUROC is 0.947, 0.925, and 0.910 across the three factors; Random25 gives 0.947, 0.925, and 0.917. The non-monotonic response across methods and metrics cautions against a simple robustness claim. The subset is small and filename-selected, and synthetic RGB scaling is not real acquisition under different illumination. These results cannot replace the full-test metrics or demonstrate deployment robustness.
-
-\begin{figure}[b]
-\centering\includegraphics[width=\linewidth]{figures/compression.pdf}
-\caption{Eight-shot memory, CPU matching-plus-map time, and image ranking. The timing component excludes the GPU backbone. Lower memory does not imply higher accuracy.}
+}]
+Table~\ref{tab:main} reports the complete twelve-category comparison. At eight shots, full-memory DINO gives image AUROC 0.870, compared with 0.684 for aligned templates, 0.529 for the compact autoencoder, and 0.766 for the released AnomalyCLIP checkpoint. These are local results under the stated adaptations, not claims about the methods' published performance.
+\subsection{Reference budget and category coverage}
+Full-memory image AUROC is 0.808 at one reference and 0.870 at eight. Figure~\ref{fig:shots} shows all budgets and separates the required and additional groups. A mean trend does not imply monotonic improvement for every category and seed. Complete per-run records allow this distinction to be checked.
+\begin{figure}[h]\centering
+\includegraphics[width=\linewidth]{figures/all12_shot_curves.pdf}
+\caption{Full-memory DINO across nested reference budgets. Original six, additional six, and all twelve are shown separately. Error bars are sample standard deviations over three reference draws.}\label{fig:shots}
 \end{figure}
+\subsection{Memory reduction}
+At eight shots, Random25 and Pooled25 have image AUROC 0.848 and 0.792, respectively, versus 0.872 for Coreset224. All three compressed banks store 6 MiB. Random selection and greedy selection retain original vectors; pooling changes their representations as well as count. Consequently this comparison tests three practical compression choices, not feature-count reduction in isolation.
+
+The original-six coverage diagnosis remains instructive: the mean worst reference cosine distance was 0.288 for random sampling and 0.111 for coreset selection, yet FNR increased from 28.78\% to 30.33\%. Better reference coverage is therefore not sufficient evidence of fewer missed anomalies after recalibration. Coverage concerns the reference pool, not a bound on unseen anomaly separation.
+\subsection{Operating points matter}
+Coreset224's all-twelve FNR is 45.36\% at FPR 4.84\%. Coreset448 changes these to 31.56\% and 5.56\%. These jointly reported outcomes address the project goal more directly than ranking alone. They are not a matched empirical-FPR experiment: the normal quantile rule is matched, while realized FPR can differ.
+
+Two-scale fusion gives FNR 41.92\% and FPR 4.79\%. A more complex combination need not improve on the higher-resolution component. Its 2048-vector component banks are smaller than either single-scale bank; saved half-bank controls help interpret this tradeoff. The 224-only and 448-only half banks have FNR 44.94\% and 32.69\%, at FPR 5.17\% and 5.28\%. Fusion is therefore worse than the high-only half-bank control as well as the full high-resolution bank; reduced component capacity alone does not explain its deficit. We retain negative results rather than changing fusion weights after inspecting test labels.
 \clearpage
-\section{Coverage-Preserving Compression}\label{sec:coverage}
-\subsection{Concrete problem and proposed remedy}
-Uniform random compression can discard reference features that represent less common normal appearances. This can increase the distance assigned to a legitimate query even when it has a close match in the full bank. The visible normal-boundary and texture false alarms motivate examining that possibility, but are not proof of a compression-induced cause: many already occur with full memory.
+\section{Diagnosing and Reducing Missed Defects}
+\subsection{Concrete failure and intervention}
+In the original-six Coreset224 diagnosis, 512 of 1317 anomalous image--seed events with mask area at most 0.5\% were missed (38.9\%), versus one of 141 above 2\% (0.7\%). A coarse grid is a plausible contributor, but category composition and defect appearance confound that association. The higher-resolution intervention tests whether a practical change helps under matched references, bank bytes, masking, calibration and evaluation masks.
+\begin{table}[h]\centering\scriptsize
+\caption{Scope-separated eight-shot results. Each entry averages three seeds. Both FPR and FNR are shown.}
+\begin{tabular}{llrrr}\toprule
+Scope & Method & AUROC & FPR & FNR\\\midrule
+Original six & Coreset224 & 0.929 & 0.042 & 0.303 \\
+Original six & Coreset448 & 0.966 & 0.044 & 0.169 \\
+Original six & Two-scale & 0.951 & 0.043 & 0.258 \\
+Additional six & Coreset224 & 0.816 & 0.055 & 0.604 \\
+Additional six & Coreset448 & 0.885 & 0.068 & 0.462 \\
+Additional six & Two-scale & 0.851 & 0.053 & 0.580 \\
+All twelve & Coreset224 & 0.872 & 0.048 & 0.454 \\
+All twelve & Coreset448 & 0.925 & 0.056 & 0.316 \\
+All twelve & Two-scale & 0.901 & 0.048 & 0.419 \\
+\bottomrule\end{tabular}
+\end{table}
+\subsection{Paired error accounting}
+Across all twelve categories and three draws, Coreset448 repairs 753 Coreset224 false-negative events and introduces 256 new ones. It repairs 92 false-positive events and introduces 120. These are paired image--seed events, not counts of independent products: each image is evaluated three times. The saved paths and decision arrays support a full audit.
 
-We therefore distinguish two questions: does selection preserve the original feature coverage, and does that preservation improve decisions on held-out images? These require separate measurements. Our method is a projected greedy $k$-center baseline inspired by PatchCore~\cite{patchcore}; the course contribution is the controlled diagnosis and adaptation, not invention of coreset selection.
-\subsection{Fixed algorithm and evaluation}
-Starting from the normalized 384-dimensional reference vectors, we apply a fixed Gaussian projection to 128 dimensions, seeded by the reference seed plus 2000. The first center is furthest from the projected mean. Each subsequent center maximizes its distance to the closest selected center. We select 4096 distinct indices and store their original 384-dimensional vectors. Selection sees neither calibration nor test labels, and no backbone weights change. Projection dimension and budget are fixed before evaluating this extension.
+For defects covering at most 0.5\% of the common mask, pooled event-level FNR changes from 51.87\% to 36.49\%. Figure~\ref{fig:size} includes the other sizes and aggregation variants. This event-weighted diagnostic differs from the category-macro metrics in the main table; neither denominator should be silently substituted for the other.
+\begin{figure}[h]\centering\includegraphics[width=\linewidth]{figures/miss_by_size.pdf}
+\caption{Miss rates by defect area on the common 224 ground truth. Bars pool image--seed events; class composition varies across bins.}\label{fig:size}
+\end{figure}
+\textbf{Category regressions.} Higher resolution is not uniformly beneficial. On macaroni1, mean FNR rises from 54.33\% to 66.00\%; on macaroni2, from 57.33\% to 65.33\%. Pipe-fryum also worsens from 10.33\% to 13.00\%. The aggregate gain is therefore accompanied by clear category-specific failures. Peak scoring recovers part of these losses, but does not eliminate the weak macaroni performance. No category-specific method switching is fitted to test labels.
 
-All three compressed methods use 6 MiB. We retain the original references, PCA query masks, distances, maps, and normal-only calibration rule. The 18 added runs cover every category and reference seed. Coverage is measured in the original feature space: for every original reference vector, find its nearest retained vector and measure cosine distance. The table reports the mean of per-run maxima, rather than a worst-case bound over unseen images.
-\begin{table}[h]\centering\small
-\caption{Equal-budget comparison. Coverage is mean worst reference cosine distance; lower is better. FPR/FNR are category-macro averages with each method's normal-calibrated threshold.}
+\subsection{Aggregation controls and limits}
+Using the smoothed-map peak gives FNR 44.86\% at 224 and 26.92\% at 448, with FPR 4.92\% and 5.96\%. The comparison is exploratory and uses independently normal-calibrated thresholds. Localization scores are exactly inherited because the maps do not change. This controls model and memory differences, while acknowledging that maximum selection and spatial smoothing jointly define the score.
+
+The experiment does not establish an optimal resolution or an optimal score. An exhaustive resolution or weight search against these test outcomes would weaken the interpretation. A separate validation design would be needed to make such choices and obtain a fresh estimate of final performance.
+\begin{table}[h]\centering\scriptsize
+\caption{Per-category means over three seeds. All columns use normal-only calibration; peak denotes 448 peak. Rates, not percentages.}
 \begin{tabular}{lrrrr}\toprule
-Method & Coverage & AUROC & FPR & FNR\\\midrule
-random25 & 0.288 & 0.921 & 0.051 & 0.288\\
-pooled25 & 0.422 & 0.888 & 0.034 & 0.376\\
-coreset25 & 0.111 & 0.929 & 0.042 & 0.303\\
-\bottomrule\end{tabular}\end{table}
-\subsection{Measured outcome and tradeoffs}
-The average worst reference distance changes from 0.288 for random sampling to 0.111 for coreset selection. Image AUROC changes from 0.9208 to 0.9294, and pixel AP from 0.4118 to 0.4275. These observations must be interpreted together: optimizing reference coverage need not optimize anomaly separation.
+Category & 224 FNR & 448 FNR & Peak FNR & Peak FPR\\\midrule
+candle & 0.350 & 0.133 & 0.143 & 0.080 \\
+capsules & 0.570 & 0.263 & 0.237 & 0.017 \\
+cashew & 0.437 & 0.287 & 0.293 & 0.020 \\
+chewinggum & 0.080 & 0.040 & 0.043 & 0.080 \\
+fryum & 0.280 & 0.160 & 0.143 & 0.007 \\
+pipe\_fryum & 0.103 & 0.130 & 0.007 & 0.087 \\
+macaroni1 & 0.543 & 0.660 & 0.553 & 0.020 \\
+macaroni2 & 0.573 & 0.653 & 0.570 & 0.100 \\
+pcb1 & 0.673 & 0.237 & 0.187 & 0.120 \\
+pcb2 & 0.687 & 0.460 & 0.403 & 0.050 \\
+pcb3 & 0.653 & 0.270 & 0.273 & 0.106 \\
+pcb4 & 0.493 & 0.493 & 0.377 & 0.030 \\
+\bottomrule\end{tabular}
+\end{table}
 
-Across the paired evaluations, coreset fixes 27 random-bank false positives and introduces 20; it fixes 50 false negatives and introduces 78. Counts refer to image--seed events, not distinct images: the same test image is evaluated under three reference draws. Both recovered and newly introduced errors are saved as explicit examples. A lower normal score alone is insufficient evidence because the calibrated threshold also changes.
-
-Offline coreset selection averages 2.95 seconds per category/seed, versus approximately 0.029 seconds for random-bank construction. Matching plus map generation averages 29.3 ms, with the shared feature-extraction component excluded. Selection-only peak allocated GPU memory averages 40.3 MiB and is separate from the backbone allocation. This offline cost must be amortized over repeated queries. Equal-size exact-search banks have the same nominal search workload; timing differences between their separate runs are not evidence of an algorithmic speed advantage.
-
-\subsection{What this establishes}
-The extension makes the problem--method--evaluation link explicit and adds a matched strong selection baseline. It does not establish that coverage alone causes the observed errors, that coreset dominates every metric/category, or that the method is novel. The subset brightness experiment still covers only the original three banks; no coreset robustness result is implied.
-\begin{figure}[h]
-\centering
-\includegraphics[width=\linewidth]{figures/coreset_fp_fixed.png}
-\includegraphics[width=\linewidth]{figures/coreset_fn_introduced.png}
-\caption{Both sides of the tradeoff: a corrected normal-image false alarm (top) and a newly missed defect (bottom). Columns show input, GT, random-bank map and coreset map. Maps are divided by their normal-calibrated pixel thresholds; identical display range does not imply identical raw scores.}
-\end{figure}
 \clearpage
-\section{Qualitative Results and Failure Analysis}
-\begin{figure}[t]
-\centering\includegraphics[width=.92\linewidth,height=.68\textheight,keepaspectratio]{figures/qualitative.pdf}
-\caption{One fixed anomalous test example per category: input, ground truth, anomaly map, and thresholded map. Examples are selected by filename order, not by best performance. Heatmap intensity alone is not the image decision.}
-\end{figure}
-We inspected 24 errors from the full eight-shot detector with seed 0. The selection attempts two false positives and two false negatives per category, then fills any shortfall with other errors. Cashew has no selected false positives and contributes four false negatives. The resulting set contains 10 false positives and 14 false negatives. These are illustrative examples, not a random sample or an estimate of error-type prevalence. Individual paths, scores, thresholds, masks, and observations are included with the code.
+\twocolumn[{
+\section{Qualitative Evidence and Error Review}
+\begin{center}\includegraphics[width=.94\textwidth,height=.48\textheight,keepaspectratio]{figures/lowmiss_examples.pdf}
 
-\textbf{Normal boundaries and arrangement.} Candle false positives highlight intact rims and surfaces. Capsules errors include responses near image boundaries and differently oriented normal instances. Fryum false positives highlight otherwise normal rims or spokes. These observations suggest sensitivity to reference coverage and local geometry, but do not prove whether pose, lighting, or the feature representation is responsible.
+\begin{minipage}{.94\textwidth}\small Paired seed-0 examples for two original and two additional categories. Within each category the rule selects the first recovered miss by filename, otherwise the first introduced miss, otherwise the first anomalous image; records state which rule applied. These outcome-conditioned examples illustrate behavior, not prevalence. Columns: input, GT, calibrated 224/448 heatmaps, and a GT-centered crop. Maps share a range after division by their own pixel thresholds.\end{minipage}
+\end{center}
+}]
+The original failure review contains 24 visually inspected full-memory errors: ten false positives and fourteen false negatives across the six required classes. Selection attempts two of each per class and fills shortages with other errors; cashew contributes four false negatives. It is an illustrative review rather than a random error sample. A further twelve Coreset448 errors (one FP and one FN per additional category) were inspected, bringing the reviewed set to 36. Thin PCB pins remain weakly represented in several misses; normal board borders and component tips produce false alarms. These observations suggest a future masking audit, not a demonstrated cause. File paths, scores, thresholds and individual observations are retained in the artifacts.
 
-\textbf{Small defects and conservative thresholds.} Several capsule, cashew, and chewinggum false negatives have localized heatmap responses that fail to cross the image threshold. Some annotated defects occupy only a small region relative to the 16-by-16 feature grid. Resolution and top-score aggregation are plausible contributors. Distinguishing their effects would require a matched-resolution and aggregation ablation.
+\textbf{Normal boundaries and arrangement.} Intact candle rims, normal fryum spokes, different capsule orientations and image boundaries can produce large responses. These observations motivate reference coverage and geometry checks, but do not prove that compression caused the error: many existed with full memory.
 
-\textbf{Background responses.} A chewinggum false positive includes a hotspot above the object, and some multi-instance examples respond strongly near the field boundary. This motivates inspecting the PCA mask rather than assuming it removes all irrelevant background. The present mask is inherited from the upstream implementation, with only an empty-mask safeguard.
+\textbf{Small and weak defects.} Several capsule, cashew and chewinggum misses have localized responses below the image threshold. The new resolution and aggregation ablations turn that observation into a controlled test. A visible hotspot is not itself a correct image-level decision, and the plotted ground-truth crop is an analysis aid, never an input to the detector.
 
-\textbf{Texture versus defects.} Pipe-fryum false positives respond to normal surface texture, whereas selected false negatives include a thin boundary notch and a pale local blemish. The observations indicate overlap between benign texture variation and weak anomaly responses. A larger nominal reference set may help, but this remains a hypothesis beyond the tested budgets.
+\textbf{Background and texture.} Some false alarms respond above an object or near the field boundary; pipe-fryum errors include normal texture and weak boundary blemishes. The upstream PCA mask is not guaranteed to remove all irrelevant background. We keep it unchanged here rather than mixing a segmentation modification into the resolution comparison.
 
-The contact sheets show both ground-truth masks and predictions so that the discussion can be checked visually. Proposed causes are explicitly separated from visible facts. In particular, a missed decision does not mean the anomaly map is completely uninformative, and a plausible-looking heatmap does not establish correct detection.
+\textbf{Interpretation.} Higher resolution changes representation and query matching cost while keeping stored-bank bytes fixed. Recovered examples support inspectability, while the complete paired error counts establish the measured balance. Neither selected images nor an aggregate gain demonstrate universal improvement. The additional PCB cases broaden the visual evidence but remain part of the same benchmark and development process.
 \clearpage
-\section{Implementation, Demo, and Limitations}
-\subsection{Hardware and reproducibility}
-Experiments run on an NVIDIA RTX A500 Laptop GPU with 4 GB of memory. Feature extraction runs on the GPU, while exact FAISS matching uses four CPU threads. Reported CUDA peak allocation is PyTorch allocated memory rather than total device occupancy. Cached features reduce repeated experiment cost, but caching time is not counted as online inference latency. The artifact includes source revisions, weight and archive hashes, data manifests, configuration in source, and per-run metrics.
+\section{Selective Review, Resources, and Reproduction}
+\subsection{Deferral is not detection}
+We retain the hard NG threshold and add lower normal-calibration quantiles 0.80, 0.85, 0.90 and 0.95. A score above the lower threshold but not above NG is REVIEW; a lower score is automatically OK. Quantiles were fixed before resolution outcomes. We report review load, automatic coverage, and anomalies incorrectly passed automatically, without assuming any human-review accuracy.
 
-The virtual environment inherits camera\_sdk and is not portable. The README records fresh installation steps; datasets and weights are separate downloads.
-\subsection{AnomalyCLIP comparison}
-The additional comparison loads the official released target-VisA prompt checkpoint and the ViT-L/14 CLIP backbone. There is no target-category gradient update. Inputs and pixel metrics use 224 resolution, and the released script's selected feature layer is retained. The operating threshold still uses the same 40 target normal calibration images, so the complete decision pipeline is not target-data-free. A single fixed checkpoint evaluation has no reference-draw standard deviation; repeating deterministic evaluation would not create meaningful independent trials.
+For the predefined 0.90 point with Coreset448, review load is 7.98\%, automatic coverage 92.02\%, and 20.44\% of anomalies are incorrectly auto-passed. This latter quantity is not ordinary binary FNR: anomalies deferred for review are unresolved, not detected. The curve is more informative than declaring a low escaped rate while hiding a large review workload.
+\begin{figure}[h]\centering\includegraphics[width=\linewidth]{figures/selective_review.pdf}
+\caption{Predefined review settings. Left: fraction of anomalies automatically passed. Right: error rate among automatic decisions. Neither curve assumes reviewers correctly resolve deferred images.}
+\end{figure}
+\subsection{Computation and interface}
+Experiments use an RTX A500 Laptop GPU (4 GB) and four CPU FAISS threads. Cached feature and matching components are not end-to-end latency. The table instead measures a common warmed application path. Equal 6 MiB banks do not equalize query costs: 448 has more patches and fusion invokes the backbone twice.
 
-This model has a larger pretrained backbone and different auxiliary learning than the DINO model. Its results should therefore be interpreted as an additional practical baseline, not an equal-pretraining-capacity comparison. Resolution and calibration adaptations are documented rather than described as exact paper reproduction.
-\subsection{Runnable inspection interface}
-The demo loads a category-specific bank and accepts a product image. It displays the input, anomaly heatmap, overlay, calibrated pixel mask, continuous image score, threshold, and OK/NG decision. Random25 is the default because it reduces bank size with a relatively small ranking loss in this experiment. The full, pooled and coreset banks remain selectable for comparison.
+\begin{table}[h]\centering\scriptsize
+\caption{Warmed single-process demo measurements on 24 fixed images per method, with randomized method order. Mean and 95th-percentile wall time include image/bank loading, features and scoring; initialization and rendering are excluded. GPU is maximum allocated MiB, including resident backbone.}
+\begin{tabular}{lrrr}\toprule
+Method & Mean ms & P95 ms & GPU MiB\\\midrule
+Coreset224 & 338.5 & 450.7 & 97.0 \\
+Coreset448 & 449.3 & 552.2 & 111.1 \\
+Two-scale & 557.8 & 650.9 & 111.1 \\
+224 peak & 320.4 & 432.5 & 97.0 \\
+448 peak & 428.5 & 538.2 & 111.1 \\
+\bottomrule\end{tabular}
+\end{table}
 
-The heatmap uses a category-specific scale derived from normal calibration rather than stretching each image independently. The thresholded display mask is not a segmentation guarantee. The category must be selected correctly, and an OK decision does not certify that an item is defect-free. The accompanying random and coreset demonstrations record actual predictions, including the continuous score needed to interpret decisions near the threshold.
-\subsection{Limitations and next experiments}
-Only six VisA categories are evaluated, at reduced resolution and with three reference draws. This does not support broad claims about industrial deployment or statistically established superiority across datasets. The compact autoencoder has a fixed 15-epoch budget; stronger reconstruction training might change its performance. Calibration uses additional normal images, which must be disclosed when comparing to stricter few-shot protocols.
+The interface defaults to 448 peak after this exploratory comparison, without an independent post-selection test. It accepts a category and image, showing scores, thresholds, OK/NG or optional REVIEW, heatmap, overlay and calibrated mask. Ninety-six fresh predictions cover the first good/bad filenames in twelve categories and four variants; all scores and maps match formal outputs. Original recordings add 24 verified predictions. Mistakes remain visible. This is image inference, not a camera-acquisition recording.
+\subsection{Reproducibility and remaining limits}
+The artifact contains manifests, source revisions, checkpoint provenance, per-run metrics, a documented fixed protocol, and unit tests for metric ties, coverage selection, scale fusion and review boundaries. Historical metrics are stored under \texttt{reference\_results}, separate from fresh-run completion markers. Full images, weights and per-pixel predictions are excluded from the public archive and regenerated locally.
 
-The quarter-bank experiment now includes projected greedy coreset selection. It remains a comparison of existing selection principles, not evidence of a novel compression algorithm. Projection dimension and budget are fixed; we do not claim an optimal operating point. Further useful tests include higher-resolution inference with the same references, alternate score aggregation under a separate validation design, and repeated acquisition under real lighting changes. The measured synthetic brightness perturbations are a bounded stress test rather than evidence of real production robustness.
-
-The inspected errors motivate future tests, not causal conclusions. The repository is public; arXiv deposition remains pending.
+The 480 main metric records include 72 score-only peak variants that reuse parent maps, not 480 independent trained models. The 54 brightness settings are separate. Three reference draws provide limited uncertainty information. Calibration uses extra normals, the AE is a small fixed-budget baseline, backbone resources differ, and all findings concern one dataset with resized metric masks. Higher-resolution gains do not establish general industrial safety or CVPR-level novelty. The public repository is available; arXiv deposition and course-platform submission remain author steps.
 \section{Conclusion}
-Under the shared six-category protocol, frozen DINO patch matching provides a reproducible few-shot detector with interpretable memory and latency costs. Quarter-size random memory retains most of the measured image ranking quality, while spatial pooling loses more accuracy at the same memory size. The matched coreset extension explicitly tests reference coverage against detection outcomes and records both corrected and introduced errors. Normal-only calibration exposes misses that ranking metrics alone conceal. The resulting project delivers measured comparisons and an inspection prototype, with explicit limits on resolution, calibration data, pretraining fairness, and generalization.
-\paragraph{Attribution and assistance.} Upstream implementations and pretrained weights are credited in the source documentation. AI assistance was used for coding, experiment orchestration, and manuscript preparation. Contributors should confirm course submission and disclosure requirements.
+The project connects a measured failure---missed small defects under normal-only calibration---to a controlled resolution intervention, with equal stored-bank bytes, repeated references, localization evaluation and paired errors. Compression quality, ranking and operating-point reliability answer different questions. The complete comparison and fusion and aggregation outcomes should guide interpretation rather than be replaced by a single favorable number.
+\paragraph{Attribution and assistance.} Upstream methods are credited. AI assisted code, experiments and writing; contributors must review the submission and course disclosure requirements.
 \clearpage
 {\small\bibliographystyle{ieeenat_fullname}\bibliography{references}}
 \end{document}

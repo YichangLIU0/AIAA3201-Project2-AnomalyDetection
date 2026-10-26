@@ -7,8 +7,8 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 r=Path(__file__).resolve().parents[1];sys.path.insert(0,str(r/'coursework'))
 from common import OUT,DATA,CATEGORIES,rgb
-rows=[json.loads(p.read_text()) for p in (OUT/'coreset').rglob('metrics.json')]
-diags=[json.loads(p.read_text()) for p in (OUT/'coreset').rglob('diagnosis.json')]
+rows=[json.loads(p.read_text()) for c in CATEGORIES for p in (OUT/'coreset'/c).rglob('metrics.json')]
+diags=[json.loads(p.read_text()) for c in CATEGORIES for p in (OUT/'coreset'/c).rglob('diagnosis.json')]
 assert len(rows)==len(diags)==18,(len(rows),len(diags))
 methods=['full','random25','pooled25','coreset25'];metrics={}
 for method in methods:
