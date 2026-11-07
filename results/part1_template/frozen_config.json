@@ -1,0 +1,36 @@
+{
+  "method": "template_rgb_rot8",
+  "version": 1,
+  "input_resolution": 448,
+  "geometry": "short_edge_448_bicubic_then_top_left_crop_to_multiple14",
+  "reference_angles_degrees": [
+    0,
+    45,
+    90,
+    135,
+    180,
+    225,
+    270,
+    315
+  ],
+  "rotation": "original RGB canvas, OpenCV linear, BORDER_REFLECT_101",
+  "descriptor": "28x28 RGB INTER_AREA, float32, MSE",
+  "selection": "minimum descriptor MSE over actual K references and 8 rotations",
+  "reference_shape_fallback": "INTER_CUBIC resize to query shape if processed shapes differ",
+  "alignment": "none",
+  "difference": "mean absolute RGB / 255 global constant",
+  "smoothing": "OpenCV Gaussian sigma2 BORDER_REFLECT_101",
+  "morphology": "3x3 grayscale closing BORDER_REFLECT_101",
+  "image_score": "mean of largest floor(1 percent * input_map_pixel_count), at least 1",
+  "native_map": "OpenCV INTER_LINEAR to original image height/width",
+  "mask_processing": "unchanged original GT, normal GT all zeros",
+  "device": "CPU",
+  "opencv_threads": 4,
+  "test_time_augmentation": "none",
+  "parameter_selection": "fixed a priori from coursework roadmap; no test-label search",
+  "config_id": "template_rgb_rot8_c3df87a74a3e",
+  "algorithm_source_sha256": {
+    "template.py": "0d450ec1efbef004a905d21e69d587dc7f08fbfa750f2637fe14318f983ad704",
+    "run_template.py": "cb8f391de0867c8787d609778b41136bcd72d7f49ab5c98b3df3cb155cca4c6e"
+  }
+}

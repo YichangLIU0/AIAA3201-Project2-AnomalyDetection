@@ -11,6 +11,8 @@
 - `shared_protocol/tests/`：26 项公共工具测试，包含零样本完整接口测试。
 - `shared_protocol/upstream/`：固定版本的外部实现参考、来源与许可证。
 - `shared_protocol/reports/`：数据和工具验证记录；不代表新模型正式实验成绩。
+- `methods/part1/`：正式 Template 基准、72 组运行程序与案例分析工具；[中文运行说明](methods/part1/开始运行.md)。
+- `results/part1_template/`：已完成的 72 组正式 Template 指标、校准分数、逐图预测记录和六个困难案例；[结果与错误分析](results/part1_template/实验结果与错误分析.md)。
 
 交接入口：[给 B 同学的接入说明](shared_protocol/给B同学_从这里开始.md)。当前数据协议为 `visa6_sorted20_official_refs_native_v2`；该版本同时支持 few-shot 和 zero-shot 实验记录。
 
@@ -55,7 +57,11 @@ python -m venv .venv
 
 公共工具在原环境和独立安装环境中各通过 26 项测试；真实 candle 的 20 张校准图与完整 200 张测试图完成过 Template 联调，原尺寸指标与可信实现进行了交叉核对。
 
-这些是工具验证，**不是完整的正式模型复现或提交结果**。AnomalyDINO / AnomalyCLIP 的真实模型实验、A 的六类正式 Template、改进、消融、资源及困难案例分析仍按分工推进。联调结果带有 `integration_only=true`，不能进入正式结果汇总。
+原来的联调结果带有 `integration_only=true`，不能进入正式结果汇总。2026-11-07 已补完六类 × 四 shot × 三 seed 的 **72 组正式 Template 实验**，全部官方测试图均参与 Image/原尺寸 Pixel AUROC，保留 AP/AUPRO、三 seed 统计、校准判断、CPU 耗时和六个困难案例。数据哈希核对与完整性检查均通过。
+
+8-shot 六类宏平均 Image AUROC 为 **0.6128 ± 0.0064**，Pixel AUROC 为 **0.7669 ± 0.0022**；固定校准阈值下平均漏报率 **0.8706**，模型效果仍弱。Template 当前为 CPU 实现，GPU 显存记 0（未使用）；与 GPU 神经模型的效率比较需明确设备差异。详细记录见结果目录；约 65 GiB 的原始浮点预测保留在运行机器的 `outputs/part1_template_v1/`，不上传 Git。
+
+**这只表示 Template 基准实验完成。** 新协议下 AnomalyDINO / AnomalyCLIP 的完整实验、A 的 ECC、AE、Part 3 C/F，以及最终报告和提交，仍按分工推进。公共工具的 26 项测试和 Template 的 4 项测试通过；共享协议版本未修改。
 
 ## 外部来源与历史
 

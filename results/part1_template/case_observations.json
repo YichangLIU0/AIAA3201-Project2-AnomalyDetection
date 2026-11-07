@@ -1,0 +1,29 @@
+{
+  "scope": "Post-hoc visual inspection of the six frozen 8-shot seed-0 cases; observations are not new metrics or causal ablations.",
+  "cases": {
+    "candle/test/bad/026.JPG": {
+      "reference": "candle/train/good/0033.JPG", "angle": 0,
+      "observation": "左上蜡烛的边缘有缺口，GT 只标注这块小区域。热图对多个正常蜡烛的外轮廓也有响应，缺口没有形成足够突出的整图分数；0.2784 低于正常校准阈值 0.6815，因此漏报。缺陷面积仅约 0.19%，最高 1% 像素求均值也可能稀释小缺陷响应。后续应独立验证配准能否降低正常轮廓差异，并用训练/校准数据研究评分方式。"
+    },
+    "capsules/test/bad/052.JPG": {
+      "reference": "capsules/train/good/033.JPG", "angle": 0,
+      "observation": "测试图与参考图中，多颗胶囊的位置和朝向明显不一致；热图在很多正常胶囊轮廓上都很亮，GT 附近的差异没有占据主导。整图分数 0.4381 低于阈值 0.5056，造成漏报。一次整图 ECC 变换未必能同时对齐各自移动的胶囊，后续还需要与局部特征方法比较。"
+    },
+    "cashew/test/good/344.JPG": {
+      "reference": "cashew/train/good/030.JPG", "angle": 0,
+      "observation": "这是一张正常腰果图，GT 全黑。测试腰果与正常参考的外形、轮廓位置不完全相同，热图最强响应沿着正常腰果的外缘，而不是某个真实缺陷；分数 0.5715 超过阈值 0.4989，因此误报。背景纹理也出现差异，但最强响应集中在主体轮廓。可以验证几何配准的作用，同时保留正常个体形状差异无法被刚性对齐完全消除的限制。"
+    },
+    "chewinggum/test/bad/030.JPG": {
+      "reference": "chewinggum/train/good/026.JPG", "angle": 0,
+      "observation": "口香糖左上角的缺损在原图可见，热图在该处已有局部响应，并非完全看不到缺陷；底边和背景纹理也有响应。最终分数只有 0.2826，远低于正常校准阈值 0.7601，仍被判为正常。这说明局部响应与整图判定应分开分析；应保持规定的校准规则，优先改善分数对正常外观变化的稳定性。"
+    },
+    "fryum/test/good/392.JPG": {
+      "reference": "fryum/train/good/026.JPG", "angle": 0,
+      "observation": "这是正常轮形产品，GT 全黑。测试图与参考图的轮辐角度、孔洞和边缘没有完全重合，热图在轮辐间形成块状高响应。分数 0.6405 仅略高于阈值 0.6385，属于接近判定边界的误报。配准可能减少整体位置/角度差异，但不能据此保证消除正常形状差异。"
+    },
+    "pipe_fryum/test/bad/060.JPG": {
+      "reference": "pipe_fryum/train/good/027.JPG", "angle": 180,
+      "observation": "原图中间的小白点是 GT 缺陷，面积仅约 0.056%。热图较强响应出现在产品上边缘和表面的大范围纹理差异，小白点没有成为主导；整图分数 0.2245 低于阈值 0.5033，因此漏报。该类平均 Pixel AUROC 很高也不能保证每个微小缺陷均被抓到；后续需要针对小缺陷响应和整图分数做独立验证。"
+    }
+  }
+}
