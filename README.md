@@ -13,6 +13,8 @@
 - `shared_protocol/reports/`：数据和工具验证记录；不代表新模型正式实验成绩。
 - `methods/part1/`：正式 Template 基准、72 组运行程序与案例分析工具；[中文运行说明](methods/part1/开始运行.md)。
 - `results/part1_template/`：已完成的 72 组正式 Template 指标、校准分数、逐图预测记录和六个困难案例；[结果与错误分析](results/part1_template/实验结果与错误分析.md)。
+- `methods/part2/`：官方 AnomalyDINO（dinov2_vits14、448、agnostic）与 AnomalyCLIP 的正式运行程序、DINO 接口和测试；[运行说明](methods/part2/README.md)，[代码来源核对](methods/part2/PROVENANCE.md)。
+- `results/part2_dino/`、`results/part2_anomalyclip/`、`results/part2_failure_analysis/`：72 组正式 DINO 与 6 类 AnomalyCLIP zero-shot 的记录、指标、汇总、服务器日志和错误分析；[Part 2 结果与需披露的偏差](results/part2_dino/PART2_REPORT.md)。原尺寸热图不上传 Git。
 
 交接入口：[给 B 同学的接入说明](shared_protocol/给B同学_从这里开始.md)。当前数据协议为 `visa6_sorted20_official_refs_native_v2`；该版本同时支持 few-shot 和 zero-shot 实验记录。
 
@@ -61,7 +63,7 @@ python -m venv .venv
 
 8-shot 六类宏平均 Image AUROC 为 **0.6128 ± 0.0064**，Pixel AUROC 为 **0.7669 ± 0.0022**；固定校准阈值下平均漏报率 **0.8706**，模型效果仍弱。Template 当前为 CPU 实现，GPU 显存记 0（未使用）；与 GPU 神经模型的效率比较需明确设备差异。详细记录见结果目录；约 65 GiB 的原始浮点预测保留在运行机器的 `outputs/part1_template_v1/`，不上传 Git。
 
-**这只表示 Template 基准实验完成。** 新协议下 AnomalyDINO / AnomalyCLIP 的完整实验、A 的 ECC、AE、Part 3 C/F，以及最终报告和提交，仍按分工推进。公共工具的 26 项测试和 Template 的 4 项测试通过；共享协议版本未修改。
+**这只表示 Template 基准实验完成。** 新协议下 AnomalyDINO（72 组）和 AnomalyCLIP（6 类 zero-shot）的正式实验已在 2026-11-06 完成，见 `results/part2_dino/`；其困难样本人工检查尚未完成。A 的 ECC、AE、Part 3，以及最终报告和提交，仍按分工推进。公共工具的 26 项测试和 Template 的 4 项测试通过；共享协议版本未修改。
 
 ## 外部来源与历史
 
