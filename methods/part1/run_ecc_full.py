@@ -20,15 +20,17 @@ from shared_protocol.protocol import ROOT, CATEGORIES, SHOTS, SEEDS, inside, sav
 from shared_protocol.metrics import aggregate_runs
 from .ecc import CONFIG, ECCDetector
 from .run_template import environment, freeze
+from .map_storage import MapStorage
 
 HERE = Path(__file__).resolve().parent
 
 
 def configuration():
     return {**CONFIG, 'experiment_shots': list(SHOTS), 'experiment_seeds': [0, 1, 2],
+            'map_storage': 'native float32 npy, identical-SHA256 hardlinks after timed inference; no quantization or score changes',
             'config_id': 'template_ecc_full_' + hashlib.sha256(json.dumps(CONFIG, sort_keys=True).encode()).hexdigest()[:12],
             'algorithm_source_sha256': {name: sha256(HERE / name) for name in
-                ['template.py', 'run_template.py', 'ecc.py', 'run_ecc_full.py']}}
+                ['template.py', 'run_template.py', 'ecc.py', 'run_ecc_full.py', 'map_storage.py']}}
 
 
 def export_compact(folder, compact, manifest, result):
@@ -71,6 +73,7 @@ def run_cell(category, shots, seed, args, config):
     assert baseline['reference_paths'] == manifest['references'][str(shots)][str(seed)]
     assert not baseline['integration_only'] and baseline['status'] == 'complete'
     if not (folder / 'run.json').exists():
+        storage_before = args.map_store.stats()
         started = time.perf_counter()
         model = ECCDetector(reference_paths(manifest, shots, seed, args.data_root), manifest['references'][str(shots)][str(seed)])
         setup_seconds = time.perf_counter() - started
@@ -93,6 +96,8 @@ def run_cell(category, shots, seed, args, config):
                     writer.write_calibration(sample['path'], prediction.score)
                 else:
                     writer.write_test(sample['path'], prediction.native_map, prediction.score, elapsed)
+                    saved = writer.records[-1]
+                    args.map_store.share(folder / saved['map'], saved['map_sha256'])
                     durations.append(elapsed)
                     peak_rss = max(peak_rss, psutil.Process().memory_info().rss)
                     if (index+1) % 50 == 0 or index == len(samples)-1:
@@ -104,7 +109,8 @@ def run_cell(category, shots, seed, args, config):
                            reference_build_seconds=setup_seconds,
                            peak_process_rss_during_inference_mb=peak_rss/1024**2,
                            timing_includes='JPG decode, preprocess, identical nearest-template selection, ECC solve and acceptance checks, difference and postprocess, native-map interpolation',
-                           timing_excludes='reference setup, warmup, calibration, disk serialization, metric evaluation',
+                           map_storage_run={key: value-storage_before[key] for key,value in args.map_store.stats().items()},
+                           timing_excludes='reference setup, warmup, calibration, disk serialization and hardlink deduplication, metric evaluation',
                            environment=environment()))
         del model
     traces = json.loads((folder / 'alignment_traces.json').read_text(encoding='utf-8'))
@@ -170,6 +176,7 @@ def main():
                  if not (args.output_root/c/f'{shots}shot_seed{seed}'/'run.json').exists())
     if shutil.disk_usage(args.output_root).free < estimate+5*1024**3:
         raise ValueError('Insufficient native-map storage plus 5 GiB reserve')
+    args.map_store=MapStorage(args.baseline_root,args.output_root)
     for category in args.categories:
         for shots in args.shots:
             for seed in args.seeds:
