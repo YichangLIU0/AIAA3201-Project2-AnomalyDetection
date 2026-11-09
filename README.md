@@ -1,6 +1,6 @@
 # AIAA3201 Project 2 — Few-Shot Industrial Visual Anomaly Detection
 
-当前主分支是按课程要求重新建立的实验起点：提供六类 VisA 数据准备、固定清单和公共评估工具。**这里尚未完成新的 DINO、AnomalyCLIP 和全部 Part 1/3 正式实验。**
+当前主分支提供六类 VisA 数据准备、固定清单、公共评估工具，以及各 72 组正式 Template / ECC 对照结果。**这尚不代表全部 Part 1/3 完成；DINO、AnomalyCLIP、AE 和其他实验仍需按分工汇合。**
 
 旧版代码、旧报告、Demo 和实验结果保存在 [legacy-v1 分支](https://github.com/YichangLIU0/AIAA3201-Project2-AnomalyDetection/tree/legacy-v1)，不与新协议结果混用。旧分支固定起点为 `568f8c588c44880c05b6434c79ba2dc66650f144`。
 
@@ -13,6 +13,7 @@
 - `shared_protocol/reports/`：数据和工具验证记录；不代表新模型正式实验成绩。
 - `methods/part1/`：正式 Template 基准、72 组运行程序与案例分析工具；[中文运行说明](methods/part1/开始运行.md)。
 - `results/part1_template/`：已完成的 72 组正式 Template 指标、校准分数、逐图预测记录和六个困难案例；[结果与错误分析](results/part1_template/实验结果与错误分析.md)。
+- `results/part1_ecc_full/`：已完成的 72 组正式 ECC 配对实验；[大白话结论与案例核查](results/part1_ecc_full/案例核查与结论.md)、[完整对照与曲线](results/part1_ecc_full/ECC结果与基准对照.md)。运行见 [ECC 方案](methods/part1/ECC对照方案.md)。
 
 交接入口：[给 B 同学的接入说明](shared_protocol/给B同学_从这里开始.md)。当前数据协议为 `visa6_sorted20_official_refs_native_v2`；该版本同时支持 few-shot 和 zero-shot 实验记录。
 
@@ -61,7 +62,11 @@ python -m venv .venv
 
 8-shot 六类宏平均 Image AUROC 为 **0.6128 ± 0.0064**，Pixel AUROC 为 **0.7669 ± 0.0022**；固定校准阈值下平均漏报率 **0.8706**，模型效果仍弱。Template 当前为 CPU 实现，GPU 显存记 0（未使用）；与 GPU 神经模型的效率比较需明确设备差异。详细记录见结果目录；约 65 GiB 的原始浮点预测保留在运行机器的 `outputs/part1_template_v1/`，不上传 Git。
 
-**这只表示 Template 基准实验完成。** 新协议下 AnomalyDINO / AnomalyCLIP 的完整实验、A 的 ECC、AE、Part 3 C/F，以及最终报告和提交，仍按分工推进。公共工具的 26 项测试和 Template 的 4 项测试通过；共享协议版本未修改。
+2026-11-10 已完成 **72 组 ECC 正式配对实验**，逐图核对参考图、旋转、校准和完整测试清单一致；差异、评分和原尺寸评价不变。8-shot 的六类宏平均 Image AUROC 为 **0.6383 ± 0.0109**，Pixel AUROC 为 **0.7700 ± 0.0025**；平均 FNR 从 0.8706 降至 **0.7350**，FPR 从 0.0517 升至 **0.1144**。本机 CPU 耗时从约 35.16 增至 48.74 ms/图。效果有类别差异，不能说全面提升，也仍不适合可靠检测。
+
+ECC 的 11,520 个原尺寸预测路径全部保留，通过字节相同的硬链接避免约 **23.87 GiB** 重复写入；相对基准实际新增独有预测内容约 **40.50 GiB**。旧单组试跑与正式结果的重复内容也已无损共享约 1.11 GiB。没有降低浮点精度或修改 GT；全部大体积预测不进入 Git，轻量指标、完整轨迹及 6 例全图/局部对照已提供。
+
+**当前完成的是 Template + ECC 正式实验与错误分析。** 新协议下 AnomalyDINO / AnomalyCLIP 结果汇合、A 的 AE、Part 3 C/F，以及最终报告和提交仍需推进。公共工具既有 26 项测试通过，本轮 Part1 的 Template/ECC/存储共 12 项检查通过；共享协议版本未修改。完整性通过与模型效果理想是不同结论。
 
 ## 外部来源与历史
 

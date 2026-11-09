@@ -1,0 +1,63 @@
+{
+  "method": "template_rgb_rot8_ecc",
+  "version": 1,
+  "input_resolution": 448,
+  "geometry": "short_edge_448_bicubic_then_top_left_crop_to_multiple14",
+  "reference_angles_degrees": [
+    0,
+    45,
+    90,
+    135,
+    180,
+    225,
+    270,
+    315
+  ],
+  "rotation": "original RGB canvas, OpenCV linear, BORDER_REFLECT_101",
+  "descriptor": "28x28 RGB INTER_AREA, float32, MSE",
+  "selection": "minimum descriptor MSE over actual K references and 8 rotations",
+  "reference_shape_fallback": "INTER_CUBIC resize to query shape if processed shapes differ",
+  "alignment": "ECC Euclidean; warp selected reference into unchanged query coordinates",
+  "difference": "mean absolute RGB / 255 global constant",
+  "smoothing": "OpenCV Gaussian sigma2 BORDER_REFLECT_101",
+  "morphology": "3x3 grayscale closing BORDER_REFLECT_101",
+  "image_score": "mean of largest floor(1 percent * input_map_pixel_count), at least 1",
+  "native_map": "OpenCV INTER_LINEAR to original image height/width",
+  "mask_processing": "unchanged original GT, normal GT all zeros",
+  "device": "CPU",
+  "opencv_threads": 4,
+  "test_time_augmentation": "none",
+  "parameter_selection": "fixed geometric settings before formal ECC test outcomes; synthetic registration checks only",
+  "ecc_max_edge": 224,
+  "ecc_max_iterations": 50,
+  "ecc_epsilon": 1e-05,
+  "ecc_gaussian_kernel": 5,
+  "ecc_init": "identity after discrete reference rotation",
+  "ecc_max_rotation_degrees": 30.0,
+  "ecc_max_center_displacement_fraction": 0.15,
+  "ecc_min_valid_fraction": 0.75,
+  "ecc_acceptance": "finite bounded transform, sufficient overlap, nondecreasing valid-pixel grayscale correlation",
+  "ecc_interpolation": "INTER_LINEAR | WARP_INVERSE_MAP; constant border",
+  "ecc_border": "outside valid warped-reference support, retain unaligned reference; never copy query or zero error",
+  "ecc_fallback": "original unaligned selected reference, explicit reason logged",
+  "experiment_shots": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "experiment_seeds": [
+    0,
+    1,
+    2
+  ],
+  "map_storage": "native float32 npy, identical-SHA256 hardlinks after timed inference; no quantization or score changes",
+  "config_id": "template_ecc_full_8b9168b6ce74",
+  "algorithm_source_sha256": {
+    "template.py": "0d450ec1efbef004a905d21e69d587dc7f08fbfa750f2637fe14318f983ad704",
+    "run_template.py": "cb8f391de0867c8787d609778b41136bcd72d7f49ab5c98b3df3cb155cca4c6e",
+    "ecc.py": "535f00f3c2bc600a493e15c727b582887a44221278c2cf692566161433aa1128",
+    "run_ecc_full.py": "4c9fd130aaf45d9df08da48aa691e8e68c7d1bb5d3a75c392039b10f46068010",
+    "map_storage.py": "e1cc5946d58c62bb3be837d8ac7c076bbdc9b445a1ba463945a0c3ef5cbf7c89"
+  }
+}

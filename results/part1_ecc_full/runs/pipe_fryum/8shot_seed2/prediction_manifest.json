@@ -1,0 +1,1225 @@
+{
+  "format": "native_maps_v2",
+  "protocol_id": "visa6_sorted20_official_refs_native_v2",
+  "status": "complete",
+  "category": "pipe_fryum",
+  "shots": 8,
+  "seed": 2,
+  "method": "template_rgb_rot8_ecc",
+  "config_id": "template_ecc_full_8b9168b6ce74",
+  "run_config": {
+    "method": "template_rgb_rot8_ecc",
+    "version": 1,
+    "input_resolution": 448,
+    "geometry": "short_edge_448_bicubic_then_top_left_crop_to_multiple14",
+    "reference_angles_degrees": [
+      0,
+      45,
+      90,
+      135,
+      180,
+      225,
+      270,
+      315
+    ],
+    "rotation": "original RGB canvas, OpenCV linear, BORDER_REFLECT_101",
+    "descriptor": "28x28 RGB INTER_AREA, float32, MSE",
+    "selection": "minimum descriptor MSE over actual K references and 8 rotations",
+    "reference_shape_fallback": "INTER_CUBIC resize to query shape if processed shapes differ",
+    "alignment": "ECC Euclidean; warp selected reference into unchanged query coordinates",
+    "difference": "mean absolute RGB / 255 global constant",
+    "smoothing": "OpenCV Gaussian sigma2 BORDER_REFLECT_101",
+    "morphology": "3x3 grayscale closing BORDER_REFLECT_101",
+    "image_score": "mean of largest floor(1 percent * input_map_pixel_count), at least 1",
+    "native_map": "OpenCV INTER_LINEAR to original image height/width",
+    "mask_processing": "unchanged original GT, normal GT all zeros",
+    "device": "CPU",
+    "opencv_threads": 4,
+    "test_time_augmentation": "none",
+    "parameter_selection": "fixed geometric settings before formal ECC test outcomes; synthetic registration checks only",
+    "ecc_max_edge": 224,
+    "ecc_max_iterations": 50,
+    "ecc_epsilon": 1e-05,
+    "ecc_gaussian_kernel": 5,
+    "ecc_init": "identity after discrete reference rotation",
+    "ecc_max_rotation_degrees": 30.0,
+    "ecc_max_center_displacement_fraction": 0.15,
+    "ecc_min_valid_fraction": 0.75,
+    "ecc_acceptance": "finite bounded transform, sufficient overlap, nondecreasing valid-pixel grayscale correlation",
+    "ecc_interpolation": "INTER_LINEAR | WARP_INVERSE_MAP; constant border",
+    "ecc_border": "outside valid warped-reference support, retain unaligned reference; never copy query or zero error",
+    "ecc_fallback": "original unaligned selected reference, explicit reason logged",
+    "experiment_shots": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "experiment_seeds": [
+      0,
+      1,
+      2
+    ],
+    "map_storage": "native float32 npy, identical-SHA256 hardlinks after timed inference; no quantization or score changes",
+    "config_id": "template_ecc_full_8b9168b6ce74",
+    "algorithm_source_sha256": {
+      "template.py": "0d450ec1efbef004a905d21e69d587dc7f08fbfa750f2637fe14318f983ad704",
+      "run_template.py": "cb8f391de0867c8787d609778b41136bcd72d7f49ab5c98b3df3cb155cca4c6e",
+      "ecc.py": "535f00f3c2bc600a493e15c727b582887a44221278c2cf692566161433aa1128",
+      "run_ecc_full.py": "4c9fd130aaf45d9df08da48aa691e8e68c7d1bb5d3a75c392039b10f46068010",
+      "map_storage.py": "e1cc5946d58c62bb3be837d8ac7c076bbdc9b445a1ba463945a0c3ef5cbf7c89"
+    }
+  },
+  "integration_only": false,
+  "manifest_sha256": "510227ef4dd63e4c10b6abab4bf8b6da7be33a36bb727f6dbae0a8d62037c59e",
+  "source_sha256": "10b6d973528f006ffa92f978c535b08d379c79f8da797bca60f403b37004ac3c",
+  "reference_paths": [
+    "pipe_fryum/train/good/040.JPG",
+    "pipe_fryum/train/good/041.JPG",
+    "pipe_fryum/train/good/042.JPG",
+    "pipe_fryum/train/good/043.JPG",
+    "pipe_fryum/train/good/044.JPG",
+    "pipe_fryum/train/good/045.JPG",
+    "pipe_fryum/train/good/046.JPG",
+    "pipe_fryum/train/good/047.JPG"
+  ],
+  "calibration_paths": [
+    "pipe_fryum/train/good/000.JPG",
+    "pipe_fryum/train/good/001.JPG",
+    "pipe_fryum/train/good/002.JPG",
+    "pipe_fryum/train/good/003.JPG",
+    "pipe_fryum/train/good/004.JPG",
+    "pipe_fryum/train/good/005.JPG",
+    "pipe_fryum/train/good/007.JPG",
+    "pipe_fryum/train/good/008.JPG",
+    "pipe_fryum/train/good/009.JPG",
+    "pipe_fryum/train/good/010.JPG",
+    "pipe_fryum/train/good/011.JPG",
+    "pipe_fryum/train/good/014.JPG",
+    "pipe_fryum/train/good/015.JPG",
+    "pipe_fryum/train/good/016.JPG",
+    "pipe_fryum/train/good/017.JPG",
+    "pipe_fryum/train/good/018.JPG",
+    "pipe_fryum/train/good/019.JPG",
+    "pipe_fryum/train/good/020.JPG",
+    "pipe_fryum/train/good/021.JPG",
+    "pipe_fryum/train/good/022.JPG"
+  ],
+  "map_space": "original_image_pixels",
+  "raw_scores_without_per_image_normalization": true,
+  "experiment_mode": "few_shot",
+  "run_seed": 2,
+  "reference_seed": 2,
+  "seed_role": "reference_selection_and_runtime",
+  "calibration_usage": "20 normal images for threshold only; no training or reference bank",
+  "calibration_scores": [
+    0.2850363254547119,
+    0.33293524384498596,
+    0.35001203417778015,
+    0.46693718433380127,
+    0.47006356716156006,
+    0.3043751120567322,
+    0.33069929480552673,
+    0.4646945893764496,
+    0.21482817828655243,
+    0.29527872800827026,
+    0.3726915121078491,
+    0.25438857078552246,
+    0.2573927044868469,
+    0.31662264466285706,
+    0.220230832695961,
+    0.47176405787467957,
+    0.24867160618305206,
+    0.1922975480556488,
+    0.25569847226142883,
+    0.329094260931015
+  ],
+  "test": [
+    {
+      "path": "pipe_fryum/test/bad/000.JPG",
+      "map": "maps/0000.npy",
+      "map_sha256": "05e99360a65501bd953e3fee57d911f18e878fdc05ac6d55f9fc0244ee44fe05",
+      "score": 0.39285314083099365,
+      "inference_seconds": 0.03946420000283979
+    },
+    {
+      "path": "pipe_fryum/test/bad/001.JPG",
+      "map": "maps/0001.npy",
+      "map_sha256": "a3d80afca9a379addd3f19e8daaaf46c5ee0795de22ac0027679f2075b53f642",
+      "score": 0.42725515365600586,
+      "inference_seconds": 0.036378599994350225
+    },
+    {
+      "path": "pipe_fryum/test/bad/002.JPG",
+      "map": "maps/0002.npy",
+      "map_sha256": "5d170fc29d22dc18849a646e5e0d8d7f6b6da1ebb412bb0fc77fb25d63b9a0de",
+      "score": 0.22976310551166534,
+      "inference_seconds": 0.036448200000450015
+    },
+    {
+      "path": "pipe_fryum/test/bad/003.JPG",
+      "map": "maps/0003.npy",
+      "map_sha256": "8f3465585c49c0cd94d02d4df474b6c6b8020b414fefff05e07b9aa82b1300b5",
+      "score": 0.263036847114563,
+      "inference_seconds": 0.04040030000032857
+    },
+    {
+      "path": "pipe_fryum/test/bad/004.JPG",
+      "map": "maps/0004.npy",
+      "map_sha256": "55db686a979555b03405a46e7973c10d2550b97f65fa89d96316f3c7e02cfa6c",
+      "score": 0.32133135199546814,
+      "inference_seconds": 0.03776629999629222
+    },
+    {
+      "path": "pipe_fryum/test/bad/005.JPG",
+      "map": "maps/0005.npy",
+      "map_sha256": "9bc0163c0f0a927e28295ac0670f9f71e2f83757fad866b51bf15306a2ecfffd",
+      "score": 0.44173145294189453,
+      "inference_seconds": 0.04069840000011027
+    },
+    {
+      "path": "pipe_fryum/test/bad/006.JPG",
+      "map": "maps/0006.npy",
+      "map_sha256": "eeb6cd1eab81757eb643e293e8f6fba59d9fe2fb8640451ee1bfaf65cb206138",
+      "score": 0.19162431359291077,
+      "inference_seconds": 0.03574710001703352
+    },
+    {
+      "path": "pipe_fryum/test/bad/007.JPG",
+      "map": "maps/0007.npy",
+      "map_sha256": "342544a23365511e2d1d9a8f7f3ad0d4e1bd7e1573e9bb57d9ea82e84400c5f2",
+      "score": 0.2227739542722702,
+      "inference_seconds": 0.04141549998894334
+    },
+    {
+      "path": "pipe_fryum/test/bad/008.JPG",
+      "map": "maps/0008.npy",
+      "map_sha256": "e719e5015785c7c94636a91b52cb5ceb9c7756e27b020da9ab12234197614858",
+      "score": 0.20324088633060455,
+      "inference_seconds": 0.036716200003866106
+    },
+    {
+      "path": "pipe_fryum/test/bad/009.JPG",
+      "map": "maps/0009.npy",
+      "map_sha256": "c44d0f7903d676a9d82180dea1b36c9f13e897df09fb4c5ca110ba2a60881bda",
+      "score": 0.39864930510520935,
+      "inference_seconds": 0.04543769999872893
+    },
+    {
+      "path": "pipe_fryum/test/bad/010.JPG",
+      "map": "maps/0010.npy",
+      "map_sha256": "ca101d6e83a6c6ee2d8caebe1f19e9516adccfb2cbb894d92021f36b50a8e119",
+      "score": 0.37534862756729126,
+      "inference_seconds": 0.03638679999858141
+    },
+    {
+      "path": "pipe_fryum/test/bad/011.JPG",
+      "map": "maps/0011.npy",
+      "map_sha256": "f65594e3a0a4c6b7e2dc1795765938b14496253939bc507dcc172e683d5b0c6f",
+      "score": 0.43410468101501465,
+      "inference_seconds": 0.04042599999229424
+    },
+    {
+      "path": "pipe_fryum/test/bad/012.JPG",
+      "map": "maps/0012.npy",
+      "map_sha256": "c91d8d26092f780ca2bee2bc13bd6d6a7fd974907b58936c484d89939a1dcd87",
+      "score": 0.40870755910873413,
+      "inference_seconds": 0.04001710002194159
+    },
+    {
+      "path": "pipe_fryum/test/bad/013.JPG",
+      "map": "maps/0013.npy",
+      "map_sha256": "a11072111b1f0a6fccf8c6073f703188385b51cc9dc1cb5db355965bb0d806a9",
+      "score": 0.30754202604293823,
+      "inference_seconds": 0.037860300013562664
+    },
+    {
+      "path": "pipe_fryum/test/bad/014.JPG",
+      "map": "maps/0014.npy",
+      "map_sha256": "b3c68e3cd7712f2db51449722a048d83e3b7b967d242a3e258d4d0ff7bd9a697",
+      "score": 0.4042733609676361,
+      "inference_seconds": 0.04133329997421242
+    },
+    {
+      "path": "pipe_fryum/test/bad/015.JPG",
+      "map": "maps/0015.npy",
+      "map_sha256": "1a4bed64ad673f708130bdab892035869cf0f4cc2daddd5f31d2870654c22371",
+      "score": 0.2209426909685135,
+      "inference_seconds": 0.04323959999601357
+    },
+    {
+      "path": "pipe_fryum/test/bad/016.JPG",
+      "map": "maps/0016.npy",
+      "map_sha256": "13441bba07d6097eb3759b5ae4d43bb01c13cb2c80b07c028ef60f34fffeba14",
+      "score": 0.1819964200258255,
+      "inference_seconds": 0.03960589997586794
+    },
+    {
+      "path": "pipe_fryum/test/bad/017.JPG",
+      "map": "maps/0017.npy",
+      "map_sha256": "ae13998b5ce1d1a28fd1cc279ebc44b9edd00eeef903afa65f5de6a6261cb01c",
+      "score": 0.4262232780456543,
+      "inference_seconds": 0.04575830002431758
+    },
+    {
+      "path": "pipe_fryum/test/bad/018.JPG",
+      "map": "maps/0018.npy",
+      "map_sha256": "97d56be64aabbf8319ea4ef4ca44d434590a818650dd5fb1fefaf1dc4430ea0e",
+      "score": 0.3388364613056183,
+      "inference_seconds": 0.0462483000010252
+    },
+    {
+      "path": "pipe_fryum/test/bad/019.JPG",
+      "map": "maps/0019.npy",
+      "map_sha256": "09d5fe7456fe442256384aea38fa80a811cc5ce31297113160fd39f5a0409eda",
+      "score": 0.21900790929794312,
+      "inference_seconds": 0.041045799996936694
+    },
+    {
+      "path": "pipe_fryum/test/bad/020.JPG",
+      "map": "maps/0020.npy",
+      "map_sha256": "2ea6580c3ee1abeb44fe7464235f54a8b5fd592518ab064924e8ff314166d294",
+      "score": 0.3536980152130127,
+      "inference_seconds": 0.04616279999027029
+    },
+    {
+      "path": "pipe_fryum/test/bad/021.JPG",
+      "map": "maps/0021.npy",
+      "map_sha256": "3d8b715faf101dbfc29fa891acaa6e29bf09fc402ec24566f21557cb27a4ac61",
+      "score": 0.27848193049430847,
+      "inference_seconds": 0.04070700000738725
+    },
+    {
+      "path": "pipe_fryum/test/bad/022.JPG",
+      "map": "maps/0022.npy",
+      "map_sha256": "346e4634c90c10d9c9919b478650e88240ff01e4ac81ca98e3db8acff8b3db35",
+      "score": 0.24701054394245148,
+      "inference_seconds": 0.04448169999523088
+    },
+    {
+      "path": "pipe_fryum/test/bad/023.JPG",
+      "map": "maps/0023.npy",
+      "map_sha256": "02237671b040f6d5ffbace2ff9601f087ed165a47a88dd2aa948eced1025317d",
+      "score": 0.31174394488334656,
+      "inference_seconds": 0.04237199999624863
+    },
+    {
+      "path": "pipe_fryum/test/bad/024.JPG",
+      "map": "maps/0024.npy",
+      "map_sha256": "a8304331dfd2b6730f1ce106f405563dde66ca3cfc6a73f8de7a32e9d097c65e",
+      "score": 0.28855621814727783,
+      "inference_seconds": 0.04253080001217313
+    },
+    {
+      "path": "pipe_fryum/test/bad/025.JPG",
+      "map": "maps/0025.npy",
+      "map_sha256": "01bd35d0b7b023ed882975c28af8b57d4dbb58954afc8fd44fa9a1fa9db821cc",
+      "score": 0.2928427755832672,
+      "inference_seconds": 0.04339649999747053
+    },
+    {
+      "path": "pipe_fryum/test/bad/026.JPG",
+      "map": "maps/0026.npy",
+      "map_sha256": "8ff64308b2baf807146a9f1d5c52821f9edeee3f89ca056a00f1b24adb22ec8d",
+      "score": 0.4245480000972748,
+      "inference_seconds": 0.043593800015514717
+    },
+    {
+      "path": "pipe_fryum/test/bad/027.JPG",
+      "map": "maps/0027.npy",
+      "map_sha256": "5d133afbce3425cb83e22023209312e7eefa69a89776de37cc7010e234604cdc",
+      "score": 0.319863498210907,
+      "inference_seconds": 0.04460319998906925
+    },
+    {
+      "path": "pipe_fryum/test/bad/028.JPG",
+      "map": "maps/0028.npy",
+      "map_sha256": "959bd1992abcbc4240608c5e31842ebcd60a96b0b9a721ccaf9b1db523bed506",
+      "score": 0.318782240152359,
+      "inference_seconds": 0.04005619999952614
+    },
+    {
+      "path": "pipe_fryum/test/bad/029.JPG",
+      "map": "maps/0029.npy",
+      "map_sha256": "4777896cabd8be3f9890675bdf775f6eedffa746d6e9cb96d0f41b8d3f8bee3c",
+      "score": 0.4149501919746399,
+      "inference_seconds": 0.044515800022054464
+    },
+    {
+      "path": "pipe_fryum/test/bad/030.JPG",
+      "map": "maps/0030.npy",
+      "map_sha256": "0d5164386aa128b935b966113d4a6d2eee0c5902c79a9ef409e265aefd98235a",
+      "score": 0.36111903190612793,
+      "inference_seconds": 0.04438040000968613
+    },
+    {
+      "path": "pipe_fryum/test/bad/031.JPG",
+      "map": "maps/0031.npy",
+      "map_sha256": "6c09085c4039429162684f9f0bb0fc2a77fc8f181e825877850e095e2dae90e6",
+      "score": 0.3351970314979553,
+      "inference_seconds": 0.041651599982287735
+    },
+    {
+      "path": "pipe_fryum/test/bad/032.JPG",
+      "map": "maps/0032.npy",
+      "map_sha256": "59587492668f96c1ea7a449b67497a9db4c37e1cef0ff20e97b78cbd7ab6af04",
+      "score": 0.3424709439277649,
+      "inference_seconds": 0.041704800009028986
+    },
+    {
+      "path": "pipe_fryum/test/bad/033.JPG",
+      "map": "maps/0033.npy",
+      "map_sha256": "80745afb45e1d2d200a1142dc2b52f476c781bf0ba017b9dd9db1fe60d8b97db",
+      "score": 0.25583362579345703,
+      "inference_seconds": 0.03986560000339523
+    },
+    {
+      "path": "pipe_fryum/test/bad/034.JPG",
+      "map": "maps/0034.npy",
+      "map_sha256": "3a93208441614e1f2ce56e5f01768ba5e339cf12280fc47d944bd6099c244a4c",
+      "score": 0.3445926010608673,
+      "inference_seconds": 0.04042309999931604
+    },
+    {
+      "path": "pipe_fryum/test/bad/035.JPG",
+      "map": "maps/0035.npy",
+      "map_sha256": "348b64aa417de7c6512223b9658e254c110f94a7ec04544bd0a7edda307170da",
+      "score": 0.3766762912273407,
+      "inference_seconds": 0.04320040001766756
+    },
+    {
+      "path": "pipe_fryum/test/bad/036.JPG",
+      "map": "maps/0036.npy",
+      "map_sha256": "d4988e10c2661019fc396c927bd0b3b9637b195ab78fef2fec0801b291872a3c",
+      "score": 0.23680007457733154,
+      "inference_seconds": 0.03996059999917634
+    },
+    {
+      "path": "pipe_fryum/test/bad/037.JPG",
+      "map": "maps/0037.npy",
+      "map_sha256": "95a140b2d5d499020d6f54210cd25ff269df0b26fe4ff7aa1c9d41d9ad182c80",
+      "score": 0.2553715705871582,
+      "inference_seconds": 0.04210320001584478
+    },
+    {
+      "path": "pipe_fryum/test/bad/038.JPG",
+      "map": "maps/0038.npy",
+      "map_sha256": "4ec3217ddf0f9fe1ade8b69ecbceb329aee8726d0d4820b7b43d9ec86a4faa1e",
+      "score": 0.24593541026115417,
+      "inference_seconds": 0.04401750001125038
+    },
+    {
+      "path": "pipe_fryum/test/bad/039.JPG",
+      "map": "maps/0039.npy",
+      "map_sha256": "e1b441d70a18ca393245e5fe0c98ec3873967265705873747cac6a731ec06d23",
+      "score": 0.3318781852722168,
+      "inference_seconds": 0.04427900002337992
+    },
+    {
+      "path": "pipe_fryum/test/bad/040.JPG",
+      "map": "maps/0040.npy",
+      "map_sha256": "2ddb95168bd59038e2cfcacb3caa33165fea7b73615331fc2edbdfd2f55aa7ef",
+      "score": 0.37354791164398193,
+      "inference_seconds": 0.04191460000583902
+    },
+    {
+      "path": "pipe_fryum/test/bad/041.JPG",
+      "map": "maps/0041.npy",
+      "map_sha256": "c8270a50fbc553b08194eda0c233da4fcbe0700b7466b4226d0df05a2818eba8",
+      "score": 0.45307135581970215,
+      "inference_seconds": 0.04748670000117272
+    },
+    {
+      "path": "pipe_fryum/test/bad/042.JPG",
+      "map": "maps/0042.npy",
+      "map_sha256": "8c571db34373e4223ac5443e8f5ce2a5aee19d5927574308e8ad13096dc71c5a",
+      "score": 0.31928762793540955,
+      "inference_seconds": 0.04474469998967834
+    },
+    {
+      "path": "pipe_fryum/test/bad/043.JPG",
+      "map": "maps/0043.npy",
+      "map_sha256": "d3ab96e739747354e6256054e0cd68b0421ba9bbd565d8a20d19c43d10a935fc",
+      "score": 0.34585341811180115,
+      "inference_seconds": 0.045619399985298514
+    },
+    {
+      "path": "pipe_fryum/test/bad/044.JPG",
+      "map": "maps/0044.npy",
+      "map_sha256": "e671b766ee79b60eee3f7087a7d18475a99dacdbc1751b2dddd7804df992b41f",
+      "score": 0.3530552089214325,
+      "inference_seconds": 0.04271349997725338
+    },
+    {
+      "path": "pipe_fryum/test/bad/045.JPG",
+      "map": "maps/0045.npy",
+      "map_sha256": "0c021fa12df6132045f17b60d53deed1c9d4eb03b2845bbe2c074fefa6dfeb7d",
+      "score": 0.21635094285011292,
+      "inference_seconds": 0.04126969998469576
+    },
+    {
+      "path": "pipe_fryum/test/bad/046.JPG",
+      "map": "maps/0046.npy",
+      "map_sha256": "83afa94b618b471222ef6a619debbcb1c0a03dd98eb8b9d60376767cff3be69b",
+      "score": 0.36866137385368347,
+      "inference_seconds": 0.045458000007783994
+    },
+    {
+      "path": "pipe_fryum/test/bad/047.JPG",
+      "map": "maps/0047.npy",
+      "map_sha256": "eff6768badc193c9c36548be0b46eb53155b15322a040680248c2e49a9bd608b",
+      "score": 0.28557509183883667,
+      "inference_seconds": 0.043657600006554276
+    },
+    {
+      "path": "pipe_fryum/test/bad/048.JPG",
+      "map": "maps/0048.npy",
+      "map_sha256": "0b12ca123942958f1eb93f97db224dbf898b369a57e6fa7af9ba66eff242b23b",
+      "score": 0.4396524727344513,
+      "inference_seconds": 0.04164239999954589
+    },
+    {
+      "path": "pipe_fryum/test/bad/049.JPG",
+      "map": "maps/0049.npy",
+      "map_sha256": "990fe2cc59565515c787dda11af4ef6e8af76a8456672d6bd41b31edb32dd985",
+      "score": 0.39246824383735657,
+      "inference_seconds": 0.04537079998408444
+    },
+    {
+      "path": "pipe_fryum/test/bad/050.JPG",
+      "map": "maps/0050.npy",
+      "map_sha256": "08deccf6abf71c64445afb8ca4dc3c02fc50fd82c4d444be07146c624cbd49aa",
+      "score": 0.3517710566520691,
+      "inference_seconds": 0.03988620001473464
+    },
+    {
+      "path": "pipe_fryum/test/bad/051.JPG",
+      "map": "maps/0051.npy",
+      "map_sha256": "3fb126f45767c6c4f358783980d489e0f2f858852dd3d904e6080900b6559683",
+      "score": 0.17955049872398376,
+      "inference_seconds": 0.040534500003559515
+    },
+    {
+      "path": "pipe_fryum/test/bad/052.JPG",
+      "map": "maps/0052.npy",
+      "map_sha256": "c15d1d840d7d85a770d0cf97bb5a698db506697de24c8769cc53a1db3e056aed",
+      "score": 0.26368629932403564,
+      "inference_seconds": 0.040186099999118596
+    },
+    {
+      "path": "pipe_fryum/test/bad/053.JPG",
+      "map": "maps/0053.npy",
+      "map_sha256": "90160cbfbfd354a7d475fa081fc68b03a7c72258ae42133487efb1985e08f407",
+      "score": 0.36702460050582886,
+      "inference_seconds": 0.04086730000562966
+    },
+    {
+      "path": "pipe_fryum/test/bad/054.JPG",
+      "map": "maps/0054.npy",
+      "map_sha256": "8e6e4ff8353b83fc1e1905a6f8ffc68ad808f8683aeb50c3a46bad2ed15cb517",
+      "score": 0.26363620162010193,
+      "inference_seconds": 0.039564000006066635
+    },
+    {
+      "path": "pipe_fryum/test/bad/055.JPG",
+      "map": "maps/0055.npy",
+      "map_sha256": "3ef9525cb6e834ab906630de3b0bffaec351a752fff370e0587d4c53ff45dee3",
+      "score": 0.1833592653274536,
+      "inference_seconds": 0.03653340000892058
+    },
+    {
+      "path": "pipe_fryum/test/bad/056.JPG",
+      "map": "maps/0056.npy",
+      "map_sha256": "8d124aee87ff987d13ac28971028a81a97b4f695db7b4221b2bf892efc29f1d8",
+      "score": 0.48807409405708313,
+      "inference_seconds": 0.04012819999479689
+    },
+    {
+      "path": "pipe_fryum/test/bad/057.JPG",
+      "map": "maps/0057.npy",
+      "map_sha256": "1d1784319e4cbf426514cb29858872c55c80ce7465d0d7e1ee9484ac8f71df33",
+      "score": 0.439346581697464,
+      "inference_seconds": 0.044471200002590194
+    },
+    {
+      "path": "pipe_fryum/test/bad/058.JPG",
+      "map": "maps/0058.npy",
+      "map_sha256": "c4567761ba81dfc7cfade6a6dab7302ceb8567564549323a5cfd154e597981cd",
+      "score": 0.39578479528427124,
+      "inference_seconds": 0.045792699995217845
+    },
+    {
+      "path": "pipe_fryum/test/bad/059.JPG",
+      "map": "maps/0059.npy",
+      "map_sha256": "2551079ee28d1995f557f07442b126f8a6133408e5aa59d431dc72f21aab4525",
+      "score": 0.4610767066478729,
+      "inference_seconds": 0.042407000000821427
+    },
+    {
+      "path": "pipe_fryum/test/bad/060.JPG",
+      "map": "maps/0060.npy",
+      "map_sha256": "17c47aee87af0180aa30e5d1bf70cef635d424fc4f1d5a605e3b19cfbe0272a1",
+      "score": 0.30151790380477905,
+      "inference_seconds": 0.04040820000227541
+    },
+    {
+      "path": "pipe_fryum/test/bad/061.JPG",
+      "map": "maps/0061.npy",
+      "map_sha256": "d697e2b56658b15d31561401dda4ef79c19cc562fe6ffffaf5fe4c0a1c0c0f2c",
+      "score": 0.2337559163570404,
+      "inference_seconds": 0.040353599993977696
+    },
+    {
+      "path": "pipe_fryum/test/bad/062.JPG",
+      "map": "maps/0062.npy",
+      "map_sha256": "817d59ba8b7932dd215148ba785232648d16763ccdf03c20c9e506f470a7fb29",
+      "score": 0.4541153013706207,
+      "inference_seconds": 0.043500700005097315
+    },
+    {
+      "path": "pipe_fryum/test/bad/063.JPG",
+      "map": "maps/0063.npy",
+      "map_sha256": "f9b9bf6d1b02ba3aa5a3dd9f38cb903c04beeb623d8b3be436a4abe9d3f5ea90",
+      "score": 0.36726871132850647,
+      "inference_seconds": 0.04192459999467246
+    },
+    {
+      "path": "pipe_fryum/test/bad/064.JPG",
+      "map": "maps/0064.npy",
+      "map_sha256": "47289d149c549503327b47822ce497069a8c69a714d6f2d549d6e0109caee52b",
+      "score": 0.243026465177536,
+      "inference_seconds": 0.04082419999758713
+    },
+    {
+      "path": "pipe_fryum/test/bad/065.JPG",
+      "map": "maps/0065.npy",
+      "map_sha256": "f738d5156ca8815f9e1c5a7963bf9f379d6023e9e21682172ba7ef77731287d9",
+      "score": 0.28584983944892883,
+      "inference_seconds": 0.04223649998311885
+    },
+    {
+      "path": "pipe_fryum/test/bad/066.JPG",
+      "map": "maps/0066.npy",
+      "map_sha256": "56237adbfbc30ed64ce7eea63f4816daf362041db55e45343235a20487bde2e7",
+      "score": 0.35675153136253357,
+      "inference_seconds": 0.04990949999773875
+    },
+    {
+      "path": "pipe_fryum/test/bad/067.JPG",
+      "map": "maps/0067.npy",
+      "map_sha256": "c5cd8d1188aed535496fb01bbcb5fc883879c90cab940dc5205bda71fdbcc3d5",
+      "score": 0.3820255994796753,
+      "inference_seconds": 0.047235599980922416
+    },
+    {
+      "path": "pipe_fryum/test/bad/068.JPG",
+      "map": "maps/0068.npy",
+      "map_sha256": "15b00f55b76b5882fa0ea2f327bfc284ad4565d96def7b7e5a7b0f667cc4adc3",
+      "score": 0.2638630270957947,
+      "inference_seconds": 0.04964089998975396
+    },
+    {
+      "path": "pipe_fryum/test/bad/069.JPG",
+      "map": "maps/0069.npy",
+      "map_sha256": "cdbc58a96bbbbd86fdf05dd8bfc6270be804efab4bf9956e558b318fb42de954",
+      "score": 0.5540828704833984,
+      "inference_seconds": 0.05895450001116842
+    },
+    {
+      "path": "pipe_fryum/test/bad/070.JPG",
+      "map": "maps/0070.npy",
+      "map_sha256": "60048cbfc5fe3035a7086bfcf16bffb73498fde43c6d7633756942c8a72ea04f",
+      "score": 0.2991478741168976,
+      "inference_seconds": 0.046237400005338714
+    },
+    {
+      "path": "pipe_fryum/test/bad/071.JPG",
+      "map": "maps/0071.npy",
+      "map_sha256": "6afc2046b563daaab16910aba8b66caf84280cd7c62f99c77f7253c9c192358c",
+      "score": 0.12835046648979187,
+      "inference_seconds": 0.04700339998817071
+    },
+    {
+      "path": "pipe_fryum/test/bad/072.JPG",
+      "map": "maps/0072.npy",
+      "map_sha256": "0864f35d9b200106556d2a4fd328f16dfdb0fae99aa32a38be2cdec53e6382ba",
+      "score": 0.16529561579227448,
+      "inference_seconds": 0.044982299994444475
+    },
+    {
+      "path": "pipe_fryum/test/bad/073.JPG",
+      "map": "maps/0073.npy",
+      "map_sha256": "04e659edfb20b2bf595a1ce2410293bb6b57ab0799588d9a61ea87cf85dde706",
+      "score": 0.2076457440853119,
+      "inference_seconds": 0.043614499998511747
+    },
+    {
+      "path": "pipe_fryum/test/bad/074.JPG",
+      "map": "maps/0074.npy",
+      "map_sha256": "d39652eb2e8fb90bb279337ea7afe81edfb4255bac2da07154081c85d5d1d159",
+      "score": 0.49738848209381104,
+      "inference_seconds": 0.05180849999305792
+    },
+    {
+      "path": "pipe_fryum/test/bad/075.JPG",
+      "map": "maps/0075.npy",
+      "map_sha256": "d451398c48dfc148f237f0bb8206d567c566c944974cff25254ede1eadaf8962",
+      "score": 0.3372713625431061,
+      "inference_seconds": 0.04579070000909269
+    },
+    {
+      "path": "pipe_fryum/test/bad/076.JPG",
+      "map": "maps/0076.npy",
+      "map_sha256": "eac35d53d9341828b928d217903a230e1d38c3af3eb7e54963b0122eea36eeac",
+      "score": 0.1691913902759552,
+      "inference_seconds": 0.04566870001144707
+    },
+    {
+      "path": "pipe_fryum/test/bad/077.JPG",
+      "map": "maps/0077.npy",
+      "map_sha256": "65e60fcb9448a254896f68291ed2938dfba97e95321d6387f62747b071103759",
+      "score": 0.16156695783138275,
+      "inference_seconds": 0.04445680000935681
+    },
+    {
+      "path": "pipe_fryum/test/bad/078.JPG",
+      "map": "maps/0078.npy",
+      "map_sha256": "43828743060d97f2a5fa209b9f2d14de0b40efdb097924b63882fa89049385a5",
+      "score": 0.45469751954078674,
+      "inference_seconds": 0.050184199993964285
+    },
+    {
+      "path": "pipe_fryum/test/bad/079.JPG",
+      "map": "maps/0079.npy",
+      "map_sha256": "dccd6f624740353663cf369e726981200ac0659e00ec932bbfa680cf048fbb78",
+      "score": 0.3706015348434448,
+      "inference_seconds": 0.05392020000726916
+    },
+    {
+      "path": "pipe_fryum/test/bad/080.JPG",
+      "map": "maps/0080.npy",
+      "map_sha256": "abc7ec36cec5bacf60be1cab95f0417e81ca5bd27b6724afe68f50c9e7c08d16",
+      "score": 0.34579694271087646,
+      "inference_seconds": 0.045857800025260076
+    },
+    {
+      "path": "pipe_fryum/test/bad/081.JPG",
+      "map": "maps/0081.npy",
+      "map_sha256": "5a684cd0ce5d0fe68f0bc625dd6bfeb39bef2164ec0c11ebdf8fd8d52b84bc78",
+      "score": 0.18180789053440094,
+      "inference_seconds": 0.04772420000517741
+    },
+    {
+      "path": "pipe_fryum/test/bad/082.JPG",
+      "map": "maps/0082.npy",
+      "map_sha256": "8d946aaf5ff66d3c7d3106e5497ff4aba0e453c0c213f303771703fa3a607149",
+      "score": 0.3872717022895813,
+      "inference_seconds": 0.0452928000013344
+    },
+    {
+      "path": "pipe_fryum/test/bad/083.JPG",
+      "map": "maps/0083.npy",
+      "map_sha256": "ab81539c0fc014d610632790d8297e2c817028a66a73ccd6d18cac6d2088f2e4",
+      "score": 0.25125226378440857,
+      "inference_seconds": 0.0433352000254672
+    },
+    {
+      "path": "pipe_fryum/test/bad/084.JPG",
+      "map": "maps/0084.npy",
+      "map_sha256": "987fb6c9f3ea0598c0069ad81936d0faebfeb1fe2d482fcdb79178c296e98c88",
+      "score": 0.29037532210350037,
+      "inference_seconds": 0.046489200001815334
+    },
+    {
+      "path": "pipe_fryum/test/bad/085.JPG",
+      "map": "maps/0085.npy",
+      "map_sha256": "1d02423ea024e2398dad7991f1d599619650cdcdf86054ce9e4fe46c1bbb1926",
+      "score": 0.2651272416114807,
+      "inference_seconds": 0.05006790001061745
+    },
+    {
+      "path": "pipe_fryum/test/bad/086.JPG",
+      "map": "maps/0086.npy",
+      "map_sha256": "57440c04f9e6fdb329093349d0ff1a3452f2737c3ff43168546d2cbaff64c7d2",
+      "score": 0.4046541154384613,
+      "inference_seconds": 0.049462700000731274
+    },
+    {
+      "path": "pipe_fryum/test/bad/087.JPG",
+      "map": "maps/0087.npy",
+      "map_sha256": "d9f0b711b3dcdec45b7570a72817f9a337e6ba9e6276ea2a1dc7f8d8de01fa00",
+      "score": 0.2233130782842636,
+      "inference_seconds": 0.05017920001409948
+    },
+    {
+      "path": "pipe_fryum/test/bad/088.JPG",
+      "map": "maps/0088.npy",
+      "map_sha256": "0aa65a4edf3b66b87e7b50b135c86fd212ae7b4b5c0e9db16fe0d4f0e74da73e",
+      "score": 0.26004189252853394,
+      "inference_seconds": 0.049936800001887605
+    },
+    {
+      "path": "pipe_fryum/test/bad/089.JPG",
+      "map": "maps/0089.npy",
+      "map_sha256": "7801794652d75f19f7e1f394dde8b1090e259b33ed6fb708071c21ea40f45094",
+      "score": 0.20255330204963684,
+      "inference_seconds": 0.04697860000305809
+    },
+    {
+      "path": "pipe_fryum/test/bad/090.JPG",
+      "map": "maps/0090.npy",
+      "map_sha256": "083462a279d3004b13d0f7f06ed415cdb5aceda129e52e497a5c517d98fa587c",
+      "score": 0.6141668558120728,
+      "inference_seconds": 0.06529279999085702
+    },
+    {
+      "path": "pipe_fryum/test/bad/091.JPG",
+      "map": "maps/0091.npy",
+      "map_sha256": "3b35ec2c2c05169d85c58b66eb000e0dcf0a2064b270a7fc9716fd6ad54d623d",
+      "score": 0.6100932955741882,
+      "inference_seconds": 0.043682799994712695
+    },
+    {
+      "path": "pipe_fryum/test/bad/092.JPG",
+      "map": "maps/0092.npy",
+      "map_sha256": "5fb2805e2d994a7476ab89da5a622547b7bfd3c280e2a0ba93d204fb4c891f45",
+      "score": 0.5115712285041809,
+      "inference_seconds": 0.0550416000187397
+    },
+    {
+      "path": "pipe_fryum/test/bad/093.JPG",
+      "map": "maps/0093.npy",
+      "map_sha256": "72f2a64ff4e1f0c3714b99aebb59372afd4437579a920e6e8d6966aa1cf11134",
+      "score": 0.4824279844760895,
+      "inference_seconds": 0.05095189998974092
+    },
+    {
+      "path": "pipe_fryum/test/bad/094.JPG",
+      "map": "maps/0094.npy",
+      "map_sha256": "2ba0de6143fbf7441b387095ffcd8e7a4980bd148bf1eadb6f934d98082da3d1",
+      "score": 0.5632021427154541,
+      "inference_seconds": 0.06652009999379516
+    },
+    {
+      "path": "pipe_fryum/test/bad/095.JPG",
+      "map": "maps/0095.npy",
+      "map_sha256": "e9e8390907756a14e20f9c7c74bf0a1d28ad449a3fcb8769543bbc16ae716208",
+      "score": 0.4836539924144745,
+      "inference_seconds": 0.05345799998030998
+    },
+    {
+      "path": "pipe_fryum/test/bad/096.JPG",
+      "map": "maps/0096.npy",
+      "map_sha256": "1c1afaed4288923f272e7b20233de48e1e6c117eb1b8664ab4950ce790e75a12",
+      "score": 0.3991072475910187,
+      "inference_seconds": 0.0488484000088647
+    },
+    {
+      "path": "pipe_fryum/test/bad/097.JPG",
+      "map": "maps/0097.npy",
+      "map_sha256": "b1e0a4ef073d471841f13e91352197acb954a0fd46e2452cd6d916b648e2eec2",
+      "score": 0.4799997806549072,
+      "inference_seconds": 0.04856149997795001
+    },
+    {
+      "path": "pipe_fryum/test/bad/098.JPG",
+      "map": "maps/0098.npy",
+      "map_sha256": "3e91208b68d52559eef522291ca74dd1cf7628a043cdb154eb149424d593b82b",
+      "score": 0.6191036105155945,
+      "inference_seconds": 0.0479613000061363
+    },
+    {
+      "path": "pipe_fryum/test/bad/099.JPG",
+      "map": "maps/0099.npy",
+      "map_sha256": "99aea15f22976d765ec741097f11e7d214a0acd384fc132ffd6b5f676bf56a95",
+      "score": 0.4706479609012604,
+      "inference_seconds": 0.04588229997898452
+    },
+    {
+      "path": "pipe_fryum/test/good/006.JPG",
+      "map": "maps/0100.npy",
+      "map_sha256": "f52161a6a11f89fa08a940e67f44ac25cc9baf654e6e55245b280eb922e860c9",
+      "score": 0.3119061291217804,
+      "inference_seconds": 0.05242399999406189
+    },
+    {
+      "path": "pipe_fryum/test/good/012.JPG",
+      "map": "maps/0101.npy",
+      "map_sha256": "19d3b5127d091411ee1cbdddfbba02994b2b316dd72aed99a1a98147e3451864",
+      "score": 0.29974281787872314,
+      "inference_seconds": 0.04436060000443831
+    },
+    {
+      "path": "pipe_fryum/test/good/013.JPG",
+      "map": "maps/0102.npy",
+      "map_sha256": "a1769246525b47af0733056021662f102200acc261212e029300dba8d9fedf41",
+      "score": 0.20760655403137207,
+      "inference_seconds": 0.04580190000706352
+    },
+    {
+      "path": "pipe_fryum/test/good/023.JPG",
+      "map": "maps/0103.npy",
+      "map_sha256": "8566df3e202921c4d8ebc5120c16ccb449d9dddcb95a5d2481ea9006c456a495",
+      "score": 0.3003509044647217,
+      "inference_seconds": 0.04570399998920038
+    },
+    {
+      "path": "pipe_fryum/test/good/050.JPG",
+      "map": "maps/0104.npy",
+      "map_sha256": "22bfa9a3e3e7648ac768e92384d5684c8c71eeeac38affc6bf2afb750e1b875a",
+      "score": 0.20702257752418518,
+      "inference_seconds": 0.04967800001031719
+    },
+    {
+      "path": "pipe_fryum/test/good/084.JPG",
+      "map": "maps/0105.npy",
+      "map_sha256": "c89c8dfb5ef3f848493d004bfc632c57f11bef539e8b302ade68a4452d662047",
+      "score": 0.28439417481422424,
+      "inference_seconds": 0.0456308999855537
+    },
+    {
+      "path": "pipe_fryum/test/good/087.JPG",
+      "map": "maps/0106.npy",
+      "map_sha256": "297c62a0ba93b406f97deb8f7574c8817559f896fcc0a311c997333549534c07",
+      "score": 0.28715914487838745,
+      "inference_seconds": 0.04819560001487844
+    },
+    {
+      "path": "pipe_fryum/test/good/089.JPG",
+      "map": "maps/0107.npy",
+      "map_sha256": "8d780ddd0295a75e0e29303c39b10a7c1876ba112f1bd96146a826f61921e658",
+      "score": 0.28640511631965637,
+      "inference_seconds": 0.048386900016339496
+    },
+    {
+      "path": "pipe_fryum/test/good/093.JPG",
+      "map": "maps/0108.npy",
+      "map_sha256": "5eebc9e9fc935fcdae673f273569c2a0327403bc5c6cdaad32a58c2c3db01d1a",
+      "score": 0.3275497853755951,
+      "inference_seconds": 0.05330499997944571
+    },
+    {
+      "path": "pipe_fryum/test/good/098.JPG",
+      "map": "maps/0109.npy",
+      "map_sha256": "c37d1a19d515f5732e1f8edeff8acc1d8e8f6e0885c59c95811e6ed32a304071",
+      "score": 0.357901006937027,
+      "inference_seconds": 0.05286270001670346
+    },
+    {
+      "path": "pipe_fryum/test/good/104.JPG",
+      "map": "maps/0110.npy",
+      "map_sha256": "a81021778421ee32d208e04369b9dae7c5160cb894c2599215899145680d6590",
+      "score": 0.24374736845493317,
+      "inference_seconds": 0.05251070001395419
+    },
+    {
+      "path": "pipe_fryum/test/good/130.JPG",
+      "map": "maps/0111.npy",
+      "map_sha256": "04e4872a6cb95e576d9ec17e805c5c6ba9750628b3c42aaf4fe4885c781232c0",
+      "score": 0.12863808870315552,
+      "inference_seconds": 0.04498430000967346
+    },
+    {
+      "path": "pipe_fryum/test/good/143.JPG",
+      "map": "maps/0112.npy",
+      "map_sha256": "ca4cea882b725f4bf8a798fc6613248189c5b62f024da16bd1fe515f3cfa1e06",
+      "score": 0.38184627890586853,
+      "inference_seconds": 0.047212300007231534
+    },
+    {
+      "path": "pipe_fryum/test/good/148.JPG",
+      "map": "maps/0113.npy",
+      "map_sha256": "424ea3ce02b5d1938c777672f82008f01952183b8cfd3074616a3f9685023147",
+      "score": 0.3798137903213501,
+      "inference_seconds": 0.04882489997544326
+    },
+    {
+      "path": "pipe_fryum/test/good/166.JPG",
+      "map": "maps/0114.npy",
+      "map_sha256": "2a9628c42eb99fb81a7c82b831ad318d6ed7f2e08e69282c017e78ef9b982cb2",
+      "score": 0.20338235795497894,
+      "inference_seconds": 0.04507679998641834
+    },
+    {
+      "path": "pipe_fryum/test/good/181.JPG",
+      "map": "maps/0115.npy",
+      "map_sha256": "8d937bc9132997ca2688e38bc8cae8710bfc04c8951e8f7f7deb998f4bf8414c",
+      "score": 0.40964141488075256,
+      "inference_seconds": 0.04915079998318106
+    },
+    {
+      "path": "pipe_fryum/test/good/213.JPG",
+      "map": "maps/0116.npy",
+      "map_sha256": "587a30556bce577d98cb12338bf85de225e6dbf43d1b2640fac3d1961bbf440c",
+      "score": 0.23720359802246094,
+      "inference_seconds": 0.04844220000086352
+    },
+    {
+      "path": "pipe_fryum/test/good/228.JPG",
+      "map": "maps/0117.npy",
+      "map_sha256": "8396f5c63c783262e1256f7bb1ce219416bf2f05cba8e9403cda2dc4d44d22cc",
+      "score": 0.2544759213924408,
+      "inference_seconds": 0.048570700018899515
+    },
+    {
+      "path": "pipe_fryum/test/good/239.JPG",
+      "map": "maps/0118.npy",
+      "map_sha256": "d45d20da02cde7a1c7a03c7ccee8822ad81471a43db2212dc0b44e09829eebb6",
+      "score": 0.11968567222356796,
+      "inference_seconds": 0.04580190000706352
+    },
+    {
+      "path": "pipe_fryum/test/good/244.JPG",
+      "map": "maps/0119.npy",
+      "map_sha256": "338b6799afa5375265691a2ba642fbcf013b12ac0f41b07fadf0704f39b2dabe",
+      "score": 0.4542868435382843,
+      "inference_seconds": 0.05046329999458976
+    },
+    {
+      "path": "pipe_fryum/test/good/245.JPG",
+      "map": "maps/0120.npy",
+      "map_sha256": "68d47c42c4c48491273ddb01e53a3282052b7faaa1ecc2baa893649bce792dc0",
+      "score": 0.4270387887954712,
+      "inference_seconds": 0.054934100015088916
+    },
+    {
+      "path": "pipe_fryum/test/good/260.JPG",
+      "map": "maps/0121.npy",
+      "map_sha256": "f2e9722c553c6b12a3a86342062d589f75ac83626edb41eea323a6a30eddcc05",
+      "score": 0.3432222604751587,
+      "inference_seconds": 0.05270699999528006
+    },
+    {
+      "path": "pipe_fryum/test/good/272.JPG",
+      "map": "maps/0122.npy",
+      "map_sha256": "cf5fe98a956d34d7e75a161cb3e6bdae07cea78dc8af6e74ef7bfddf293bfcf6",
+      "score": 0.4734340012073517,
+      "inference_seconds": 0.0637501000019256
+    },
+    {
+      "path": "pipe_fryum/test/good/276.JPG",
+      "map": "maps/0123.npy",
+      "map_sha256": "2e2414a1d1affc97af8ade97ec038ed0e83d45319f74f3ff59b52b8995ba2db2",
+      "score": 0.4127081632614136,
+      "inference_seconds": 0.05653619999065995
+    },
+    {
+      "path": "pipe_fryum/test/good/284.JPG",
+      "map": "maps/0124.npy",
+      "map_sha256": "596687d174e567ea703b0be202e06bb37b19eb4ec52951c12b863d45f3bde0b2",
+      "score": 0.1980978101491928,
+      "inference_seconds": 0.050336800020886585
+    },
+    {
+      "path": "pipe_fryum/test/good/307.JPG",
+      "map": "maps/0125.npy",
+      "map_sha256": "be38c7306ec4299d46b86c1741584723e195e08cbb3d1deac16134ef179b7c66",
+      "score": 0.3116861581802368,
+      "inference_seconds": 0.051147399994079024
+    },
+    {
+      "path": "pipe_fryum/test/good/309.JPG",
+      "map": "maps/0126.npy",
+      "map_sha256": "f636ac7cad8371f92741373eed26b15197e8f991eb512905d072b3333f7f3765",
+      "score": 0.15187618136405945,
+      "inference_seconds": 0.05232170000090264
+    },
+    {
+      "path": "pipe_fryum/test/good/324.JPG",
+      "map": "maps/0127.npy",
+      "map_sha256": "9d91e1abebbae0a057671ba5de8b255f732ca2ae98d97ef6448e714319cd6324",
+      "score": 0.38520491123199463,
+      "inference_seconds": 0.04961330001242459
+    },
+    {
+      "path": "pipe_fryum/test/good/337.JPG",
+      "map": "maps/0128.npy",
+      "map_sha256": "2d77e7bba72eb46c684c78c0d26acead0374ab09b57685a227a828e1b5ab2868",
+      "score": 0.12948474287986755,
+      "inference_seconds": 0.04976749999332242
+    },
+    {
+      "path": "pipe_fryum/test/good/342.JPG",
+      "map": "maps/0129.npy",
+      "map_sha256": "278b9ac12b62aa93171ff4c3a1f26bf4f4912dfdbb1dab63f906f9a58c27aaed",
+      "score": 0.2691994309425354,
+      "inference_seconds": 0.0489452000183519
+    },
+    {
+      "path": "pipe_fryum/test/good/344.JPG",
+      "map": "maps/0130.npy",
+      "map_sha256": "431a47ab04ec6af9a1355c8bc2d1250284236b143eb6b8c64484f28ba89a829d",
+      "score": 0.2100670486688614,
+      "inference_seconds": 0.04754020000109449
+    },
+    {
+      "path": "pipe_fryum/test/good/352.JPG",
+      "map": "maps/0131.npy",
+      "map_sha256": "168a5d46f991d8ba8639d4cbae17860c9e0b18d19d31b251819df0cce8eb21ab",
+      "score": 0.46448710560798645,
+      "inference_seconds": 0.04871219999040477
+    },
+    {
+      "path": "pipe_fryum/test/good/367.JPG",
+      "map": "maps/0132.npy",
+      "map_sha256": "08b56577109158e09d46253f4a5df22c37739b606b42c01c5ed77b5221354f1c",
+      "score": 0.24495893716812134,
+      "inference_seconds": 0.049613599985605106
+    },
+    {
+      "path": "pipe_fryum/test/good/369.JPG",
+      "map": "maps/0133.npy",
+      "map_sha256": "a113bd591ef058bc7a8079330478c65fb24229a54cf4b9f6a7aabfa9b2711a02",
+      "score": 0.3723924458026886,
+      "inference_seconds": 0.058749399991938844
+    },
+    {
+      "path": "pipe_fryum/test/good/377.JPG",
+      "map": "maps/0134.npy",
+      "map_sha256": "1571e9cf04907a7b0af723fa971e20fdefa9d48071f0657304feb82d899988f4",
+      "score": 0.24205826222896576,
+      "inference_seconds": 0.05084840001654811
+    },
+    {
+      "path": "pipe_fryum/test/good/384.JPG",
+      "map": "maps/0135.npy",
+      "map_sha256": "ab2934fdc17508511875fa58fe6257653628cd8ac10f9ee3f8d4c67b87f5dd73",
+      "score": 0.17622698843479156,
+      "inference_seconds": 0.04710279998835176
+    },
+    {
+      "path": "pipe_fryum/test/good/389.JPG",
+      "map": "maps/0136.npy",
+      "map_sha256": "33addd0e9098a56de348839063278e06ce487fb3d88dfe6496c3eb5a94bbd4d6",
+      "score": 0.4133191704750061,
+      "inference_seconds": 0.0458197999978438
+    },
+    {
+      "path": "pipe_fryum/test/good/392.JPG",
+      "map": "maps/0137.npy",
+      "map_sha256": "bde62afa7171e44d25ed92bb7098a34741203f759c5743e90bb0c7c5ab3834a8",
+      "score": 0.2982277274131775,
+      "inference_seconds": 0.05545479999273084
+    },
+    {
+      "path": "pipe_fryum/test/good/398.JPG",
+      "map": "maps/0138.npy",
+      "map_sha256": "de22f086a2116211fa0a72594968c993806b1c82b89b7b565af04cdf7b0a2d1e",
+      "score": 0.44115713238716125,
+      "inference_seconds": 0.05207949999021366
+    },
+    {
+      "path": "pipe_fryum/test/good/400.JPG",
+      "map": "maps/0139.npy",
+      "map_sha256": "858996ff69a59ea800ebe57f56afc51dfc1703acd8f73a846762a2c91d9727d4",
+      "score": 0.387857586145401,
+      "inference_seconds": 0.051326399989193305
+    },
+    {
+      "path": "pipe_fryum/test/good/402.JPG",
+      "map": "maps/0140.npy",
+      "map_sha256": "1b73d53ae23420ee8bc4f5d9428c1aa01668b0595955258600191be6f0c34eaf",
+      "score": 0.3485020399093628,
+      "inference_seconds": 0.04751959998975508
+    },
+    {
+      "path": "pipe_fryum/test/good/405.JPG",
+      "map": "maps/0141.npy",
+      "map_sha256": "90a7a4d4820c18c1f4da419994ce2bc30554abc20d777ba99a4c4dbd1c0e6aad",
+      "score": 0.3401455879211426,
+      "inference_seconds": 0.04761400001007132
+    },
+    {
+      "path": "pipe_fryum/test/good/435.JPG",
+      "map": "maps/0142.npy",
+      "map_sha256": "f27bd1b2ba14371d318b98c8a36dc058c65d48f78a773d0d3082bbcd6c7082c3",
+      "score": 0.3337618112564087,
+      "inference_seconds": 0.0463754000084009
+    },
+    {
+      "path": "pipe_fryum/test/good/446.JPG",
+      "map": "maps/0143.npy",
+      "map_sha256": "ac0d6e24a8178c7c267e26085cc76507b1540d8ad5dff92970653b6df744f485",
+      "score": 0.31948474049568176,
+      "inference_seconds": 0.0462857999955304
+    },
+    {
+      "path": "pipe_fryum/test/good/460.JPG",
+      "map": "maps/0144.npy",
+      "map_sha256": "8cf03f282663966ac6c3aa05f6ad76963bd08d25b8b2366dbe182288ba5448d9",
+      "score": 0.30071473121643066,
+      "inference_seconds": 0.045749799988698214
+    },
+    {
+      "path": "pipe_fryum/test/good/461.JPG",
+      "map": "maps/0145.npy",
+      "map_sha256": "9a08433ffb9e79a906ddd09a9cf332591c90d3c1b774db8dc156e4a4aa75395d",
+      "score": 0.2832607328891754,
+      "inference_seconds": 0.04832789997453801
+    },
+    {
+      "path": "pipe_fryum/test/good/467.JPG",
+      "map": "maps/0146.npy",
+      "map_sha256": "54814d358f0ccdda56550b7267fc97ad666bfb8a67b008c4968e67753e77dedb",
+      "score": 0.29055315256118774,
+      "inference_seconds": 0.05116410000482574
+    },
+    {
+      "path": "pipe_fryum/test/good/482.JPG",
+      "map": "maps/0147.npy",
+      "map_sha256": "c7245a797afcb6cd9392598dceacb475d8976338eab1c043c400c4eb9ad0c04e",
+      "score": 0.32819458842277527,
+      "inference_seconds": 0.057672299997648224
+    },
+    {
+      "path": "pipe_fryum/test/good/484.JPG",
+      "map": "maps/0148.npy",
+      "map_sha256": "6977c5828eef1792bf6fb9445fb0729277eb6dc968cbca0f295c43ef9aac414f",
+      "score": 0.39930301904678345,
+      "inference_seconds": 0.05602419999195263
+    },
+    {
+      "path": "pipe_fryum/test/good/487.JPG",
+      "map": "maps/0149.npy",
+      "map_sha256": "042a9ff566aa962df72302b22e7a98df53ae3e4f94e7e116bb85d30d9e85ffa2",
+      "score": 0.2870119512081146,
+      "inference_seconds": 0.05503659998066723
+    }
+  ],
+  "resources": {
+    "device": "CPU",
+    "gpu_used": false,
+    "peak_gpu_allocated_mb": 0.0,
+    "cpu_threads_opencv": 4,
+    "warmup_images": 3,
+    "inference_seconds_mean": 0.046288610666718646,
+    "inference_seconds_std": 0.005599562733465597,
+    "reference_build_seconds": 0.9383522999996785,
+    "peak_process_rss_during_inference_mb": 225.46875,
+    "timing_includes": "JPG decode, preprocess, identical nearest-template selection, ECC solve and acceptance checks, difference and postprocess, native-map interpolation",
+    "map_storage_run": {
+      "shared_files": 0,
+      "saved_bytes": 0,
+      "new_unique_files": 150
+    },
+    "timing_excludes": "reference setup, warmup, calibration, disk serialization and hardlink deduplication, metric evaluation",
+    "environment": {
+      "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "cpu": "AMD64 Family 25 Model 117 Stepping 2, AuthenticAMD",
+      "opencv": "5.0.0",
+      "dependencies": {
+        "numpy": "2.1.3",
+        "scipy": "1.15.3",
+        "scikit-learn": "1.6.1",
+        "Pillow": "11.1.0",
+        "matplotlib": "3.10.0",
+        "psutil": "5.9.0"
+      },
+      "git_base_commit": "288213f3a8de906ab289e088cce9abf4ad3b4a23",
+      "cpu_count_logical": 16,
+      "gpu_used": false,
+      "hardware_comparison_note": "CPU classical baseline; compare latency only with explicitly disclosed CPU/GPU device settings."
+    }
+  }
+}
