@@ -1,6 +1,8 @@
 # AIAA3201 Project 2 — Few-Shot Industrial Visual Anomaly Detection
 
-当前主分支提供六类 VisA 数据准备、固定清单、公共评估工具，以及各 72 组正式 Template / ECC 对照结果。**这尚不代表全部 Part 1/3 完成；DINO、AnomalyCLIP、AE 和其他实验仍需按分工汇合。**
+当前主分支提供六类 VisA 公共协议、各72组 Template/ECC 正式实验、18组正常图训练 AE，以及这三种检测器上的162组选择性预测分析。**A 的 Part1 已完成；Part3 C 仅准备完成，DINO上的C/F正式对照仍需B的接口和结果，最终报告与提交尚未完成。**
+
+先看 [A本轮完成情况](A本轮完成情况.md)；需要B提供什么见 [交接清单](A剩余任务与B交接清单.md)。
 
 旧版代码、旧报告、Demo 和实验结果保存在 [legacy-v1 分支](https://github.com/YichangLIU0/AIAA3201-Project2-AnomalyDetection/tree/legacy-v1)，不与新协议结果混用。旧分支固定起点为 `568f8c588c44880c05b6434c79ba2dc66650f144`。
 
@@ -14,6 +16,11 @@
 - `methods/part1/`：正式 Template 基准、72 组运行程序与案例分析工具；[中文运行说明](methods/part1/开始运行.md)。
 - `results/part1_template/`：已完成的 72 组正式 Template 指标、校准分数、逐图预测记录和六个困难案例；[结果与错误分析](results/part1_template/实验结果与错误分析.md)。
 - `results/part1_ecc_full/`：已完成的 72 组正式 ECC 配对实验；[大白话结论与案例核查](results/part1_ecc_full/案例核查与结论.md)、[完整对照与曲线](results/part1_ecc_full/ECC结果与基准对照.md)。运行见 [ECC 方案](methods/part1/ECC对照方案.md)。
+
+- `results/part1_ae/`：六类×三个训练seed，共18组；[完整报告](results/part1_ae/AE正式结果与分析.md)、[人工案例核查](results/part1_ae/人工案例核查.md)、全部18个小模型与串行复测。运行见 [AE方案](methods/part1/AE实验方案.md)。AE使用完整正常训练池，不冒充few-shot或zero-shot。
+- `methods/part3/`：合成缺陷生成器、冻结评分头准备和选择性预测程序；[方法说明](methods/part3/README.md)。
+- `results/part3_f_template/`、`part3_f_ecc/`、`part3_f_ae/`：各72/72/18组风险覆盖、REVIEW消融、随机控制和真实案例；不把REVIEW算正确检出，不称为DINO结果。
+- `results/part3_c_preparation/`：[六类训练图上的合成示例与局限](results/part3_c_preparation/说明.md)，尚未进行真实DINO训练或缺陷迁移。
 
 交接入口：[给 B 同学的接入说明](shared_protocol/给B同学_从这里开始.md)。当前数据协议为 `visa6_sorted20_official_refs_native_v2`；该版本同时支持 few-shot 和 zero-shot 实验记录。
 
@@ -66,7 +73,11 @@ python -m venv .venv
 
 ECC 的 11,520 个原尺寸预测路径全部保留，通过字节相同的硬链接避免约 **23.87 GiB** 重复写入；相对基准实际新增独有预测内容约 **40.50 GiB**。旧单组试跑与正式结果的重复内容也已无损共享约 1.11 GiB。没有降低浮点精度或修改 GT；全部大体积预测不进入 Git，轻量指标、完整轨迹及 6 例全图/局部对照已提供。
 
-**当前完成的是 Template + ECC 正式实验与错误分析。** 新协议下 AnomalyDINO / AnomalyCLIP 结果汇合、A 的 AE、Part 3 C/F，以及最终报告和提交仍需推进。公共工具既有 26 项测试通过，本轮 Part1 的 Template/ECC/存储共 12 项检查通过；共享协议版本未修改。完整性通过与模型效果理想是不同结论。
+2026-11-14 完成 AE 收尾：18组、2880张原尺寸测试预测和全部模型核对通过；重新串行推理的图像分数与原记录逐个完全一致。AE六类宏平均 Image AUROC **0.7777 ± 0.0125**，Pixel AUROC **0.6440 ± 0.0319**，FPR **6.89%**，FNR **54.72%**；GPU串行约 **31.62 ms/图**，峰值allocated显存 **30.22 MiB**。AE训练数据更多、设备不同，不是公平预算或公平设备下优于模板的证明；其中一组出现全黑重建退化，仍保留在统计中。无损NPZ预测约14.04 GiB，本机保留，不进入Git。
+
+F在Template/ECC/AE上完成162组分析；AE自动覆盖约86.90%时，剩余自动判断错误率约34.33%，不复核时约36.78%。这有人工复核负担，REVIEW不算成功检出，且不改变模型的原AUROC。Template/ECC上的改善有限，负结果也保留。
+
+**当前完成的是 A 的Part1和不依赖B的Part3准备/分析；DINO上的C/F正式实验尚未完成。** 公共工具26、Part1含AE15、Part3共7项，合计48项检查通过；共享协议版本未修改。具体边界、结果和B交接需求见本页开头的两份说明。
 
 ## 外部来源与历史
 

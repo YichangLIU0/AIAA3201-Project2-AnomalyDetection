@@ -1,0 +1,316 @@
+{
+  "status": "preparation_only_not_formal_experiment",
+  "config": {
+    "version": 2,
+    "modes": [
+      "cutpaste",
+      "texture"
+    ],
+    "placement": "default foreground estimated from normal-image border Lab; canvas option retained for future ablation",
+    "foreground": "Lab chroma distance from border median > max(12,border95th+8); additionally positive luminance contrast for dark backgrounds L<70; opening5, components>=0.1% canvas; no test GT",
+    "rectangle_area_fraction": [
+      0.02,
+      0.08
+    ],
+    "aspect_ratio": [
+      0.5,
+      2.0
+    ],
+    "cutpaste": "same-image donor crop, random location; independent RGB gains .6..1.4 and offset -20..20",
+    "texture": "procedural coarse RGB noise, linear interpolation to rectangle, blend alpha .7",
+    "mask": "only pixels whose uint8 RGB changed, not every pixel of proposed rectangle",
+    "patch_targets": "adaptive-average mask coverage on actual extractor patch grid; no GT test masks",
+    "head": "1x1 Conv 384->128, ReLU, 1x1 Conv128->1; backbone features detached",
+    "loss": "BCEWithLogits; positive weight from synthetic target mass only",
+    "status": "generator and head preparation only; real-DINO training/transfer/ablation not yet run",
+    "source": "CutPaste inspiration: https://openaccess.thecvf.com/content/CVPR2021/html/Li_CutPaste_Self-Supervised_Learning_for_Anomaly_Detection_and_Localization_CVPR_2021_paper.html"
+  },
+  "source_sha256": "027bfcc65364aeb9bf97a5d7a677de4ff0db860d0b2cbf2a9f6427d2169ecf85",
+  "backbone_loaded": false,
+  "head_trained_on_dino": false,
+  "real_defect_transfer_evaluated": false,
+  "examples": [
+    {
+      "category": "candle",
+      "normal_training_path": "candle/train/good/0023.JPG",
+      "source_sha256": "8810d5bf8e6f952e31acbd688a851d19e7d94c5bc71ea4367fa1d388818310c9",
+      "example": "examples/candle/cutpaste.png",
+      "mask": "examples/candle/cutpaste_mask.png",
+      "synthetic_sha256": "a5601c79bbc687eca3f1fdd0333a3cff52404c29f6f48d7729b561deb4af1d81",
+      "seed": 20261111,
+      "mode": "cutpaste",
+      "placement": "foreground",
+      "estimated_foreground_fraction": 0.3603270772594752,
+      "target_rectangle_xywh": [
+        249,
+        34,
+        146,
+        74
+      ],
+      "donor_rectangle_xywh": [
+        21,
+        258,
+        146,
+        74
+      ],
+      "changed_pixels": 6357,
+      "changed_fraction": 0.028958637026239065
+    },
+    {
+      "category": "candle",
+      "normal_training_path": "candle/train/good/0023.JPG",
+      "source_sha256": "8810d5bf8e6f952e31acbd688a851d19e7d94c5bc71ea4367fa1d388818310c9",
+      "example": "examples/candle/texture.png",
+      "mask": "examples/candle/texture_mask.png",
+      "synthetic_sha256": "8db870b517c6ba17f7264f0b51cbb7d4e2c4b3f7785bb13ace95f5972266fae6",
+      "seed": 20261111,
+      "mode": "texture",
+      "placement": "foreground",
+      "estimated_foreground_fraction": 0.3603270772594752,
+      "target_rectangle_xywh": [
+        249,
+        34,
+        146,
+        74
+      ],
+      "donor_rectangle_xywh": null,
+      "changed_pixels": 6357,
+      "changed_fraction": 0.028958637026239065
+    },
+    {
+      "category": "capsules",
+      "normal_training_path": "capsules/train/good/023.JPG",
+      "source_sha256": "24d8df308fd1add15f826c44d5549fadd92bc6e605020df42cb6f66f4c90952d",
+      "example": "examples/capsules/cutpaste.png",
+      "mask": "examples/capsules/cutpaste_mask.png",
+      "synthetic_sha256": "6148d43fae5f9ef79ccc2bfbdea341600eea60975926ba0b62ec2c0230d54d90",
+      "seed": 20261112,
+      "mode": "cutpaste",
+      "placement": "foreground",
+      "estimated_foreground_fraction": 0.34006297831632654,
+      "target_rectangle_xywh": [
+        31,
+        133,
+        119,
+        183
+      ],
+      "donor_rectangle_xywh": [
+        59,
+        235,
+        119,
+        183
+      ],
+      "changed_pixels": 5901,
+      "changed_fraction": 0.019601004464285716
+    },
+    {
+      "category": "capsules",
+      "normal_training_path": "capsules/train/good/023.JPG",
+      "source_sha256": "24d8df308fd1add15f826c44d5549fadd92bc6e605020df42cb6f66f4c90952d",
+      "example": "examples/capsules/texture.png",
+      "mask": "examples/capsules/texture_mask.png",
+      "synthetic_sha256": "fe38ac0b0ac56abba517fa428e78e697160016e2b3e0d90ca9e3d2d0a35921c6",
+      "seed": 20261112,
+      "mode": "texture",
+      "placement": "foreground",
+      "estimated_foreground_fraction": 0.34006297831632654,
+      "target_rectangle_xywh": [
+        31,
+        133,
+        119,
+        183
+      ],
+      "donor_rectangle_xywh": null,
+      "changed_pixels": 5901,
+      "changed_fraction": 0.019601004464285716
+    },
+    {
+      "category": "cashew",
+      "normal_training_path": "cashew/train/good/024.JPG",
+      "source_sha256": "739d3d9841a58b4dc4b8c3b45fc6abfa64fb74329132c734c79158a5f3ea6862",
+      "example": "examples/cashew/cutpaste.png",
+      "mask": "examples/cashew/cutpaste_mask.png",
+      "synthetic_sha256": "6c5dc9cf23db03c18b6fd2d1c6ea73a11543748b7d8ae3f6c2d41615f8af112e",
+      "seed": 20261113,
+      "mode": "cutpaste",
+      "placement": "foreground",
+      "estimated_foreground_fraction": 0.15064150660264106,
+      "target_rectangle_xywh": [
+        143,
+        150,
+        107,
+        61
+      ],
+      "donor_rectangle_xywh": [
+        362,
+        67,
+        107,
+        61
+      ],
+      "changed_pixels": 4556,
+      "changed_fraction": 0.021364795918367346
+    },
+    {
+      "category": "cashew",
+      "normal_training_path": "cashew/train/good/024.JPG",
+      "source_sha256": "739d3d9841a58b4dc4b8c3b45fc6abfa64fb74329132c734c79158a5f3ea6862",
+      "example": "examples/cashew/texture.png",
+      "mask": "examples/cashew/texture_mask.png",
+      "synthetic_sha256": "6c3895647391433a762dbc0e2e926c53016c864ce8491235c1e50bf7395ebf1b",
+      "seed": 20261113,
+      "mode": "texture",
+      "placement": "foreground",
+      "estimated_foreground_fraction": 0.15064150660264106,
+      "target_rectangle_xywh": [
+        143,
+        150,
+        107,
+        61
+      ],
+      "donor_rectangle_xywh": null,
+      "changed_pixels": 4556,
+      "changed_fraction": 0.021364795918367346
+    },
+    {
+      "category": "chewinggum",
+      "normal_training_path": "chewinggum/train/good/023.JPG",
+      "source_sha256": "6c57a779509999846db8a47dd578c8bee4a6788580d926d3463be357d2339ec8",
+      "example": "examples/chewinggum/cutpaste.png",
+      "mask": "examples/chewinggum/cutpaste_mask.png",
+      "synthetic_sha256": "1e81912ea32cf6251933bf8189c9a8999d4108d762498f4e29430ebc5f2c23cc",
+      "seed": 20261114,
+      "mode": "cutpaste",
+      "placement": "foreground",
+      "estimated_foreground_fraction": 0.22027725563909775,
+      "target_rectangle_xywh": [
+        337,
+        173,
+        117,
+        156
+      ],
+      "donor_rectangle_xywh": [
+        217,
+        57,
+        117,
+        156
+      ],
+      "changed_pixels": 8157,
+      "changed_fraction": 0.034224791890440386
+    },
+    {
+      "category": "chewinggum",
+      "normal_training_path": "chewinggum/train/good/023.JPG",
+      "source_sha256": "6c57a779509999846db8a47dd578c8bee4a6788580d926d3463be357d2339ec8",
+      "example": "examples/chewinggum/texture.png",
+      "mask": "examples/chewinggum/texture_mask.png",
+      "synthetic_sha256": "1995dd2fbd408deb5f72d58bb64535c76222a9236124835658787fc7ebfe5f7c",
+      "seed": 20261114,
+      "mode": "texture",
+      "placement": "foreground",
+      "estimated_foreground_fraction": 0.22027725563909775,
+      "target_rectangle_xywh": [
+        337,
+        173,
+        117,
+        156
+      ],
+      "donor_rectangle_xywh": null,
+      "changed_pixels": 8157,
+      "changed_fraction": 0.034224791890440386
+    },
+    {
+      "category": "fryum",
+      "normal_training_path": "fryum/train/good/024.JPG",
+      "source_sha256": "6a9cb903ba9c16d97fa70fbd5f5b01365d2ac259b30734cd8f16325cd8862568",
+      "example": "examples/fryum/cutpaste.png",
+      "mask": "examples/fryum/cutpaste_mask.png",
+      "synthetic_sha256": "e0b401e5f51098ba5acb2502c0eb40382e4a3216b32e19838672c406d1878182",
+      "seed": 20261115,
+      "mode": "cutpaste",
+      "placement": "foreground",
+      "estimated_foreground_fraction": 0.14937752444727892,
+      "target_rectangle_xywh": [
+        198,
+        228,
+        121,
+        123
+      ],
+      "donor_rectangle_xywh": [
+        172,
+        97,
+        121,
+        123
+      ],
+      "changed_pixels": 7871,
+      "changed_fraction": 0.026144637542517005
+    },
+    {
+      "category": "fryum",
+      "normal_training_path": "fryum/train/good/024.JPG",
+      "source_sha256": "6a9cb903ba9c16d97fa70fbd5f5b01365d2ac259b30734cd8f16325cd8862568",
+      "example": "examples/fryum/texture.png",
+      "mask": "examples/fryum/texture_mask.png",
+      "synthetic_sha256": "c6fc80768883a7684c232bbf00f0d6c85e8ae4278c5888d77a37269fab0a34ba",
+      "seed": 20261115,
+      "mode": "texture",
+      "placement": "foreground",
+      "estimated_foreground_fraction": 0.14937752444727892,
+      "target_rectangle_xywh": [
+        198,
+        228,
+        121,
+        123
+      ],
+      "donor_rectangle_xywh": null,
+      "changed_pixels": 7871,
+      "changed_fraction": 0.026144637542517005
+    },
+    {
+      "category": "pipe_fryum",
+      "normal_training_path": "pipe_fryum/train/good/024.JPG",
+      "source_sha256": "5084993200e7fa8cb4722b91277a7ffcd1f61b5e6129ac07d12b35f059b92771",
+      "example": "examples/pipe_fryum/cutpaste.png",
+      "mask": "examples/pipe_fryum/cutpaste_mask.png",
+      "synthetic_sha256": "3116cbb35b32603388178bee22a04a525951f35e6477bdbce7ee3028919ebfc7",
+      "seed": 20261116,
+      "mode": "cutpaste",
+      "placement": "foreground",
+      "estimated_foreground_fraction": 0.11436631944444445,
+      "target_rectangle_xywh": [
+        164,
+        181,
+        89,
+        79
+      ],
+      "donor_rectangle_xywh": [
+        291,
+        145,
+        89,
+        79
+      ],
+      "changed_pixels": 7031,
+      "changed_fraction": 0.031139278628117915
+    },
+    {
+      "category": "pipe_fryum",
+      "normal_training_path": "pipe_fryum/train/good/024.JPG",
+      "source_sha256": "5084993200e7fa8cb4722b91277a7ffcd1f61b5e6129ac07d12b35f059b92771",
+      "example": "examples/pipe_fryum/texture.png",
+      "mask": "examples/pipe_fryum/texture_mask.png",
+      "synthetic_sha256": "39a100678215b85df2738b95f7346da40daf7417840b1ae9ccd0835b99632cc8",
+      "seed": 20261116,
+      "mode": "texture",
+      "placement": "foreground",
+      "estimated_foreground_fraction": 0.11436631944444445,
+      "target_rectangle_xywh": [
+        164,
+        181,
+        89,
+        79
+      ],
+      "donor_rectangle_xywh": null,
+      "changed_pixels": 7031,
+      "changed_fraction": 0.031139278628117915
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "review_date_client": "2026-11-14",
+  "scope": "posthoc interpretation only; no model/threshold changes",
+  "cases": [
+    {
+      "path": "candle/test/bad/026.JPG",
+      "observation": "蜡烛缺口在GT和误差图中有局部响应，重建图将边缘平滑。AE分数0.07451仍低于0.07912阈值，属于有局部提示但整图漏报，不能说模型完全看不到缺口。",
+      "figures_sha256": {
+        "figures/candle_026.png": "9591079ccb9ab52c2c202869861ef526ea8183fc94ed04abc594650ba218b15b",
+        "figures/candle_026_detail.png": "bbad57b97ac814a9519f3335f11c1390bb42f723f8e271f7987c2120800c516b"
+      }
+    },
+    {
+      "path": "capsules/test/bad/052.JPG",
+      "observation": "胶囊端部缺损的GT呈片状，但AE较强响应还集中于正常高光和表面纹理；重建图把胶囊与灰色背景都明显抹平。分数0.20564仅略低于0.20688阈值，依旧漏报。不能因为接近阈值就在测试图上改阈值。",
+      "figures_sha256": {
+        "figures/capsules_052.png": "c6b3a427cbd4d38946517bf958b941a9932ae5c1364240d681f04397586ac750",
+        "figures/capsules_052_detail.png": "fa4005d2d60a4b4ae45feaa30b2e4c5494fdb4ea9da3dc22b08ed5c6d1b5500f"
+      }
+    },
+    {
+      "path": "cashew/test/good/344.JPG",
+      "observation": "这是一张正常图，AE和ECC都判OK，修正了原Template的误报。AE主体内部响应较弱，复杂的正常背景纹理反而到处有响应；正常图没有GT缺陷，不能把热图亮点虚构成缺陷。",
+      "figures_sha256": {
+        "figures/cashew_344.png": "a74c8a173ac7b42ecd957de138c7f8fce0faa03f8c2dd3a0ea9eaf6680c66c16",
+        "figures/cashew_344_detail.png": "d4be905ad04b3d50f52f27ae6ed3b96f89e9ad14c96317f7d9d986fad4a1087f"
+      }
+    },
+    {
+      "path": "chewinggum/test/bad/030.JPG",
+      "observation": "缺损在原图清晰可见，AE重建把边缘与缺损过度平滑。AE在缺口与正常边缘均有响应，未形成足够高的整图分数，0.13483低于0.14609，仍漏报；并非看到热图亮就等于检测成功。",
+      "figures_sha256": {
+        "figures/chewinggum_030.png": "eb383742d32359820c6ec2822cdad7d98e326f922329e0ec2776411690ca23f9",
+        "figures/chewinggum_030_detail.png": "2696ccaefb4c027cb86749e90d0bdbb783284fbba6e9d2856636983af23156e9"
+      }
+    },
+    {
+      "path": "fryum/test/good/392.JPG",
+      "observation": "这是正常轮形产品。Template/ECC在轮辐和轮廓处有大面积差异而误报；AE学到了大致轮形，整体误差降低，本例正确判OK。正常背景网格仍有残差，不能据此保证全部背景变化都能被消除。",
+      "figures_sha256": {
+        "figures/fryum_392.png": "0fcec11adcead8256f20d5b862901b7103ea3ea40cf4458355e4ab08f5b37857",
+        "figures/fryum_392_detail.png": "b048b90f3818cdda1b767ee21026903b8ca7f42fee7906a0fac6b9655464d303"
+      }
+    },
+    {
+      "path": "pipe_fryum/test/bad/060.JPG",
+      "observation": "小缺陷在GT和局部误差图中有圆状响应；AE重建几乎成为均匀色块，丢失了细小表面纹理。图像分数0.09903低于0.13393，仍漏报。该图说明局部像素响应与校准后的整图决策必须分开看。",
+      "figures_sha256": {
+        "figures/pipe_fryum_060.png": "0140728360ffc51c491ae990405e7f99fb89c1d6f56ecf387e7350b1ee3655c2",
+        "figures/pipe_fryum_060_detail.png": "c433996c3ce6a56e2f859cde47f87e2020d2ecf3e09d9512740d72f8ca53ece5"
+      }
+    },
+    {
+      "path": "cashew/test/bad/000.JPG",
+      "observation": "这是按官方清单顺序补选的首张异常腰果图。AE分数0.14244超过0.12850，整图判断正确；但热图对大范围正常背景的响应强于多数腰果表面，GT棕斑处仅有较小响应。重建图把背景纹理抹掉，因此产生大量背景误差。它解释了整图AUROC较高而定位差可以同时出现，但不是独立的背景因果消融。",
+      "figures_sha256": {
+        "figures/cashew_000.png": "9270c372b0345d41ce24c23bcdd4fe85c681e90641570e3f80c43878df78595e",
+        "figures/cashew_000_detail.png": "06e6dd8f4abaceb10fb3384589a872ea76ae85575fc7e88df1576650a73ffda2"
+      }
+    }
+  ],
+  "training_quality_figure_sha256": "ebca77b31e9c9419c8a3f7703e7d8a927b0fc19b9e0e3cef85de3577d5e7e259"
+}

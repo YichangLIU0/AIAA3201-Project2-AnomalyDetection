@@ -1,0 +1,4058 @@
+{
+  "method": "compact_normal_ae",
+  "experiment_mode": "normal_training",
+  "shots": null,
+  "reference_paths": [],
+  "seed": 0,
+  "seed_role": "training_initialization_and_shuffle",
+  "category": "candle",
+  "protocol_id": "visa6_sorted20_official_refs_native_v2",
+  "config_id": "normal_ae_63c8f0a676cf",
+  "run_config": {
+    "method": "compact_normal_ae",
+    "experiment_mode": "normal_training",
+    "training_pool": "entire manifest normal_training_pool; excludes all 20 calibration images",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "epochs": 12,
+    "batch_size": 8,
+    "learning_rate": 0.001,
+    "optimizer": "Adam",
+    "loss": "mean RGB squared reconstruction error",
+    "architecture": "four stride2 Conv3x3 encoder blocks 16/32/48/64; nearest-upsample Conv3x3 decoder 48/32/16/3; ReLU, final sigmoid",
+    "augmentation": "independent horizontal and vertical flips p=.5 per training image; no synthetic defects",
+    "input_geometry": "same short-edge448 bicubic and bottom/right crop to14 as Template; reflection pad bottom/right to16 for AE, crop reconstruction back",
+    "map": "mean absolute RGB reconstruction error, Gaussian sigma2 on input grid; no morphology",
+    "image_score": "mean largest floor(1% of unpadded input-map pixels), at least1",
+    "native_map": "OpenCV linear resize to original size; original GT unchanged",
+    "threshold": "linear 95th percentile of exactly20 held-out normal calibration scores",
+    "selection": "fixed architecture/12 final epochs a priori; no test-label selection, no calibration fitting or early stopping",
+    "precision": "float32; no AMP; native maps stored losslessly as float32 compressed NPZ",
+    "determinism": "fixed seeds; cudnn deterministic true; benchmark false; torch threads4",
+    "comparison_scope": "normal-training extension, not a K-shot experiment; training counts reported separately",
+    "algorithm_source_sha256": {
+      "methods/part1/run_ae.py": "fc84159135cd4994750236d843d08e981e5464a63743bfd1a0ed1aff5ed68a1a",
+      "methods/part1/ae.py": "3fdb6e09243f95214404c479aa6f18849b581072abd48574f7e9979cc0c27315",
+      "methods/part1/template.py": "0d450ec1efbef004a905d21e69d587dc7f08fbfa750f2637fe14318f983ad704",
+      "methods/normal_training.py": "4eebe335deadb9377d258eb8573c7ec51ab56d58cf1b1e3b4876119c2ef68b81"
+    },
+    "python": "3.10.20 | packaged by Anaconda, Inc. | (main, Jun 11 2026, 15:13:20) [MSC v.1942 64 bit (AMD64)]",
+    "dependencies": {
+      "torch": "2.5.1+cu121",
+      "numpy": "2.1.3",
+      "scipy": "1.15.3",
+      "scikit-learn": "1.6.1",
+      "Pillow": "12.2.0",
+      "opencv-python-headless": "4.11.0.86"
+    },
+    "config_id": "normal_ae_63c8f0a676cf"
+  },
+  "integration_only": false,
+  "training_paths": [
+    "candle/train/good/0023.JPG",
+    "candle/train/good/0025.JPG",
+    "candle/train/good/0028.JPG",
+    "candle/train/good/0029.JPG",
+    "candle/train/good/0030.JPG",
+    "candle/train/good/0031.JPG",
+    "candle/train/good/0032.JPG",
+    "candle/train/good/0033.JPG",
+    "candle/train/good/0034.JPG",
+    "candle/train/good/0035.JPG",
+    "candle/train/good/0036.JPG",
+    "candle/train/good/0037.JPG",
+    "candle/train/good/0038.JPG",
+    "candle/train/good/0039.JPG",
+    "candle/train/good/0040.JPG",
+    "candle/train/good/0041.JPG",
+    "candle/train/good/0042.JPG",
+    "candle/train/good/0043.JPG",
+    "candle/train/good/0044.JPG",
+    "candle/train/good/0045.JPG",
+    "candle/train/good/0047.JPG",
+    "candle/train/good/0048.JPG",
+    "candle/train/good/0049.JPG",
+    "candle/train/good/0050.JPG",
+    "candle/train/good/0051.JPG",
+    "candle/train/good/0052.JPG",
+    "candle/train/good/0053.JPG",
+    "candle/train/good/0054.JPG",
+    "candle/train/good/0055.JPG",
+    "candle/train/good/0056.JPG",
+    "candle/train/good/0057.JPG",
+    "candle/train/good/0058.JPG",
+    "candle/train/good/0059.JPG",
+    "candle/train/good/0060.JPG",
+    "candle/train/good/0061.JPG",
+    "candle/train/good/0062.JPG",
+    "candle/train/good/0063.JPG",
+    "candle/train/good/0064.JPG",
+    "candle/train/good/0065.JPG",
+    "candle/train/good/0066.JPG",
+    "candle/train/good/0067.JPG",
+    "candle/train/good/0068.JPG",
+    "candle/train/good/0069.JPG",
+    "candle/train/good/0070.JPG",
+    "candle/train/good/0071.JPG",
+    "candle/train/good/0072.JPG",
+    "candle/train/good/0073.JPG",
+    "candle/train/good/0074.JPG",
+    "candle/train/good/0075.JPG",
+    "candle/train/good/0076.JPG",
+    "candle/train/good/0077.JPG",
+    "candle/train/good/0078.JPG",
+    "candle/train/good/0079.JPG",
+    "candle/train/good/0080.JPG",
+    "candle/train/good/0081.JPG",
+    "candle/train/good/0082.JPG",
+    "candle/train/good/0083.JPG",
+    "candle/train/good/0084.JPG",
+    "candle/train/good/0085.JPG",
+    "candle/train/good/0086.JPG",
+    "candle/train/good/0087.JPG",
+    "candle/train/good/0088.JPG",
+    "candle/train/good/0089.JPG",
+    "candle/train/good/0090.JPG",
+    "candle/train/good/0091.JPG",
+    "candle/train/good/0092.JPG",
+    "candle/train/good/0093.JPG",
+    "candle/train/good/0094.JPG",
+    "candle/train/good/0095.JPG",
+    "candle/train/good/0096.JPG",
+    "candle/train/good/0097.JPG",
+    "candle/train/good/0098.JPG",
+    "candle/train/good/0099.JPG",
+    "candle/train/good/0101.JPG",
+    "candle/train/good/0102.JPG",
+    "candle/train/good/0103.JPG",
+    "candle/train/good/0104.JPG",
+    "candle/train/good/0105.JPG",
+    "candle/train/good/0106.JPG",
+    "candle/train/good/0108.JPG",
+    "candle/train/good/0109.JPG",
+    "candle/train/good/0110.JPG",
+    "candle/train/good/0111.JPG",
+    "candle/train/good/0112.JPG",
+    "candle/train/good/0113.JPG",
+    "candle/train/good/0114.JPG",
+    "candle/train/good/0115.JPG",
+    "candle/train/good/0116.JPG",
+    "candle/train/good/0117.JPG",
+    "candle/train/good/0118.JPG",
+    "candle/train/good/0119.JPG",
+    "candle/train/good/0120.JPG",
+    "candle/train/good/0121.JPG",
+    "candle/train/good/0122.JPG",
+    "candle/train/good/0123.JPG",
+    "candle/train/good/0124.JPG",
+    "candle/train/good/0125.JPG",
+    "candle/train/good/0126.JPG",
+    "candle/train/good/0127.JPG",
+    "candle/train/good/0128.JPG",
+    "candle/train/good/0129.JPG",
+    "candle/train/good/0130.JPG",
+    "candle/train/good/0131.JPG",
+    "candle/train/good/0132.JPG",
+    "candle/train/good/0133.JPG",
+    "candle/train/good/0134.JPG",
+    "candle/train/good/0135.JPG",
+    "candle/train/good/0136.JPG",
+    "candle/train/good/0137.JPG",
+    "candle/train/good/0138.JPG",
+    "candle/train/good/0139.JPG",
+    "candle/train/good/0140.JPG",
+    "candle/train/good/0141.JPG",
+    "candle/train/good/0142.JPG",
+    "candle/train/good/0143.JPG",
+    "candle/train/good/0144.JPG",
+    "candle/train/good/0145.JPG",
+    "candle/train/good/0146.JPG",
+    "candle/train/good/0147.JPG",
+    "candle/train/good/0148.JPG",
+    "candle/train/good/0149.JPG",
+    "candle/train/good/0150.JPG",
+    "candle/train/good/0151.JPG",
+    "candle/train/good/0152.JPG",
+    "candle/train/good/0153.JPG",
+    "candle/train/good/0154.JPG",
+    "candle/train/good/0155.JPG",
+    "candle/train/good/0156.JPG",
+    "candle/train/good/0157.JPG",
+    "candle/train/good/0158.JPG",
+    "candle/train/good/0160.JPG",
+    "candle/train/good/0161.JPG",
+    "candle/train/good/0162.JPG",
+    "candle/train/good/0163.JPG",
+    "candle/train/good/0164.JPG",
+    "candle/train/good/0165.JPG",
+    "candle/train/good/0166.JPG",
+    "candle/train/good/0167.JPG",
+    "candle/train/good/0169.JPG",
+    "candle/train/good/0171.JPG",
+    "candle/train/good/0173.JPG",
+    "candle/train/good/0175.JPG",
+    "candle/train/good/0176.JPG",
+    "candle/train/good/0177.JPG",
+    "candle/train/good/0179.JPG",
+    "candle/train/good/0180.JPG",
+    "candle/train/good/0181.JPG",
+    "candle/train/good/0182.JPG",
+    "candle/train/good/0183.JPG",
+    "candle/train/good/0184.JPG",
+    "candle/train/good/0185.JPG",
+    "candle/train/good/0186.JPG",
+    "candle/train/good/0188.JPG",
+    "candle/train/good/0189.JPG",
+    "candle/train/good/0190.JPG",
+    "candle/train/good/0191.JPG",
+    "candle/train/good/0192.JPG",
+    "candle/train/good/0193.JPG",
+    "candle/train/good/0194.JPG",
+    "candle/train/good/0195.JPG",
+    "candle/train/good/0197.JPG",
+    "candle/train/good/0198.JPG",
+    "candle/train/good/0199.JPG",
+    "candle/train/good/0200.JPG",
+    "candle/train/good/0201.JPG",
+    "candle/train/good/0202.JPG",
+    "candle/train/good/0203.JPG",
+    "candle/train/good/0204.JPG",
+    "candle/train/good/0205.JPG",
+    "candle/train/good/0206.JPG",
+    "candle/train/good/0207.JPG",
+    "candle/train/good/0209.JPG",
+    "candle/train/good/0210.JPG",
+    "candle/train/good/0211.JPG",
+    "candle/train/good/0212.JPG",
+    "candle/train/good/0213.JPG",
+    "candle/train/good/0216.JPG",
+    "candle/train/good/0217.JPG",
+    "candle/train/good/0218.JPG",
+    "candle/train/good/0219.JPG",
+    "candle/train/good/0220.JPG",
+    "candle/train/good/0221.JPG",
+    "candle/train/good/0222.JPG",
+    "candle/train/good/0223.JPG",
+    "candle/train/good/0224.JPG",
+    "candle/train/good/0225.JPG",
+    "candle/train/good/0226.JPG",
+    "candle/train/good/0227.JPG",
+    "candle/train/good/0228.JPG",
+    "candle/train/good/0229.JPG",
+    "candle/train/good/0230.JPG",
+    "candle/train/good/0231.JPG",
+    "candle/train/good/0232.JPG",
+    "candle/train/good/0233.JPG",
+    "candle/train/good/0234.JPG",
+    "candle/train/good/0235.JPG",
+    "candle/train/good/0236.JPG",
+    "candle/train/good/0238.JPG",
+    "candle/train/good/0239.JPG",
+    "candle/train/good/0240.JPG",
+    "candle/train/good/0241.JPG",
+    "candle/train/good/0242.JPG",
+    "candle/train/good/0243.JPG",
+    "candle/train/good/0244.JPG",
+    "candle/train/good/0245.JPG",
+    "candle/train/good/0246.JPG",
+    "candle/train/good/0247.JPG",
+    "candle/train/good/0248.JPG",
+    "candle/train/good/0249.JPG",
+    "candle/train/good/0250.JPG",
+    "candle/train/good/0251.JPG",
+    "candle/train/good/0252.JPG",
+    "candle/train/good/0253.JPG",
+    "candle/train/good/0254.JPG",
+    "candle/train/good/0255.JPG",
+    "candle/train/good/0256.JPG",
+    "candle/train/good/0257.JPG",
+    "candle/train/good/0258.JPG",
+    "candle/train/good/0259.JPG",
+    "candle/train/good/0260.JPG",
+    "candle/train/good/0262.JPG",
+    "candle/train/good/0263.JPG",
+    "candle/train/good/0264.JPG",
+    "candle/train/good/0265.JPG",
+    "candle/train/good/0266.JPG",
+    "candle/train/good/0267.JPG",
+    "candle/train/good/0268.JPG",
+    "candle/train/good/0269.JPG",
+    "candle/train/good/0270.JPG",
+    "candle/train/good/0271.JPG",
+    "candle/train/good/0272.JPG",
+    "candle/train/good/0273.JPG",
+    "candle/train/good/0274.JPG",
+    "candle/train/good/0275.JPG",
+    "candle/train/good/0276.JPG",
+    "candle/train/good/0277.JPG",
+    "candle/train/good/0278.JPG",
+    "candle/train/good/0279.JPG",
+    "candle/train/good/0280.JPG",
+    "candle/train/good/0281.JPG",
+    "candle/train/good/0282.JPG",
+    "candle/train/good/0283.JPG",
+    "candle/train/good/0284.JPG",
+    "candle/train/good/0285.JPG",
+    "candle/train/good/0287.JPG",
+    "candle/train/good/0288.JPG",
+    "candle/train/good/0289.JPG",
+    "candle/train/good/0290.JPG",
+    "candle/train/good/0291.JPG",
+    "candle/train/good/0292.JPG",
+    "candle/train/good/0293.JPG",
+    "candle/train/good/0295.JPG",
+    "candle/train/good/0296.JPG",
+    "candle/train/good/0298.JPG",
+    "candle/train/good/0299.JPG",
+    "candle/train/good/0300.JPG",
+    "candle/train/good/0301.JPG",
+    "candle/train/good/0302.JPG",
+    "candle/train/good/0304.JPG",
+    "candle/train/good/0305.JPG",
+    "candle/train/good/0307.JPG",
+    "candle/train/good/0308.JPG",
+    "candle/train/good/0309.JPG",
+    "candle/train/good/0310.JPG",
+    "candle/train/good/0311.JPG",
+    "candle/train/good/0312.JPG",
+    "candle/train/good/0313.JPG",
+    "candle/train/good/0314.JPG",
+    "candle/train/good/0315.JPG",
+    "candle/train/good/0316.JPG",
+    "candle/train/good/0317.JPG",
+    "candle/train/good/0318.JPG",
+    "candle/train/good/0319.JPG",
+    "candle/train/good/0321.JPG",
+    "candle/train/good/0322.JPG",
+    "candle/train/good/0323.JPG",
+    "candle/train/good/0324.JPG",
+    "candle/train/good/0325.JPG",
+    "candle/train/good/0326.JPG",
+    "candle/train/good/0327.JPG",
+    "candle/train/good/0328.JPG",
+    "candle/train/good/0329.JPG",
+    "candle/train/good/0330.JPG",
+    "candle/train/good/0331.JPG",
+    "candle/train/good/0332.JPG",
+    "candle/train/good/0334.JPG",
+    "candle/train/good/0335.JPG",
+    "candle/train/good/0336.JPG",
+    "candle/train/good/0337.JPG",
+    "candle/train/good/0338.JPG",
+    "candle/train/good/0339.JPG",
+    "candle/train/good/0340.JPG",
+    "candle/train/good/0341.JPG",
+    "candle/train/good/0342.JPG",
+    "candle/train/good/0343.JPG",
+    "candle/train/good/0344.JPG",
+    "candle/train/good/0345.JPG",
+    "candle/train/good/0346.JPG",
+    "candle/train/good/0347.JPG",
+    "candle/train/good/0348.JPG",
+    "candle/train/good/0349.JPG",
+    "candle/train/good/0350.JPG",
+    "candle/train/good/0351.JPG",
+    "candle/train/good/0352.JPG",
+    "candle/train/good/0353.JPG",
+    "candle/train/good/0354.JPG",
+    "candle/train/good/0355.JPG",
+    "candle/train/good/0356.JPG",
+    "candle/train/good/0357.JPG",
+    "candle/train/good/0358.JPG",
+    "candle/train/good/0359.JPG",
+    "candle/train/good/0360.JPG",
+    "candle/train/good/0361.JPG",
+    "candle/train/good/0362.JPG",
+    "candle/train/good/0364.JPG",
+    "candle/train/good/0365.JPG",
+    "candle/train/good/0366.JPG",
+    "candle/train/good/0367.JPG",
+    "candle/train/good/0368.JPG",
+    "candle/train/good/0369.JPG",
+    "candle/train/good/0370.JPG",
+    "candle/train/good/0371.JPG",
+    "candle/train/good/0372.JPG",
+    "candle/train/good/0373.JPG",
+    "candle/train/good/0374.JPG",
+    "candle/train/good/0375.JPG",
+    "candle/train/good/0376.JPG",
+    "candle/train/good/0378.JPG",
+    "candle/train/good/0379.JPG",
+    "candle/train/good/0380.JPG",
+    "candle/train/good/0381.JPG",
+    "candle/train/good/0382.JPG",
+    "candle/train/good/0383.JPG",
+    "candle/train/good/0384.JPG",
+    "candle/train/good/0385.JPG",
+    "candle/train/good/0386.JPG",
+    "candle/train/good/0387.JPG",
+    "candle/train/good/0388.JPG",
+    "candle/train/good/0389.JPG",
+    "candle/train/good/0390.JPG",
+    "candle/train/good/0391.JPG",
+    "candle/train/good/0392.JPG",
+    "candle/train/good/0393.JPG",
+    "candle/train/good/0395.JPG",
+    "candle/train/good/0396.JPG",
+    "candle/train/good/0397.JPG",
+    "candle/train/good/0398.JPG",
+    "candle/train/good/0399.JPG",
+    "candle/train/good/0401.JPG",
+    "candle/train/good/0403.JPG",
+    "candle/train/good/0404.JPG",
+    "candle/train/good/0405.JPG",
+    "candle/train/good/0406.JPG",
+    "candle/train/good/0407.JPG",
+    "candle/train/good/0408.JPG",
+    "candle/train/good/0409.JPG",
+    "candle/train/good/0410.JPG",
+    "candle/train/good/0411.JPG",
+    "candle/train/good/0412.JPG",
+    "candle/train/good/0413.JPG",
+    "candle/train/good/0414.JPG",
+    "candle/train/good/0415.JPG",
+    "candle/train/good/0416.JPG",
+    "candle/train/good/0418.JPG",
+    "candle/train/good/0419.JPG",
+    "candle/train/good/0420.JPG",
+    "candle/train/good/0421.JPG",
+    "candle/train/good/0422.JPG",
+    "candle/train/good/0424.JPG",
+    "candle/train/good/0425.JPG",
+    "candle/train/good/0426.JPG",
+    "candle/train/good/0428.JPG",
+    "candle/train/good/0429.JPG",
+    "candle/train/good/0430.JPG",
+    "candle/train/good/0431.JPG",
+    "candle/train/good/0432.JPG",
+    "candle/train/good/0433.JPG",
+    "candle/train/good/0434.JPG",
+    "candle/train/good/0435.JPG",
+    "candle/train/good/0436.JPG",
+    "candle/train/good/0437.JPG",
+    "candle/train/good/0438.JPG",
+    "candle/train/good/0439.JPG",
+    "candle/train/good/0440.JPG",
+    "candle/train/good/0441.JPG",
+    "candle/train/good/0442.JPG",
+    "candle/train/good/0443.JPG",
+    "candle/train/good/0444.JPG",
+    "candle/train/good/0445.JPG",
+    "candle/train/good/0446.JPG",
+    "candle/train/good/0447.JPG",
+    "candle/train/good/0448.JPG",
+    "candle/train/good/0449.JPG",
+    "candle/train/good/0450.JPG",
+    "candle/train/good/0451.JPG",
+    "candle/train/good/0452.JPG",
+    "candle/train/good/0453.JPG",
+    "candle/train/good/0454.JPG",
+    "candle/train/good/0455.JPG",
+    "candle/train/good/0456.JPG",
+    "candle/train/good/0458.JPG",
+    "candle/train/good/0459.JPG",
+    "candle/train/good/0460.JPG",
+    "candle/train/good/0461.JPG",
+    "candle/train/good/0462.JPG",
+    "candle/train/good/0463.JPG",
+    "candle/train/good/0464.JPG",
+    "candle/train/good/0465.JPG",
+    "candle/train/good/0466.JPG",
+    "candle/train/good/0467.JPG",
+    "candle/train/good/0468.JPG",
+    "candle/train/good/0470.JPG",
+    "candle/train/good/0471.JPG",
+    "candle/train/good/0472.JPG",
+    "candle/train/good/0473.JPG",
+    "candle/train/good/0474.JPG",
+    "candle/train/good/0475.JPG",
+    "candle/train/good/0476.JPG",
+    "candle/train/good/0477.JPG",
+    "candle/train/good/0478.JPG",
+    "candle/train/good/0480.JPG",
+    "candle/train/good/0481.JPG",
+    "candle/train/good/0482.JPG",
+    "candle/train/good/0485.JPG",
+    "candle/train/good/0486.JPG",
+    "candle/train/good/0487.JPG",
+    "candle/train/good/0489.JPG",
+    "candle/train/good/0491.JPG",
+    "candle/train/good/0492.JPG",
+    "candle/train/good/0493.JPG",
+    "candle/train/good/0494.JPG",
+    "candle/train/good/0495.JPG",
+    "candle/train/good/0496.JPG",
+    "candle/train/good/0497.JPG",
+    "candle/train/good/0498.JPG",
+    "candle/train/good/0499.JPG",
+    "candle/train/good/0500.JPG",
+    "candle/train/good/0501.JPG",
+    "candle/train/good/0502.JPG",
+    "candle/train/good/0503.JPG",
+    "candle/train/good/0504.JPG",
+    "candle/train/good/0505.JPG",
+    "candle/train/good/0506.JPG",
+    "candle/train/good/0507.JPG",
+    "candle/train/good/0508.JPG",
+    "candle/train/good/0509.JPG",
+    "candle/train/good/0510.JPG",
+    "candle/train/good/0511.JPG",
+    "candle/train/good/0512.JPG",
+    "candle/train/good/0513.JPG",
+    "candle/train/good/0515.JPG",
+    "candle/train/good/0516.JPG",
+    "candle/train/good/0517.JPG",
+    "candle/train/good/0519.JPG",
+    "candle/train/good/0521.JPG",
+    "candle/train/good/0522.JPG",
+    "candle/train/good/0523.JPG",
+    "candle/train/good/0524.JPG",
+    "candle/train/good/0526.JPG",
+    "candle/train/good/0527.JPG",
+    "candle/train/good/0528.JPG",
+    "candle/train/good/0529.JPG",
+    "candle/train/good/0530.JPG",
+    "candle/train/good/0531.JPG",
+    "candle/train/good/0532.JPG",
+    "candle/train/good/0533.JPG",
+    "candle/train/good/0534.JPG",
+    "candle/train/good/0535.JPG",
+    "candle/train/good/0536.JPG",
+    "candle/train/good/0537.JPG",
+    "candle/train/good/0538.JPG",
+    "candle/train/good/0539.JPG",
+    "candle/train/good/0540.JPG",
+    "candle/train/good/0541.JPG",
+    "candle/train/good/0542.JPG",
+    "candle/train/good/0543.JPG",
+    "candle/train/good/0544.JPG",
+    "candle/train/good/0546.JPG",
+    "candle/train/good/0547.JPG",
+    "candle/train/good/0548.JPG",
+    "candle/train/good/0549.JPG",
+    "candle/train/good/0550.JPG",
+    "candle/train/good/0551.JPG",
+    "candle/train/good/0553.JPG",
+    "candle/train/good/0554.JPG",
+    "candle/train/good/0555.JPG",
+    "candle/train/good/0556.JPG",
+    "candle/train/good/0557.JPG",
+    "candle/train/good/0558.JPG",
+    "candle/train/good/0559.JPG",
+    "candle/train/good/0560.JPG",
+    "candle/train/good/0561.JPG",
+    "candle/train/good/0562.JPG",
+    "candle/train/good/0563.JPG",
+    "candle/train/good/0564.JPG",
+    "candle/train/good/0565.JPG",
+    "candle/train/good/0566.JPG",
+    "candle/train/good/0567.JPG",
+    "candle/train/good/0568.JPG",
+    "candle/train/good/0570.JPG",
+    "candle/train/good/0571.JPG",
+    "candle/train/good/0572.JPG",
+    "candle/train/good/0573.JPG",
+    "candle/train/good/0574.JPG",
+    "candle/train/good/0575.JPG",
+    "candle/train/good/0576.JPG",
+    "candle/train/good/0577.JPG",
+    "candle/train/good/0578.JPG",
+    "candle/train/good/0579.JPG",
+    "candle/train/good/0580.JPG",
+    "candle/train/good/0581.JPG",
+    "candle/train/good/0582.JPG",
+    "candle/train/good/0583.JPG",
+    "candle/train/good/0584.JPG",
+    "candle/train/good/0585.JPG",
+    "candle/train/good/0586.JPG",
+    "candle/train/good/0587.JPG",
+    "candle/train/good/0588.JPG",
+    "candle/train/good/0589.JPG",
+    "candle/train/good/0590.JPG",
+    "candle/train/good/0591.JPG",
+    "candle/train/good/0592.JPG",
+    "candle/train/good/0593.JPG",
+    "candle/train/good/0594.JPG",
+    "candle/train/good/0595.JPG",
+    "candle/train/good/0596.JPG",
+    "candle/train/good/0597.JPG",
+    "candle/train/good/0598.JPG",
+    "candle/train/good/0599.JPG",
+    "candle/train/good/0600.JPG",
+    "candle/train/good/0601.JPG",
+    "candle/train/good/0602.JPG",
+    "candle/train/good/0603.JPG",
+    "candle/train/good/0604.JPG",
+    "candle/train/good/0605.JPG",
+    "candle/train/good/0606.JPG",
+    "candle/train/good/0607.JPG",
+    "candle/train/good/0608.JPG",
+    "candle/train/good/0609.JPG",
+    "candle/train/good/0610.JPG",
+    "candle/train/good/0611.JPG",
+    "candle/train/good/0612.JPG",
+    "candle/train/good/0613.JPG",
+    "candle/train/good/0614.JPG",
+    "candle/train/good/0616.JPG",
+    "candle/train/good/0618.JPG",
+    "candle/train/good/0620.JPG",
+    "candle/train/good/0622.JPG",
+    "candle/train/good/0623.JPG",
+    "candle/train/good/0624.JPG",
+    "candle/train/good/0625.JPG",
+    "candle/train/good/0626.JPG",
+    "candle/train/good/0627.JPG",
+    "candle/train/good/0628.JPG",
+    "candle/train/good/0630.JPG",
+    "candle/train/good/0632.JPG",
+    "candle/train/good/0633.JPG",
+    "candle/train/good/0634.JPG",
+    "candle/train/good/0635.JPG",
+    "candle/train/good/0636.JPG",
+    "candle/train/good/0637.JPG",
+    "candle/train/good/0638.JPG",
+    "candle/train/good/0639.JPG",
+    "candle/train/good/0640.JPG",
+    "candle/train/good/0641.JPG",
+    "candle/train/good/0642.JPG",
+    "candle/train/good/0643.JPG",
+    "candle/train/good/0644.JPG",
+    "candle/train/good/0645.JPG",
+    "candle/train/good/0646.JPG",
+    "candle/train/good/0647.JPG",
+    "candle/train/good/0649.JPG",
+    "candle/train/good/0650.JPG",
+    "candle/train/good/0651.JPG",
+    "candle/train/good/0652.JPG",
+    "candle/train/good/0653.JPG",
+    "candle/train/good/0655.JPG",
+    "candle/train/good/0656.JPG",
+    "candle/train/good/0658.JPG",
+    "candle/train/good/0660.JPG",
+    "candle/train/good/0661.JPG",
+    "candle/train/good/0662.JPG",
+    "candle/train/good/0663.JPG",
+    "candle/train/good/0664.JPG",
+    "candle/train/good/0665.JPG",
+    "candle/train/good/0666.JPG",
+    "candle/train/good/0667.JPG",
+    "candle/train/good/0668.JPG",
+    "candle/train/good/0669.JPG",
+    "candle/train/good/0670.JPG",
+    "candle/train/good/0671.JPG",
+    "candle/train/good/0672.JPG",
+    "candle/train/good/0673.JPG",
+    "candle/train/good/0675.JPG",
+    "candle/train/good/0676.JPG",
+    "candle/train/good/0677.JPG",
+    "candle/train/good/0678.JPG",
+    "candle/train/good/0679.JPG",
+    "candle/train/good/0680.JPG",
+    "candle/train/good/0681.JPG",
+    "candle/train/good/0682.JPG",
+    "candle/train/good/0683.JPG",
+    "candle/train/good/0686.JPG",
+    "candle/train/good/0687.JPG",
+    "candle/train/good/0689.JPG",
+    "candle/train/good/0691.JPG",
+    "candle/train/good/0692.JPG",
+    "candle/train/good/0693.JPG",
+    "candle/train/good/0695.JPG",
+    "candle/train/good/0696.JPG",
+    "candle/train/good/0697.JPG",
+    "candle/train/good/0698.JPG",
+    "candle/train/good/0699.JPG",
+    "candle/train/good/0700.JPG",
+    "candle/train/good/0701.JPG",
+    "candle/train/good/0702.JPG",
+    "candle/train/good/0703.JPG",
+    "candle/train/good/0704.JPG",
+    "candle/train/good/0706.JPG",
+    "candle/train/good/0707.JPG",
+    "candle/train/good/0708.JPG",
+    "candle/train/good/0709.JPG",
+    "candle/train/good/0710.JPG",
+    "candle/train/good/0711.JPG",
+    "candle/train/good/0712.JPG",
+    "candle/train/good/0713.JPG",
+    "candle/train/good/0714.JPG",
+    "candle/train/good/0715.JPG",
+    "candle/train/good/0716.JPG",
+    "candle/train/good/0717.JPG",
+    "candle/train/good/0718.JPG",
+    "candle/train/good/0719.JPG",
+    "candle/train/good/0720.JPG",
+    "candle/train/good/0721.JPG",
+    "candle/train/good/0722.JPG",
+    "candle/train/good/0723.JPG",
+    "candle/train/good/0724.JPG",
+    "candle/train/good/0726.JPG",
+    "candle/train/good/0727.JPG",
+    "candle/train/good/0728.JPG",
+    "candle/train/good/0729.JPG",
+    "candle/train/good/0731.JPG",
+    "candle/train/good/0732.JPG",
+    "candle/train/good/0733.JPG",
+    "candle/train/good/0734.JPG",
+    "candle/train/good/0736.JPG",
+    "candle/train/good/0737.JPG",
+    "candle/train/good/0738.JPG",
+    "candle/train/good/0740.JPG",
+    "candle/train/good/0741.JPG",
+    "candle/train/good/0742.JPG",
+    "candle/train/good/0743.JPG",
+    "candle/train/good/0744.JPG",
+    "candle/train/good/0745.JPG",
+    "candle/train/good/0746.JPG",
+    "candle/train/good/0747.JPG",
+    "candle/train/good/0748.JPG",
+    "candle/train/good/0749.JPG",
+    "candle/train/good/0750.JPG",
+    "candle/train/good/0752.JPG",
+    "candle/train/good/0753.JPG",
+    "candle/train/good/0754.JPG",
+    "candle/train/good/0756.JPG",
+    "candle/train/good/0757.JPG",
+    "candle/train/good/0758.JPG",
+    "candle/train/good/0759.JPG",
+    "candle/train/good/0760.JPG",
+    "candle/train/good/0761.JPG",
+    "candle/train/good/0762.JPG",
+    "candle/train/good/0763.JPG",
+    "candle/train/good/0765.JPG",
+    "candle/train/good/0766.JPG",
+    "candle/train/good/0767.JPG",
+    "candle/train/good/0769.JPG",
+    "candle/train/good/0770.JPG",
+    "candle/train/good/0771.JPG",
+    "candle/train/good/0772.JPG",
+    "candle/train/good/0773.JPG",
+    "candle/train/good/0774.JPG",
+    "candle/train/good/0775.JPG",
+    "candle/train/good/0776.JPG",
+    "candle/train/good/0777.JPG",
+    "candle/train/good/0778.JPG",
+    "candle/train/good/0780.JPG",
+    "candle/train/good/0781.JPG",
+    "candle/train/good/0782.JPG",
+    "candle/train/good/0783.JPG",
+    "candle/train/good/0785.JPG",
+    "candle/train/good/0786.JPG",
+    "candle/train/good/0787.JPG",
+    "candle/train/good/0788.JPG",
+    "candle/train/good/0789.JPG",
+    "candle/train/good/0791.JPG",
+    "candle/train/good/0792.JPG",
+    "candle/train/good/0793.JPG",
+    "candle/train/good/0794.JPG",
+    "candle/train/good/0795.JPG",
+    "candle/train/good/0798.JPG",
+    "candle/train/good/0799.JPG",
+    "candle/train/good/0801.JPG",
+    "candle/train/good/0802.JPG",
+    "candle/train/good/0803.JPG",
+    "candle/train/good/0805.JPG",
+    "candle/train/good/0806.JPG",
+    "candle/train/good/0807.JPG",
+    "candle/train/good/0808.JPG",
+    "candle/train/good/0809.JPG",
+    "candle/train/good/0810.JPG",
+    "candle/train/good/0812.JPG",
+    "candle/train/good/0813.JPG",
+    "candle/train/good/0814.JPG",
+    "candle/train/good/0815.JPG",
+    "candle/train/good/0816.JPG",
+    "candle/train/good/0817.JPG",
+    "candle/train/good/0818.JPG",
+    "candle/train/good/0819.JPG",
+    "candle/train/good/0820.JPG",
+    "candle/train/good/0821.JPG",
+    "candle/train/good/0822.JPG",
+    "candle/train/good/0823.JPG",
+    "candle/train/good/0824.JPG",
+    "candle/train/good/0825.JPG",
+    "candle/train/good/0826.JPG",
+    "candle/train/good/0827.JPG",
+    "candle/train/good/0828.JPG",
+    "candle/train/good/0829.JPG",
+    "candle/train/good/0830.JPG",
+    "candle/train/good/0831.JPG",
+    "candle/train/good/0832.JPG",
+    "candle/train/good/0833.JPG",
+    "candle/train/good/0834.JPG",
+    "candle/train/good/0835.JPG",
+    "candle/train/good/0836.JPG",
+    "candle/train/good/0837.JPG",
+    "candle/train/good/0838.JPG",
+    "candle/train/good/0839.JPG",
+    "candle/train/good/0840.JPG",
+    "candle/train/good/0841.JPG",
+    "candle/train/good/0842.JPG",
+    "candle/train/good/0843.JPG",
+    "candle/train/good/0845.JPG",
+    "candle/train/good/0846.JPG",
+    "candle/train/good/0847.JPG",
+    "candle/train/good/0848.JPG",
+    "candle/train/good/0849.JPG",
+    "candle/train/good/0850.JPG",
+    "candle/train/good/0851.JPG",
+    "candle/train/good/0852.JPG",
+    "candle/train/good/0853.JPG",
+    "candle/train/good/0854.JPG",
+    "candle/train/good/0855.JPG",
+    "candle/train/good/0856.JPG",
+    "candle/train/good/0857.JPG",
+    "candle/train/good/0858.JPG",
+    "candle/train/good/0859.JPG",
+    "candle/train/good/0860.JPG",
+    "candle/train/good/0861.JPG",
+    "candle/train/good/0862.JPG",
+    "candle/train/good/0863.JPG",
+    "candle/train/good/0864.JPG",
+    "candle/train/good/0865.JPG",
+    "candle/train/good/0866.JPG",
+    "candle/train/good/0867.JPG",
+    "candle/train/good/0868.JPG",
+    "candle/train/good/0870.JPG",
+    "candle/train/good/0872.JPG",
+    "candle/train/good/0873.JPG",
+    "candle/train/good/0874.JPG",
+    "candle/train/good/0875.JPG",
+    "candle/train/good/0876.JPG",
+    "candle/train/good/0877.JPG",
+    "candle/train/good/0878.JPG",
+    "candle/train/good/0879.JPG",
+    "candle/train/good/0880.JPG",
+    "candle/train/good/0881.JPG",
+    "candle/train/good/0882.JPG",
+    "candle/train/good/0883.JPG",
+    "candle/train/good/0884.JPG",
+    "candle/train/good/0885.JPG",
+    "candle/train/good/0886.JPG",
+    "candle/train/good/0887.JPG",
+    "candle/train/good/0888.JPG",
+    "candle/train/good/0889.JPG",
+    "candle/train/good/0890.JPG",
+    "candle/train/good/0891.JPG",
+    "candle/train/good/0893.JPG",
+    "candle/train/good/0894.JPG",
+    "candle/train/good/0895.JPG",
+    "candle/train/good/0896.JPG",
+    "candle/train/good/0897.JPG",
+    "candle/train/good/0898.JPG",
+    "candle/train/good/0899.JPG",
+    "candle/train/good/0901.JPG",
+    "candle/train/good/0902.JPG",
+    "candle/train/good/0903.JPG",
+    "candle/train/good/0904.JPG",
+    "candle/train/good/0905.JPG",
+    "candle/train/good/0906.JPG",
+    "candle/train/good/0907.JPG",
+    "candle/train/good/0908.JPG",
+    "candle/train/good/0909.JPG",
+    "candle/train/good/0910.JPG",
+    "candle/train/good/0911.JPG",
+    "candle/train/good/0912.JPG",
+    "candle/train/good/0913.JPG",
+    "candle/train/good/0914.JPG",
+    "candle/train/good/0915.JPG",
+    "candle/train/good/0916.JPG",
+    "candle/train/good/0917.JPG",
+    "candle/train/good/0918.JPG",
+    "candle/train/good/0919.JPG",
+    "candle/train/good/0921.JPG",
+    "candle/train/good/0922.JPG",
+    "candle/train/good/0924.JPG",
+    "candle/train/good/0925.JPG",
+    "candle/train/good/0926.JPG",
+    "candle/train/good/0927.JPG",
+    "candle/train/good/0928.JPG",
+    "candle/train/good/0929.JPG",
+    "candle/train/good/0930.JPG",
+    "candle/train/good/0931.JPG",
+    "candle/train/good/0932.JPG",
+    "candle/train/good/0933.JPG",
+    "candle/train/good/0934.JPG",
+    "candle/train/good/0936.JPG",
+    "candle/train/good/0937.JPG",
+    "candle/train/good/0938.JPG",
+    "candle/train/good/0939.JPG",
+    "candle/train/good/0940.JPG",
+    "candle/train/good/0941.JPG",
+    "candle/train/good/0942.JPG",
+    "candle/train/good/0943.JPG",
+    "candle/train/good/0944.JPG",
+    "candle/train/good/0945.JPG",
+    "candle/train/good/0946.JPG",
+    "candle/train/good/0947.JPG",
+    "candle/train/good/0948.JPG",
+    "candle/train/good/0949.JPG",
+    "candle/train/good/0950.JPG",
+    "candle/train/good/0951.JPG",
+    "candle/train/good/0954.JPG",
+    "candle/train/good/0955.JPG",
+    "candle/train/good/0956.JPG",
+    "candle/train/good/0957.JPG",
+    "candle/train/good/0958.JPG",
+    "candle/train/good/0959.JPG",
+    "candle/train/good/0960.JPG",
+    "candle/train/good/0961.JPG",
+    "candle/train/good/0962.JPG",
+    "candle/train/good/0963.JPG",
+    "candle/train/good/0965.JPG",
+    "candle/train/good/0966.JPG",
+    "candle/train/good/0968.JPG",
+    "candle/train/good/0969.JPG",
+    "candle/train/good/0970.JPG",
+    "candle/train/good/0971.JPG",
+    "candle/train/good/0972.JPG",
+    "candle/train/good/0973.JPG",
+    "candle/train/good/0975.JPG",
+    "candle/train/good/0976.JPG",
+    "candle/train/good/0977.JPG",
+    "candle/train/good/0978.JPG",
+    "candle/train/good/0979.JPG",
+    "candle/train/good/0980.JPG",
+    "candle/train/good/0981.JPG",
+    "candle/train/good/0982.JPG",
+    "candle/train/good/0983.JPG",
+    "candle/train/good/0984.JPG",
+    "candle/train/good/0986.JPG",
+    "candle/train/good/0987.JPG",
+    "candle/train/good/0988.JPG",
+    "candle/train/good/0989.JPG",
+    "candle/train/good/0990.JPG",
+    "candle/train/good/0991.JPG",
+    "candle/train/good/0992.JPG",
+    "candle/train/good/0993.JPG",
+    "candle/train/good/0995.JPG",
+    "candle/train/good/0997.JPG",
+    "candle/train/good/0998.JPG",
+    "candle/train/good/0999.JPG"
+  ],
+  "training_count": 880,
+  "calibration": [
+    {
+      "path": "candle/train/good/0000.JPG",
+      "score": 0.06634543836116791
+    },
+    {
+      "path": "candle/train/good/0001.JPG",
+      "score": 0.0664268210530281
+    },
+    {
+      "path": "candle/train/good/0002.JPG",
+      "score": 0.08152350783348083
+    },
+    {
+      "path": "candle/train/good/0003.JPG",
+      "score": 0.0722058042883873
+    },
+    {
+      "path": "candle/train/good/0004.JPG",
+      "score": 0.07169613242149353
+    },
+    {
+      "path": "candle/train/good/0005.JPG",
+      "score": 0.06590189039707184
+    },
+    {
+      "path": "candle/train/good/0006.JPG",
+      "score": 0.07338618487119675
+    },
+    {
+      "path": "candle/train/good/0007.JPG",
+      "score": 0.062443818897008896
+    },
+    {
+      "path": "candle/train/good/0008.JPG",
+      "score": 0.07462607324123383
+    },
+    {
+      "path": "candle/train/good/0009.JPG",
+      "score": 0.07072698324918747
+    },
+    {
+      "path": "candle/train/good/0010.JPG",
+      "score": 0.06495319306850433
+    },
+    {
+      "path": "candle/train/good/0012.JPG",
+      "score": 0.06868644058704376
+    },
+    {
+      "path": "candle/train/good/0014.JPG",
+      "score": 0.06850540637969971
+    },
+    {
+      "path": "candle/train/good/0015.JPG",
+      "score": 0.06873449683189392
+    },
+    {
+      "path": "candle/train/good/0017.JPG",
+      "score": 0.06632870435714722
+    },
+    {
+      "path": "candle/train/good/0018.JPG",
+      "score": 0.07018257677555084
+    },
+    {
+      "path": "candle/train/good/0019.JPG",
+      "score": 0.07899489998817444
+    },
+    {
+      "path": "candle/train/good/0020.JPG",
+      "score": 0.06965716183185577
+    },
+    {
+      "path": "candle/train/good/0021.JPG",
+      "score": 0.06300577521324158
+    },
+    {
+      "path": "candle/train/good/0022.JPG",
+      "score": 0.07070699334144592
+    }
+  ],
+  "test": [
+    {
+      "path": "candle/test/bad/000.JPG",
+      "score": 0.07413926720619202,
+      "map": "maps/0000.npz",
+      "map_sha256": "a06ddce5af9e78101b17b939c84f03c2b7c8a49438457605b4ab17b51d35aac0",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08490610000444576
+    },
+    {
+      "path": "candle/test/bad/001.JPG",
+      "score": 0.07090559601783752,
+      "map": "maps/0001.npz",
+      "map_sha256": "8dd5f8a58d2cb45304659b1c55fd76412293761e667781eb280a54c0845b2bcd",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.05377779999980703
+    },
+    {
+      "path": "candle/test/bad/002.JPG",
+      "score": 0.07288069278001785,
+      "map": "maps/0002.npz",
+      "map_sha256": "e66666393eaaa90be6335eb73b9192cdf26ebce159c1b65b6c5d474355d0148c",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08484610001323745
+    },
+    {
+      "path": "candle/test/bad/003.JPG",
+      "score": 0.07365180552005768,
+      "map": "maps/0003.npz",
+      "map_sha256": "6bd71222ee6babb2a0e5be1d9054c094c8793f08986599e12ce300cf9903d85c",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.05570269998861477
+    },
+    {
+      "path": "candle/test/bad/004.JPG",
+      "score": 0.08512809127569199,
+      "map": "maps/0004.npz",
+      "map_sha256": "f89ae92a73097f573ea04bd32fcec6eda8cd26c70b5688c41afb0b4e8b722ac9",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06242440000642091
+    },
+    {
+      "path": "candle/test/bad/005.JPG",
+      "score": 0.0886443704366684,
+      "map": "maps/0005.npz",
+      "map_sha256": "96b44e081b1bf8809409d8827208485f5c5452f8b76bdee710ccadaf160063ea",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08225839998340234
+    },
+    {
+      "path": "candle/test/bad/006.JPG",
+      "score": 0.07830677181482315,
+      "map": "maps/0006.npz",
+      "map_sha256": "793cb8bf752c17720f86788cd60953dd5ec66287c8a723699c0b709bedb1196f",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09309540002141148
+    },
+    {
+      "path": "candle/test/bad/007.JPG",
+      "score": 0.09128414839506149,
+      "map": "maps/0007.npz",
+      "map_sha256": "272e1b2c6e844b0d1314b0f944acd000a81e7e1ebf74c8bada7ce6261f6e863b",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08611710002878681
+    },
+    {
+      "path": "candle/test/bad/008.JPG",
+      "score": 0.06457467377185822,
+      "map": "maps/0008.npz",
+      "map_sha256": "8a71cd366bdfabef1e457584beb5c6730ee744183c87dd0bdd9765a2183a52f8",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06466890004230663
+    },
+    {
+      "path": "candle/test/bad/009.JPG",
+      "score": 0.08067619055509567,
+      "map": "maps/0009.npz",
+      "map_sha256": "670bde9af4da61be595dccb64726d8ebcbeb61b97cfead2d5816ed9f89d1c1f2",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09059829998295754
+    },
+    {
+      "path": "candle/test/bad/010.JPG",
+      "score": 0.07587464153766632,
+      "map": "maps/0010.npz",
+      "map_sha256": "b769b5fb5f4fd8425e0531de6501794b5cd5dd34a025e196e827dfddb9a8ab92",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06130579998716712
+    },
+    {
+      "path": "candle/test/bad/011.JPG",
+      "score": 0.07267685234546661,
+      "map": "maps/0011.npz",
+      "map_sha256": "dec014d451922f34a0a4b301a89a6aa243d00315daed28a2e8664c5ff7f77565",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09789999999338761
+    },
+    {
+      "path": "candle/test/bad/012.JPG",
+      "score": 0.07733765244483948,
+      "map": "maps/0012.npz",
+      "map_sha256": "f61db9a3563599dac79c18fb3fe6d36c09972b0a5512457395704f780f720916",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09833820001222193
+    },
+    {
+      "path": "candle/test/bad/013.JPG",
+      "score": 0.0703892931342125,
+      "map": "maps/0013.npz",
+      "map_sha256": "1feb54649734cec87c9f43630a59c4859df81bbaf37561226d4f1cd7bd76fae5",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09408120001899078
+    },
+    {
+      "path": "candle/test/bad/014.JPG",
+      "score": 0.06823327392339706,
+      "map": "maps/0014.npz",
+      "map_sha256": "550ec8358f344b90fa1b378d71b2471a68df18107be4ea515d77048a2e269fa6",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.07363529998110607
+    },
+    {
+      "path": "candle/test/bad/015.JPG",
+      "score": 0.0753876194357872,
+      "map": "maps/0015.npz",
+      "map_sha256": "30aa2ae9fe6c97cba45759936be5db61442fb2e3fa13c6b1fd7b1b768e421749",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09735250001540408
+    },
+    {
+      "path": "candle/test/bad/016.JPG",
+      "score": 0.0760713517665863,
+      "map": "maps/0016.npz",
+      "map_sha256": "629d636688f90e4f3e7fe6b90e19fe799759f08f75c72e5ec3f670a3bf3458e6",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08950559998629615
+    },
+    {
+      "path": "candle/test/bad/017.JPG",
+      "score": 0.06575974822044373,
+      "map": "maps/0017.npz",
+      "map_sha256": "9e6515813bd0143e0aee4dfbde014790ee34029f651b2c330e149e1ab01cba45",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08740700001362711
+    },
+    {
+      "path": "candle/test/bad/018.JPG",
+      "score": 0.06619435548782349,
+      "map": "maps/0018.npz",
+      "map_sha256": "2dc1bb8f25b41cbb66fd996b06c6741e90293e50b65baf238e68ace581fd206c",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09738430002471432
+    },
+    {
+      "path": "candle/test/bad/019.JPG",
+      "score": 0.06632698327302933,
+      "map": "maps/0019.npz",
+      "map_sha256": "a6e975264bda80d52c0e6056dd52e80f5eb8a09019e5f95dc87dc334be3b9bed",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09058739995816723
+    },
+    {
+      "path": "candle/test/bad/020.JPG",
+      "score": 0.06450092792510986,
+      "map": "maps/0020.npz",
+      "map_sha256": "4e6b15540e4a1813442f10fdf21de76f1aad4c2f681c6a8ecaebe15136aba180",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.07913299999199808
+    },
+    {
+      "path": "candle/test/bad/021.JPG",
+      "score": 0.0753273218870163,
+      "map": "maps/0021.npz",
+      "map_sha256": "41c7d2f79a0cd820da1f67ef31d546bbbdf81e2a73c7d3d60d41747bea0ca9bf",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08851859997957945
+    },
+    {
+      "path": "candle/test/bad/022.JPG",
+      "score": 0.07682343572378159,
+      "map": "maps/0022.npz",
+      "map_sha256": "72cf83c00a2a06a9beca917c87477f66aa701d252fc4a1905674e9b8e999640c",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.10223030002089217
+    },
+    {
+      "path": "candle/test/bad/023.JPG",
+      "score": 0.06789971888065338,
+      "map": "maps/0023.npz",
+      "map_sha256": "8436bdae83deb2e81117bdf923d2c88b1490b8ddfff260afd4c0af9511402ba7",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.1262144999927841
+    },
+    {
+      "path": "candle/test/bad/024.JPG",
+      "score": 0.07747691869735718,
+      "map": "maps/0024.npz",
+      "map_sha256": "a9ad4dec269c43510333a14338bf000275a4e1f738169a7abc054aca1a209214",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08546910004224628
+    },
+    {
+      "path": "candle/test/bad/025.JPG",
+      "score": 0.07644492387771606,
+      "map": "maps/0025.npz",
+      "map_sha256": "a3e1bec5a95d230835d53f268cda05da0a69fdd1eef828ffca0e9b191b4bd358",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06135219999123365
+    },
+    {
+      "path": "candle/test/bad/026.JPG",
+      "score": 0.07451373338699341,
+      "map": "maps/0026.npz",
+      "map_sha256": "fa42ee18a93613728c47ba1194fc54eeef76857eebd41c313fbec2c70c4d45e9",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09462250000797212
+    },
+    {
+      "path": "candle/test/bad/027.JPG",
+      "score": 0.06170151010155678,
+      "map": "maps/0027.npz",
+      "map_sha256": "dc6cc4f9649f7e6ded30c8f84df1f8f235248d4d5ad200ccf771aac2a158e3d6",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09691069996915758
+    },
+    {
+      "path": "candle/test/bad/028.JPG",
+      "score": 0.07492620497941971,
+      "map": "maps/0028.npz",
+      "map_sha256": "017c1bb467120754eeac9a0a12fe876ff4feabd751e788780699b6adc4a9786b",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.07486059999791905
+    },
+    {
+      "path": "candle/test/bad/029.JPG",
+      "score": 0.06094755977392197,
+      "map": "maps/0029.npz",
+      "map_sha256": "accefe5ccde3062c5db4a56b95175189fcbddc18b8678fa17e6a3f434cf5ee3d",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.062265300017315894
+    },
+    {
+      "path": "candle/test/bad/030.JPG",
+      "score": 0.11941108107566833,
+      "map": "maps/0030.npz",
+      "map_sha256": "968c501abb03e53ff54dc900bdd94654a869deb99d4ce90cd6fe051b1cf36eb8",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0978892000275664
+    },
+    {
+      "path": "candle/test/bad/031.JPG",
+      "score": 0.06210555136203766,
+      "map": "maps/0031.npz",
+      "map_sha256": "7b15370a38f9560bdf90eb8438487b3ddc731560df642d1d75fc43d33f5a61ab",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08867760002613068
+    },
+    {
+      "path": "candle/test/bad/032.JPG",
+      "score": 0.0627160593867302,
+      "map": "maps/0032.npz",
+      "map_sha256": "a1b64f98253b04e094ea2d907507fef1071a8fa1ddc15fc54c06fe564eda4095",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0974735000054352
+    },
+    {
+      "path": "candle/test/bad/033.JPG",
+      "score": 0.0689399316906929,
+      "map": "maps/0033.npz",
+      "map_sha256": "ceaf5e2a8334c952cdf4000082f305cf629af90aeee9ea3ddab351fbb12471ff",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.07479030004469678
+    },
+    {
+      "path": "candle/test/bad/034.JPG",
+      "score": 0.06050192564725876,
+      "map": "maps/0034.npz",
+      "map_sha256": "44cf591f903c53cc8a1bc8cb8c12f1b5cb063e5baee5fae38da3fc18311d4d22",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.10318769997684285
+    },
+    {
+      "path": "candle/test/bad/035.JPG",
+      "score": 0.07559452950954437,
+      "map": "maps/0035.npz",
+      "map_sha256": "782586a9b11e7a531150c127baade56dc7655d83b26651bbc92356dc68bca1f1",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08918080001603812
+    },
+    {
+      "path": "candle/test/bad/036.JPG",
+      "score": 0.06876655668020248,
+      "map": "maps/0036.npz",
+      "map_sha256": "1ca9b709a511034f4dafc546b1a54b5f7670cde19e376ab4915cde059fd2fec9",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09076710004592314
+    },
+    {
+      "path": "candle/test/bad/037.JPG",
+      "score": 0.05832721292972565,
+      "map": "maps/0037.npz",
+      "map_sha256": "25ac22224bc84c89ee0fdf3abfa4764daface719e8ddd5d6a00d589cba5dcf09",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06340210000053048
+    },
+    {
+      "path": "candle/test/bad/038.JPG",
+      "score": 0.06866102665662766,
+      "map": "maps/0038.npz",
+      "map_sha256": "d36b1a62d5aea4dfc426afbaf632cd50c1c839ebb4a5fc6f8e6de397dc5bc4c2",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09593910002149642
+    },
+    {
+      "path": "candle/test/bad/039.JPG",
+      "score": 0.07748684287071228,
+      "map": "maps/0039.npz",
+      "map_sha256": "deaa612abdeca7ae3336f6c92b3d42586d4c4d8a24fc3a2729502bf7030fefdc",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0936132000060752
+    },
+    {
+      "path": "candle/test/bad/040.JPG",
+      "score": 0.06386625021696091,
+      "map": "maps/0040.npz",
+      "map_sha256": "5d64ea5819cf49bae4da809c1b06ef8c4697786b2fb459b4f7846ef9ea6ba9c2",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09145110001554713
+    },
+    {
+      "path": "candle/test/bad/041.JPG",
+      "score": 0.06764475256204605,
+      "map": "maps/0041.npz",
+      "map_sha256": "54eaaa7ed84d1e58bb9166923b06bbe8cec1103c4c584570170f5b9994d7e634",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.10450610000407323
+    },
+    {
+      "path": "candle/test/bad/042.JPG",
+      "score": 0.06342199444770813,
+      "map": "maps/0042.npz",
+      "map_sha256": "6e65dd7678f1d089967a68486d732c500c7e86ba6a0169165df727d3d9c1e9dc",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0732284999685362
+    },
+    {
+      "path": "candle/test/bad/043.JPG",
+      "score": 0.0688646137714386,
+      "map": "maps/0043.npz",
+      "map_sha256": "cc545e9f315d4859411f3c49c5d0e605c1950b5f0eddfd265ac9e92e2c657d7e",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08633190003456548
+    },
+    {
+      "path": "candle/test/bad/044.JPG",
+      "score": 0.06220526620745659,
+      "map": "maps/0044.npz",
+      "map_sha256": "567ce61742b6ea6e802d377504c9b42eca5a3a98870fdb3c9000fdb2e365a362",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09060840000165626
+    },
+    {
+      "path": "candle/test/bad/045.JPG",
+      "score": 0.07923467457294464,
+      "map": "maps/0045.npz",
+      "map_sha256": "4a8d315e95749327d595ca40c824b55e2015ee6631910038bdb1e94eb04b4a6e",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0961511000059545
+    },
+    {
+      "path": "candle/test/bad/046.JPG",
+      "score": 0.06681857258081436,
+      "map": "maps/0046.npz",
+      "map_sha256": "18f79599cbe58ee1e79992de2abc0dc6b4b3f3a9503604daada942f23be86a98",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09925339999608696
+    },
+    {
+      "path": "candle/test/bad/047.JPG",
+      "score": 0.058480411767959595,
+      "map": "maps/0047.npz",
+      "map_sha256": "4c242e683ccfa3c5164464b48b60c10f604bea0af252715eb97e3ffbe98ec406",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09302089997800067
+    },
+    {
+      "path": "candle/test/bad/048.JPG",
+      "score": 0.06695960462093353,
+      "map": "maps/0048.npz",
+      "map_sha256": "473789fdb2a4e214f00584ca387b89f258e25d8526f4f9bbfd83cc4138f02108",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09436759998789057
+    },
+    {
+      "path": "candle/test/bad/049.JPG",
+      "score": 0.061264071613550186,
+      "map": "maps/0049.npz",
+      "map_sha256": "d2ecb5a9145a2aa111364974e81fc9637eb3c24f79d2b2de48abac4545c41112",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06878899998264387
+    },
+    {
+      "path": "candle/test/bad/050.JPG",
+      "score": 0.06550047546625137,
+      "map": "maps/0050.npz",
+      "map_sha256": "273e8fa9fcceeb557aea7759d81595579613aee4ce09e200ffc1fd089c3e64da",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.07245199999306351
+    },
+    {
+      "path": "candle/test/bad/051.JPG",
+      "score": 0.06439284235239029,
+      "map": "maps/0051.npz",
+      "map_sha256": "23063368621253edecfb87c18479a222181d1a77e5a0e67e34bcc2bdf6edfbbd",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09547299996484071
+    },
+    {
+      "path": "candle/test/bad/052.JPG",
+      "score": 0.0662214457988739,
+      "map": "maps/0052.npz",
+      "map_sha256": "5de9c24565ee45edd154b1e7dd8a63096a15723a62d823bccba49d341cfe986d",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09683340002084151
+    },
+    {
+      "path": "candle/test/bad/053.JPG",
+      "score": 0.07047436386346817,
+      "map": "maps/0053.npz",
+      "map_sha256": "b4c8a7e63e3d6d0bb285efec25db569843461cdcd7edec19378040e148c78af9",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09661550004966557
+    },
+    {
+      "path": "candle/test/bad/054.JPG",
+      "score": 0.06514304131269455,
+      "map": "maps/0054.npz",
+      "map_sha256": "16c4230b44c6b651600324e598345f85ecd3901b6f3499318d74c70875924fd7",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09436469996580854
+    },
+    {
+      "path": "candle/test/bad/055.JPG",
+      "score": 0.06951867043972015,
+      "map": "maps/0055.npz",
+      "map_sha256": "9ca6fa69fb286154b777471dab14ca7600eb479c87ff84519db910602ef5e1fb",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.13840980001259595
+    },
+    {
+      "path": "candle/test/bad/056.JPG",
+      "score": 0.0641985684633255,
+      "map": "maps/0056.npz",
+      "map_sha256": "5ac325dc0ac47e8527c9e36cc28eace17e5c7618dd121bf93f1391b0080f0e2b",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.16298090002965182
+    },
+    {
+      "path": "candle/test/bad/057.JPG",
+      "score": 0.06804657727479935,
+      "map": "maps/0057.npz",
+      "map_sha256": "8b6337da4f7cdb7237f795993a3f6df910848b22da1ffe242ce069c447552514",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08021559996996075
+    },
+    {
+      "path": "candle/test/bad/058.JPG",
+      "score": 0.07552420347929001,
+      "map": "maps/0058.npz",
+      "map_sha256": "1cb084ba7093b27c0e5505a48297fd1806ebc8832117e5adf3b58d3d98a0ccb3",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.05723560001933947
+    },
+    {
+      "path": "candle/test/bad/059.JPG",
+      "score": 0.06785789132118225,
+      "map": "maps/0059.npz",
+      "map_sha256": "2a78f9973b107f306ea9e197349f3c822fc1392489468e51e6d21bfa32c27909",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08412430004682392
+    },
+    {
+      "path": "candle/test/bad/060.JPG",
+      "score": 0.07236438244581223,
+      "map": "maps/0060.npz",
+      "map_sha256": "c9627d8335af58b8dd8bbdebeb7d948732f581cf13a8d0ff08fd90ea27795f50",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.07697850000113249
+    },
+    {
+      "path": "candle/test/bad/061.JPG",
+      "score": 0.07360111176967621,
+      "map": "maps/0061.npz",
+      "map_sha256": "17d5276bdef93d314fa9b8ef1ed10037b767aaea999eead586fdcad1f6e0c806",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.10877950000576675
+    },
+    {
+      "path": "candle/test/bad/062.JPG",
+      "score": 0.06469716876745224,
+      "map": "maps/0062.npz",
+      "map_sha256": "abd28cce966e595d313e7a6452271e395a6416911ca915a8caa6342c605ddfc0",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.07555209996644408
+    },
+    {
+      "path": "candle/test/bad/063.JPG",
+      "score": 0.09693673253059387,
+      "map": "maps/0063.npz",
+      "map_sha256": "cf20458f19ae1dff3724ceae65eb120e2c834e36f005f54d0e5326d63e2ab0eb",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.05079680000199005
+    },
+    {
+      "path": "candle/test/bad/064.JPG",
+      "score": 0.07434461265802383,
+      "map": "maps/0064.npz",
+      "map_sha256": "1cf2d07f3316fddfdd2d1635c65c600aac2cdd85eb4b7d6639cb3d0520bbba32",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.04887619998771697
+    },
+    {
+      "path": "candle/test/bad/065.JPG",
+      "score": 0.0667988508939743,
+      "map": "maps/0065.npz",
+      "map_sha256": "35357b8bd8b7fec3695918bf867f1c5c0acbc4d4b58a067ff262bba39f20e0a5",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.04812120000133291
+    },
+    {
+      "path": "candle/test/bad/066.JPG",
+      "score": 0.06038269028067589,
+      "map": "maps/0066.npz",
+      "map_sha256": "9ac044d600a072c3c7379619b9703fc184bb28ded80098a3082ac4627715175c",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.07950140000320971
+    },
+    {
+      "path": "candle/test/bad/067.JPG",
+      "score": 0.06099073588848114,
+      "map": "maps/0067.npz",
+      "map_sha256": "18063c1e14a850a8994c7bc563799e6e9c1e3a4c125000cc85def2ce740b747e",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08116949995746836
+    },
+    {
+      "path": "candle/test/bad/068.JPG",
+      "score": 0.10041813552379608,
+      "map": "maps/0068.npz",
+      "map_sha256": "61f56f482caab0131d3dd5660a6d8b7c3ecb4070c26fb128d1906e80966c9493",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08577360003255308
+    },
+    {
+      "path": "candle/test/bad/069.JPG",
+      "score": 0.07261061668395996,
+      "map": "maps/0069.npz",
+      "map_sha256": "7bcd4538dccc85c9bc8fc1d7b89c5b3d510134a4a034c86c73147acdfda99f35",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08692640002118424
+    },
+    {
+      "path": "candle/test/bad/070.JPG",
+      "score": 0.09186824411153793,
+      "map": "maps/0070.npz",
+      "map_sha256": "b5fba75008d5102ff0d60d039068d59ddc6f3c5c0353f1785dd125b658b1afd8",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08972519997041672
+    },
+    {
+      "path": "candle/test/bad/071.JPG",
+      "score": 0.07565478980541229,
+      "map": "maps/0071.npz",
+      "map_sha256": "a1820b9baba4ff09d9750585024a7ce27c34b664933c31b63a54c1baa7ac2b6d",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08057879999978468
+    },
+    {
+      "path": "candle/test/bad/072.JPG",
+      "score": 0.0839003250002861,
+      "map": "maps/0072.npz",
+      "map_sha256": "781d4792dde8e1a3932c21c6932c5873dba69f8f6c4a964985a1416afd1bf1b2",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.07023720000870526
+    },
+    {
+      "path": "candle/test/bad/073.JPG",
+      "score": 0.06395615637302399,
+      "map": "maps/0073.npz",
+      "map_sha256": "ec7df8d2fe70238782ffca8d2a4b7ff6393357faf861cfe674a6dcb53a564a82",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.092483899963554
+    },
+    {
+      "path": "candle/test/bad/074.JPG",
+      "score": 0.0806511715054512,
+      "map": "maps/0074.npz",
+      "map_sha256": "4f758b7bcb7932ab974ae5fabd99702f377a9f69ae91c50d1f8a24e66327695b",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0873213000013493
+    },
+    {
+      "path": "candle/test/bad/075.JPG",
+      "score": 0.07667730748653412,
+      "map": "maps/0075.npz",
+      "map_sha256": "c4c1514e56e2ae94efb4cd1b84e0df5de0689e1fe251332e88ac095c7a4b8a80",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06843069999013096
+    },
+    {
+      "path": "candle/test/bad/076.JPG",
+      "score": 0.07509854435920715,
+      "map": "maps/0076.npz",
+      "map_sha256": "5283914cf1eaed0cb63f6d59ee1edc8085b85b4e8a063eb6c433f5a8278479da",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09249959996668622
+    },
+    {
+      "path": "candle/test/bad/077.JPG",
+      "score": 0.07618777453899384,
+      "map": "maps/0077.npz",
+      "map_sha256": "f792c926dabaa83bb45fbb51d248c8011a90ee8ce8b11f4f0499b71be5aec847",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09824249998200685
+    },
+    {
+      "path": "candle/test/bad/078.JPG",
+      "score": 0.09176602959632874,
+      "map": "maps/0078.npz",
+      "map_sha256": "d68e4c899331030d1ffc231e1557276cbb70253a14391035f4c9844a5a41621f",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09691949997795746
+    },
+    {
+      "path": "candle/test/bad/079.JPG",
+      "score": 0.07482661306858063,
+      "map": "maps/0079.npz",
+      "map_sha256": "0c256adfdefbcea4bb79ba756a2e122f325d1d45d66fcb01d1f22aaec7bcf330",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.07214429997839034
+    },
+    {
+      "path": "candle/test/bad/080.JPG",
+      "score": 0.06858129799365997,
+      "map": "maps/0080.npz",
+      "map_sha256": "863ce3f380ff1163799c97b4ba9a78d186d6e2624bc6ca5457a50eab3b8a8604",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06377879995852709
+    },
+    {
+      "path": "candle/test/bad/081.JPG",
+      "score": 0.07982920110225677,
+      "map": "maps/0081.npz",
+      "map_sha256": "dd2d3999224544a0aee40dbe9b8080b6024597a6a5d245379c0e097ffc272f96",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.07224770000902936
+    },
+    {
+      "path": "candle/test/bad/082.JPG",
+      "score": 0.06075169891119003,
+      "map": "maps/0082.npz",
+      "map_sha256": "4f6214c37b4bc2a331c0dbc383154bc295ccd60fa1b878be309ee6ca28119c03",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0970831000013277
+    },
+    {
+      "path": "candle/test/bad/083.JPG",
+      "score": 0.08731625229120255,
+      "map": "maps/0083.npz",
+      "map_sha256": "a6dce46633e46c98583b0dfd995490e77a0a4246a82399123e8fb9c1b5ac1263",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.10207520000403747
+    },
+    {
+      "path": "candle/test/bad/084.JPG",
+      "score": 0.08556278049945831,
+      "map": "maps/0084.npz",
+      "map_sha256": "2b855ca30016bd7c0198be94d355399d25a76c37c38b5dee4a29a7a4bf3be32d",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.10690289997728541
+    },
+    {
+      "path": "candle/test/bad/085.JPG",
+      "score": 0.09524399787187576,
+      "map": "maps/0085.npz",
+      "map_sha256": "35d4bb691781017a4c2a8935cdc9ee288e0e9059e83d2cf9ade392c172588f76",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0942094000056386
+    },
+    {
+      "path": "candle/test/bad/086.JPG",
+      "score": 0.0883488580584526,
+      "map": "maps/0086.npz",
+      "map_sha256": "8ac46d8806834c90ddb1714c15c789434743cdeb2491a0839a422264ada29fbd",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09558550000656396
+    },
+    {
+      "path": "candle/test/bad/087.JPG",
+      "score": 0.1286477893590927,
+      "map": "maps/0087.npz",
+      "map_sha256": "553ae6d4ed66fde30d1b061ae8879ebaff9c0ed7f864da81ece7ca2beb0e9aaa",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0775969999958761
+    },
+    {
+      "path": "candle/test/bad/088.JPG",
+      "score": 0.0947529599070549,
+      "map": "maps/0088.npz",
+      "map_sha256": "a918da152f46b991f982f5f15787d77a18e75229e1dea71b54ed9b26e53204ca",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.055743000004440546
+    },
+    {
+      "path": "candle/test/bad/089.JPG",
+      "score": 0.08429485559463501,
+      "map": "maps/0089.npz",
+      "map_sha256": "0a6a27e40fd1009821433325991eef2d2ae7e5c80017588d8b37f9f8d24fcf79",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.05202820000704378
+    },
+    {
+      "path": "candle/test/bad/090.JPG",
+      "score": 0.06367767602205276,
+      "map": "maps/0090.npz",
+      "map_sha256": "6f314384fa64e6e3c78b2dc699379c60a5fdbab856d1df231be4dae2a95a758b",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.05358830001205206
+    },
+    {
+      "path": "candle/test/bad/091.JPG",
+      "score": 0.06900531053543091,
+      "map": "maps/0091.npz",
+      "map_sha256": "359969066fb4a4ac03e1388c8dc672e691bda8bff5cf19182d1c52100de88928",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.05158020003000274
+    },
+    {
+      "path": "candle/test/bad/092.JPG",
+      "score": 0.08694428205490112,
+      "map": "maps/0092.npz",
+      "map_sha256": "192ec8251cdb3cd9274e3eae7c2f1eeae2964b9bcbd38e7134d729634b695ed8",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.07685110002057627
+    },
+    {
+      "path": "candle/test/bad/093.JPG",
+      "score": 0.08003664016723633,
+      "map": "maps/0093.npz",
+      "map_sha256": "16e3e8064c796bcc9140864291eb49b8f07cbda20ff9e07316e629d99b430577",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08206919999793172
+    },
+    {
+      "path": "candle/test/bad/094.JPG",
+      "score": 0.06985093653202057,
+      "map": "maps/0094.npz",
+      "map_sha256": "285fa4221ca84ab46ea695067ff3c9e7037f04d9cb19154310e15fd0c6cee622",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.07761400000890717
+    },
+    {
+      "path": "candle/test/bad/095.JPG",
+      "score": 0.09271487593650818,
+      "map": "maps/0095.npz",
+      "map_sha256": "777be3441c7849b8824a9445d56d0a506ab485824ef24eb26ca090ecd8accc71",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08309279999230057
+    },
+    {
+      "path": "candle/test/bad/096.JPG",
+      "score": 0.07641904801130295,
+      "map": "maps/0096.npz",
+      "map_sha256": "650c857b954ceeb64956b7328bb51f667437c9adeb91e38e4ccfd1f535936526",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08851729996968061
+    },
+    {
+      "path": "candle/test/bad/097.JPG",
+      "score": 0.0989874005317688,
+      "map": "maps/0097.npz",
+      "map_sha256": "2e194f17ca119f4844c33dfc71edf0f6a3a5bd730737fec26c33b47e10a75f29",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08767909999005497
+    },
+    {
+      "path": "candle/test/bad/098.JPG",
+      "score": 0.06862244009971619,
+      "map": "maps/0098.npz",
+      "map_sha256": "16adfba694312464cb77d7b60aeea0d68a8d25759bf8b2e87913c818792be196",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06467560003511608
+    },
+    {
+      "path": "candle/test/bad/099.JPG",
+      "score": 0.11359447240829468,
+      "map": "maps/0099.npz",
+      "map_sha256": "9ed69480b13e75354840c91e998b88ea4e7a14012ce31989b78cd9d274976ee2",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.069071099977009
+    },
+    {
+      "path": "candle/test/good/0011.JPG",
+      "score": 0.0690770074725151,
+      "map": "maps/0100.npz",
+      "map_sha256": "17fafbc684dba62f03bf8e36591a1483ecd0647e26cf66acb9ba6cc0797628a0",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.07269410003209487
+    },
+    {
+      "path": "candle/test/good/0013.JPG",
+      "score": 0.0788668617606163,
+      "map": "maps/0101.npz",
+      "map_sha256": "57411cb524855ff0a6d70b5ca128e91637dbe117b486ff15b294c6916273181b",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06251379998866469
+    },
+    {
+      "path": "candle/test/good/0016.JPG",
+      "score": 0.07319444417953491,
+      "map": "maps/0102.npz",
+      "map_sha256": "de2b9e08ac729ac7e55b49a5d0e088bd12d79ee6192e7348933288e754e245e9",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09692589996848255
+    },
+    {
+      "path": "candle/test/good/0024.JPG",
+      "score": 0.06163277104496956,
+      "map": "maps/0103.npz",
+      "map_sha256": "93bfbcd4aa4da903b731269e4f1de0f188ca62e96bf76c5ace02707f68c9f2bc",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09534190001431853
+    },
+    {
+      "path": "candle/test/good/0026.JPG",
+      "score": 0.06752753257751465,
+      "map": "maps/0104.npz",
+      "map_sha256": "647ed5c22256e8fcd5bdae9e0195431ee9faece851fffcf1a56f40b9908cd83b",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08627010002965108
+    },
+    {
+      "path": "candle/test/good/0027.JPG",
+      "score": 0.060157522559165955,
+      "map": "maps/0105.npz",
+      "map_sha256": "abd5f9bc221ba2618c769466bfe8749a8f9f20fded89e24bf3f06332153c1363",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0947850999655202
+    },
+    {
+      "path": "candle/test/good/0046.JPG",
+      "score": 0.06040995568037033,
+      "map": "maps/0106.npz",
+      "map_sha256": "5466589bf14b54ef6f8ffbf5f7eda3fa8e02265e4696311a1dc1cb4b51e4fd15",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.10349970002425835
+    },
+    {
+      "path": "candle/test/good/0100.JPG",
+      "score": 0.06477082520723343,
+      "map": "maps/0107.npz",
+      "map_sha256": "afdf93a9759178829a4804eca08f839ddaa276a9d0517007c895c8639dd2f1ec",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0967016999493353
+    },
+    {
+      "path": "candle/test/good/0107.JPG",
+      "score": 0.059429291635751724,
+      "map": "maps/0108.npz",
+      "map_sha256": "f53ac419d465fb02911da5f68fbd93aeff3b0a9916420abf180a64d8d6c439e1",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08546249999199063
+    },
+    {
+      "path": "candle/test/good/0159.JPG",
+      "score": 0.07684016972780228,
+      "map": "maps/0109.npz",
+      "map_sha256": "3c5d740ac536dd18979d8b93bfbcf6ba5a0b25afd00c01fd984b0a7f887e464c",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09943040000507608
+    },
+    {
+      "path": "candle/test/good/0168.JPG",
+      "score": 0.06049254909157753,
+      "map": "maps/0110.npz",
+      "map_sha256": "23cf315d9db22890eea3db482a2505d1c8ed47b4baedb2e2e0e9f9275620066f",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.062133100000210106
+    },
+    {
+      "path": "candle/test/good/0170.JPG",
+      "score": 0.0647834911942482,
+      "map": "maps/0111.npz",
+      "map_sha256": "30e4f9de386ecc1efb673732b0a8b84b22e0806b5a6ef1b592c69f83e773d7b8",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08990120002999902
+    },
+    {
+      "path": "candle/test/good/0172.JPG",
+      "score": 0.05722690001130104,
+      "map": "maps/0112.npz",
+      "map_sha256": "1f82d1241d34292bf80c1a535238464e74a4d7f5f7d00f9acf13ab5d46d39b77",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06798880000133067
+    },
+    {
+      "path": "candle/test/good/0174.JPG",
+      "score": 0.05396332964301109,
+      "map": "maps/0113.npz",
+      "map_sha256": "212ad3d8fe1c6dac73730fc801e4a6952768afc4cccd5cd132138bad3bfb75be",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09419079998042434
+    },
+    {
+      "path": "candle/test/good/0178.JPG",
+      "score": 0.059359315782785416,
+      "map": "maps/0114.npz",
+      "map_sha256": "a54ed8a316fda978bdaf9e55b25b8502a278c1c628fa688dee2ef528010225fa",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09828540001763031
+    },
+    {
+      "path": "candle/test/good/0187.JPG",
+      "score": 0.06018099933862686,
+      "map": "maps/0115.npz",
+      "map_sha256": "a028e6db5023d73ab8ea4a30c9af66b359f1d1f60d09ae6811e293875520a6ef",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0923299000132829
+    },
+    {
+      "path": "candle/test/good/0196.JPG",
+      "score": 0.07048745453357697,
+      "map": "maps/0116.npz",
+      "map_sha256": "6b4a9ffe7923a27c8fb920a97d9b278ce351bcccfa5af8ceb17c14b5e6b861f6",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0994580999831669
+    },
+    {
+      "path": "candle/test/good/0208.JPG",
+      "score": 0.06739050149917603,
+      "map": "maps/0117.npz",
+      "map_sha256": "ba53d8a07ca3095c412c1e5b251a0eadd8f25a20386f61c2f93569e6b574d08f",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06919710000511259
+    },
+    {
+      "path": "candle/test/good/0214.JPG",
+      "score": 0.06834997981786728,
+      "map": "maps/0118.npz",
+      "map_sha256": "f1c6f677b9fc57d7cfb74fe22ecdf51239671506d90080fcf549e210d5981c88",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09895200002938509
+    },
+    {
+      "path": "candle/test/good/0215.JPG",
+      "score": 0.05590547248721123,
+      "map": "maps/0119.npz",
+      "map_sha256": "7477205dc393e413003325f13fe27eb58b980983328618bc8ca520e2ba9f93f3",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0926527000265196
+    },
+    {
+      "path": "candle/test/good/0237.JPG",
+      "score": 0.060694485902786255,
+      "map": "maps/0120.npz",
+      "map_sha256": "cebc14c58abc68e7a873023a2eb188295f4469bf00e527579ec53d6332843939",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0988058999646455
+    },
+    {
+      "path": "candle/test/good/0261.JPG",
+      "score": 0.0619673877954483,
+      "map": "maps/0121.npz",
+      "map_sha256": "3f3019ab9a7a862186a47076ed7cec1418aa55e7191ad717671e8aa37ec6ded3",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.07941270002629608
+    },
+    {
+      "path": "candle/test/good/0286.JPG",
+      "score": 0.0751524269580841,
+      "map": "maps/0122.npz",
+      "map_sha256": "04e07f5a29f0757f488023cb42fee3e1486ffabed37db66ceba8fbf44bc5757c",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09657529997639358
+    },
+    {
+      "path": "candle/test/good/0294.JPG",
+      "score": 0.0724259689450264,
+      "map": "maps/0123.npz",
+      "map_sha256": "ae1ee48cd77e1219323acb4b085429889509c99b129843e92888ee38864e0727",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06461719999788329
+    },
+    {
+      "path": "candle/test/good/0297.JPG",
+      "score": 0.06830169260501862,
+      "map": "maps/0124.npz",
+      "map_sha256": "8a69b50a4e947969452dcc60d08d9d62ed226e72e6cdf545fddb179b54d8a65e",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0711066999938339
+    },
+    {
+      "path": "candle/test/good/0303.JPG",
+      "score": 0.06584977358579636,
+      "map": "maps/0125.npz",
+      "map_sha256": "6f628fc4abb1f067bee307112eb154e32d48820510a5ba988701f32f4e3974c3",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06543909996980801
+    },
+    {
+      "path": "candle/test/good/0306.JPG",
+      "score": 0.06137925386428833,
+      "map": "maps/0126.npz",
+      "map_sha256": "0dc6f0b976d7949f0e739f65942cedb663c17db399322d1dc353b79977a4f25d",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09557629999471828
+    },
+    {
+      "path": "candle/test/good/0320.JPG",
+      "score": 0.07586963474750519,
+      "map": "maps/0127.npz",
+      "map_sha256": "8403bfdb7e407a24d273b789c7cf0658930dac7b22505b012b5f122a4674222a",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.07910579995950684
+    },
+    {
+      "path": "candle/test/good/0333.JPG",
+      "score": 0.0669320747256279,
+      "map": "maps/0128.npz",
+      "map_sha256": "a08d0db9ed5629edcb83f8c7cc41d41e52a0593ec0b4cb2e895f4e20e59250a2",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09064810001291335
+    },
+    {
+      "path": "candle/test/good/0363.JPG",
+      "score": 0.06731484830379486,
+      "map": "maps/0129.npz",
+      "map_sha256": "646f0aafec59e51d6f2fd9528b130973272bfdd8f81a89c3a35758a048014f33",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09438040002714843
+    },
+    {
+      "path": "candle/test/good/0377.JPG",
+      "score": 0.05850715935230255,
+      "map": "maps/0130.npz",
+      "map_sha256": "f271cd32cd72e210b75322d9001def15b981fce20fc058760a3aaac7e2866f0b",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08768620004411787
+    },
+    {
+      "path": "candle/test/good/0394.JPG",
+      "score": 0.06741219013929367,
+      "map": "maps/0131.npz",
+      "map_sha256": "a06fd5dae9d1284a5004506cef0a454ff42633fc47ddf9971bb7b746d42a9ac8",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08101729996269569
+    },
+    {
+      "path": "candle/test/good/0400.JPG",
+      "score": 0.06512085348367691,
+      "map": "maps/0132.npz",
+      "map_sha256": "3782b723bb7ec4e1199ad2b00c1e71755fbb87a6d8749423d563b26c0fe9276d",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0951284000184387
+    },
+    {
+      "path": "candle/test/good/0402.JPG",
+      "score": 0.06667161732912064,
+      "map": "maps/0133.npz",
+      "map_sha256": "28cb39bed9cf58f1d7cbb64f265b505f0d4307622ee782f3cbab1ccc9c39036b",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09815480001270771
+    },
+    {
+      "path": "candle/test/good/0417.JPG",
+      "score": 0.0638212338089943,
+      "map": "maps/0134.npz",
+      "map_sha256": "91c5e61a62ffa7d50e1ae2c331296b3a4654b82fe91785b97ffaae556f708854",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0712420999770984
+    },
+    {
+      "path": "candle/test/good/0423.JPG",
+      "score": 0.058739203959703445,
+      "map": "maps/0135.npz",
+      "map_sha256": "70ee460cfb3595ce6b7ae991e764313e60898c657742bb0919113e26c6ee2668",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06463139998959377
+    },
+    {
+      "path": "candle/test/good/0427.JPG",
+      "score": 0.062004704028367996,
+      "map": "maps/0136.npz",
+      "map_sha256": "6db316e065ea9d82d989b701d8ec055682dde2f46ff9f461f31361adbae78d77",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06576780002797022
+    },
+    {
+      "path": "candle/test/good/0457.JPG",
+      "score": 0.06742966920137405,
+      "map": "maps/0137.npz",
+      "map_sha256": "d1735e79bed74a948ba1bcdb76c96e58e629cc2b00ed353f5ce02f010254a68d",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.07543720002286136
+    },
+    {
+      "path": "candle/test/good/0469.JPG",
+      "score": 0.06144602596759796,
+      "map": "maps/0138.npz",
+      "map_sha256": "82b7cc65e9e10eaa535a072d37c488d24ab71e7b4bc7382de9a81927b870093a",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09547759999986738
+    },
+    {
+      "path": "candle/test/good/0479.JPG",
+      "score": 0.0654449537396431,
+      "map": "maps/0139.npz",
+      "map_sha256": "3fdaf8ac48e4ded473f2b8ac8ae78f2d0f029ee1161a7f9e679cf4ab8af75866",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0972118999925442
+    },
+    {
+      "path": "candle/test/good/0483.JPG",
+      "score": 0.07195070385932922,
+      "map": "maps/0140.npz",
+      "map_sha256": "c76962b6f47d879ead6c1190d1136ec19c05ecf96172ba68176b950ce3af44da",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.10428470000624657
+    },
+    {
+      "path": "candle/test/good/0484.JPG",
+      "score": 0.06421888619661331,
+      "map": "maps/0141.npz",
+      "map_sha256": "6e22afb29cfe98df67e61da1bd07a23307ddaae3b2e04eae17013358a738bb55",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.11843070003669709
+    },
+    {
+      "path": "candle/test/good/0488.JPG",
+      "score": 0.07056237012147903,
+      "map": "maps/0142.npz",
+      "map_sha256": "ded1f1d6ee4ce529ec561f068151bd5f82be650a3ae9712fb638efb43ccb8343",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09506899997359142
+    },
+    {
+      "path": "candle/test/good/0490.JPG",
+      "score": 0.06981779634952545,
+      "map": "maps/0143.npz",
+      "map_sha256": "8c5021f1342d524417f6a7c163c6232bd110b2ce5e937573e58cc5cb1d3ba56b",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08925550000276417
+    },
+    {
+      "path": "candle/test/good/0514.JPG",
+      "score": 0.06567960232496262,
+      "map": "maps/0144.npz",
+      "map_sha256": "eb68f411f8a8b7f8eda3c8b521a676165ee023fbcdce7dbb05f0b4755555498e",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09769199998117983
+    },
+    {
+      "path": "candle/test/good/0518.JPG",
+      "score": 0.07290761172771454,
+      "map": "maps/0145.npz",
+      "map_sha256": "936c2910f4e117584cf268335bde15a4a5314a67587eacf61e7d4125192cb154",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09957869997015223
+    },
+    {
+      "path": "candle/test/good/0520.JPG",
+      "score": 0.062081702053546906,
+      "map": "maps/0146.npz",
+      "map_sha256": "8771e8eae130852f02dbdf9b6c1579ba9feb7390f0528528da6cd177e5f750a3",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06650060001993552
+    },
+    {
+      "path": "candle/test/good/0525.JPG",
+      "score": 0.07201465964317322,
+      "map": "maps/0147.npz",
+      "map_sha256": "4df031e0ab7ddadd9fe08fd1bad1919a2066066f994b744571b9e3d44b577783",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09801110002445057
+    },
+    {
+      "path": "candle/test/good/0545.JPG",
+      "score": 0.06758548319339752,
+      "map": "maps/0148.npz",
+      "map_sha256": "c73353efc43e6c21d0eb8d23267a68af082605eeda35922370cc516796958a15",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06945229996927083
+    },
+    {
+      "path": "candle/test/good/0552.JPG",
+      "score": 0.06445537507534027,
+      "map": "maps/0149.npz",
+      "map_sha256": "095f192b76c108642378fdf878abfa86d24ebfa2b66ffd8900d19bacb830abab",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09048459999030456
+    },
+    {
+      "path": "candle/test/good/0569.JPG",
+      "score": 0.06855253130197525,
+      "map": "maps/0150.npz",
+      "map_sha256": "e2872f862e9bf8a418abbb5f5a55073b7f3daa0b1e5e7ff27039880009ea3abb",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08471630001440644
+    },
+    {
+      "path": "candle/test/good/0615.JPG",
+      "score": 0.07994672656059265,
+      "map": "maps/0151.npz",
+      "map_sha256": "7d1ff693cd78869476757fea1fce56686cab13cc6f69c5051f2c4ba936471b33",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09711820003576577
+    },
+    {
+      "path": "candle/test/good/0617.JPG",
+      "score": 0.066422238945961,
+      "map": "maps/0152.npz",
+      "map_sha256": "c9b5d062fc316385a3b727417a0ee611b12521e4eafc7e77504f325ea9c7d16b",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08163560001412407
+    },
+    {
+      "path": "candle/test/good/0619.JPG",
+      "score": 0.06449659913778305,
+      "map": "maps/0153.npz",
+      "map_sha256": "003a8876e151ade1cd9e4554df6daf7563ca1cf1837267dc2d0a668f6d01d4b7",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.096914800000377
+    },
+    {
+      "path": "candle/test/good/0621.JPG",
+      "score": 0.07326085865497589,
+      "map": "maps/0154.npz",
+      "map_sha256": "c23ee202be81ac4b5659f2cdc3ae09a6f8e25d3e9e80d1c66ea05bfef1a938ef",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08963650005171075
+    },
+    {
+      "path": "candle/test/good/0629.JPG",
+      "score": 0.07867535948753357,
+      "map": "maps/0155.npz",
+      "map_sha256": "d980a123d149b22a801f6370d1c8b21bfbe7e4bb4b3e5eaee7d15a20a0162e6a",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09023390000220388
+    },
+    {
+      "path": "candle/test/good/0631.JPG",
+      "score": 0.07013107091188431,
+      "map": "maps/0156.npz",
+      "map_sha256": "3591c2d7c12cc97d822b401e352bbd00f459f77c75dbb9f2a58037396d8d5380",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09061720001045614
+    },
+    {
+      "path": "candle/test/good/0648.JPG",
+      "score": 0.07714083045721054,
+      "map": "maps/0157.npz",
+      "map_sha256": "1c8bf1f13b1cf64a5e21ccebaa939ad373d81fec959f5f7998f8f439b3a7c2b4",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08922119997441769
+    },
+    {
+      "path": "candle/test/good/0654.JPG",
+      "score": 0.0697641596198082,
+      "map": "maps/0158.npz",
+      "map_sha256": "c07874056467030a0fa3a72c10efafa477213a09cc981931d64eebdd34fc1273",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06380830000853166
+    },
+    {
+      "path": "candle/test/good/0657.JPG",
+      "score": 0.08696397393941879,
+      "map": "maps/0159.npz",
+      "map_sha256": "686974e3deb959e3632d5924607eca4c4bf68dc66715411f7057e612a46e6dee",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06708900001831353
+    },
+    {
+      "path": "candle/test/good/0659.JPG",
+      "score": 0.07553655654191971,
+      "map": "maps/0160.npz",
+      "map_sha256": "6b50ed8f4437b52e12a9b3a3c807b5bb6861f42ecd31abcf78a9aef4ba2826fb",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0928944000042975
+    },
+    {
+      "path": "candle/test/good/0674.JPG",
+      "score": 0.08288746327161789,
+      "map": "maps/0161.npz",
+      "map_sha256": "c34853ee3d78ab5da5166774cca7c094450764fe5b0632409428d4b9ac53a1d5",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0722797000198625
+    },
+    {
+      "path": "candle/test/good/0684.JPG",
+      "score": 0.06586632877588272,
+      "map": "maps/0162.npz",
+      "map_sha256": "99b3d3cbdc20008e7da32a3779f4c340e0ae5e5e3a2ed0f90ece8f341bb358f1",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09094939997885376
+    },
+    {
+      "path": "candle/test/good/0685.JPG",
+      "score": 0.06980251520872116,
+      "map": "maps/0163.npz",
+      "map_sha256": "e8addf7972c05fb1a9ee8ec75e55ff26ead9f258ec4fcd573f7e5d958b4e3f4e",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06896760000381619
+    },
+    {
+      "path": "candle/test/good/0688.JPG",
+      "score": 0.07118281722068787,
+      "map": "maps/0164.npz",
+      "map_sha256": "7b1ab832402622d4a246da611bf407727b8ddfadb7183e7233110467f6967ab6",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06198030000086874
+    },
+    {
+      "path": "candle/test/good/0690.JPG",
+      "score": 0.07546799629926682,
+      "map": "maps/0165.npz",
+      "map_sha256": "c83e064b175078357aebee319e38c3bd5b224d6deecb8eb4d3b5931d44d8d09b",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08941409998806193
+    },
+    {
+      "path": "candle/test/good/0694.JPG",
+      "score": 0.08039789646863937,
+      "map": "maps/0166.npz",
+      "map_sha256": "fcde18310ba125fdf5d9e89e63e52befc196baaa4bc61d4419ac561b1f430fb8",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08910979999927804
+    },
+    {
+      "path": "candle/test/good/0705.JPG",
+      "score": 0.06782200187444687,
+      "map": "maps/0167.npz",
+      "map_sha256": "3ae5b0f816ae08e446e5981002976798f4fb8832c30797ab21b6733ea00b7d6d",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06767100002616644
+    },
+    {
+      "path": "candle/test/good/0725.JPG",
+      "score": 0.06785792857408524,
+      "map": "maps/0168.npz",
+      "map_sha256": "07050d689d9e38b596a4819bc340966c26318ebaf81ed0b64f8630a1e288f021",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08634710003389046
+    },
+    {
+      "path": "candle/test/good/0730.JPG",
+      "score": 0.07551062852144241,
+      "map": "maps/0169.npz",
+      "map_sha256": "77f3663de1a1cdaee8c2e481b01505b918d03265a17c5254c1da170ed9f93e73",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0910497999866493
+    },
+    {
+      "path": "candle/test/good/0735.JPG",
+      "score": 0.06802715361118317,
+      "map": "maps/0170.npz",
+      "map_sha256": "28738266193e324955cf1365098eaaad82850e433b5ccf94f7e526c5df58a493",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0652913999510929
+    },
+    {
+      "path": "candle/test/good/0739.JPG",
+      "score": 0.07660872489213943,
+      "map": "maps/0171.npz",
+      "map_sha256": "701f288082d08504df5be2e16d07b5be98320356c6666a136bb53a3a2e2212c1",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08019639999838546
+    },
+    {
+      "path": "candle/test/good/0751.JPG",
+      "score": 0.0765996053814888,
+      "map": "maps/0172.npz",
+      "map_sha256": "27547c63edfbbbb859876e4c14a24f8dd76fa41574ce87c0c3dd6df97f9bc9f5",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0898408999782987
+    },
+    {
+      "path": "candle/test/good/0755.JPG",
+      "score": 0.05804610252380371,
+      "map": "maps/0173.npz",
+      "map_sha256": "018ae967fa6575107617ea695430f7b036fb9a20979162b69bb911e04c18eb6c",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09262309997575358
+    },
+    {
+      "path": "candle/test/good/0764.JPG",
+      "score": 0.06896299868822098,
+      "map": "maps/0174.npz",
+      "map_sha256": "70b56bb621a89f8994abea261b059d6d6258c0091adec560cc728be002c1574b",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08941919996868819
+    },
+    {
+      "path": "candle/test/good/0768.JPG",
+      "score": 0.06741458922624588,
+      "map": "maps/0175.npz",
+      "map_sha256": "3716de20a06ad2a5318b49cb2ec955c514e1bd2cbe5acec2e3f8d9ac41a6b039",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08696829999098554
+    },
+    {
+      "path": "candle/test/good/0779.JPG",
+      "score": 0.06132396683096886,
+      "map": "maps/0176.npz",
+      "map_sha256": "1c99dd9e15671b02f5911602f70060ef64c10ab275e0df0b868997a52d651cd7",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08966860000509769
+    },
+    {
+      "path": "candle/test/good/0784.JPG",
+      "score": 0.06381750106811523,
+      "map": "maps/0177.npz",
+      "map_sha256": "fdb6011aca49c63ea06e46f873856ee80d780f0408c4cf9d239afdba61461f8c",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08890119998250157
+    },
+    {
+      "path": "candle/test/good/0790.JPG",
+      "score": 0.06319025158882141,
+      "map": "maps/0178.npz",
+      "map_sha256": "165ccc61108ce058fbb6800a69388e2c1cd2ec301f5578ca0e37f271754ea761",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06574049999471754
+    },
+    {
+      "path": "candle/test/good/0796.JPG",
+      "score": 0.06391430646181107,
+      "map": "maps/0179.npz",
+      "map_sha256": "bfe03d952c2c7f89ee4c4998af183e2527dcb4e2830aef5627ec5b640a98851d",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08943059999728575
+    },
+    {
+      "path": "candle/test/good/0797.JPG",
+      "score": 0.06534858793020248,
+      "map": "maps/0180.npz",
+      "map_sha256": "5d38b44917b756e71da37f9c588aaa6f483322e9e59c6c25f28f3d706e3e8525",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08869960001902655
+    },
+    {
+      "path": "candle/test/good/0800.JPG",
+      "score": 0.06784392148256302,
+      "map": "maps/0181.npz",
+      "map_sha256": "e2c29a581fd8cc4b62e3c93ffbc031a8e4e62ad85d35125e167e8854e0848631",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08763239998370409
+    },
+    {
+      "path": "candle/test/good/0804.JPG",
+      "score": 0.07997573167085648,
+      "map": "maps/0182.npz",
+      "map_sha256": "d00387275dbe4f6dede4c4e2fd4532e637b6c894ecc7cc4b0736c62aac8dee7c",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06435739999869838
+    },
+    {
+      "path": "candle/test/good/0811.JPG",
+      "score": 0.06421255320310593,
+      "map": "maps/0183.npz",
+      "map_sha256": "4c9c1647f0a1228404efda16441df8200f500d790c45f1a521429dba7fbd204e",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08958820003317669
+    },
+    {
+      "path": "candle/test/good/0844.JPG",
+      "score": 0.06023253872990608,
+      "map": "maps/0184.npz",
+      "map_sha256": "daa21594c1af38c585cf62eac3f80a41c1fde874f71f469cec0ead4abb778b82",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0872716999729164
+    },
+    {
+      "path": "candle/test/good/0869.JPG",
+      "score": 0.060619715601205826,
+      "map": "maps/0185.npz",
+      "map_sha256": "e7e0d42385712e1e69fd4ec2e6b385251ad2986cdeaa2a0ecd0de113b5bef294",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09394130000146106
+    },
+    {
+      "path": "candle/test/good/0871.JPG",
+      "score": 0.06947808712720871,
+      "map": "maps/0186.npz",
+      "map_sha256": "7137a6763a9735c12ce9d07d035fa6a4995298d35976eb05d3e92968f25fb747",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08524469996336848
+    },
+    {
+      "path": "candle/test/good/0892.JPG",
+      "score": 0.06186097860336304,
+      "map": "maps/0187.npz",
+      "map_sha256": "3c48d568136215384fb46295024a3adddba6f2e263737bc23501a10e654e31f7",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.09095569996861741
+    },
+    {
+      "path": "candle/test/good/0900.JPG",
+      "score": 0.06404046714305878,
+      "map": "maps/0188.npz",
+      "map_sha256": "d8ae8d47b5e5a83753bc25ff3a78480533a6f0fb01fe0bce56c1fa8d7351b431",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0877992000314407
+    },
+    {
+      "path": "candle/test/good/0920.JPG",
+      "score": 0.06403471529483795,
+      "map": "maps/0189.npz",
+      "map_sha256": "8fddb637e0b23e736b39e265fe6d12c13dde34dc750329c652ceb0972c981afb",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08975159999681637
+    },
+    {
+      "path": "candle/test/good/0923.JPG",
+      "score": 0.06216391921043396,
+      "map": "maps/0190.npz",
+      "map_sha256": "9cc632e2378965eeeb39c7d91bce661fab37e246237b22d55867677bb0f45f73",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06725850002840161
+    },
+    {
+      "path": "candle/test/good/0935.JPG",
+      "score": 0.06743849813938141,
+      "map": "maps/0191.npz",
+      "map_sha256": "6ccbf36291e76901b71b79aebf13c7100dea82d2c8469f18bd1e4e02c3edd8b9",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.06251249997876585
+    },
+    {
+      "path": "candle/test/good/0952.JPG",
+      "score": 0.06428820639848709,
+      "map": "maps/0192.npz",
+      "map_sha256": "91b540393cd12e2e49ff3a513fd4d8e2f4902d05a4bf1b3920b98fe72401e275",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0851947000483051
+    },
+    {
+      "path": "candle/test/good/0953.JPG",
+      "score": 0.06937544047832489,
+      "map": "maps/0193.npz",
+      "map_sha256": "a46caa873f5a2a5ba762df95189a78294f2b53c875a835abcd529aaf19012713",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.07171190000372007
+    },
+    {
+      "path": "candle/test/good/0964.JPG",
+      "score": 0.06872193515300751,
+      "map": "maps/0194.npz",
+      "map_sha256": "a6484be413c6dfc407e192fa6b610a3fea0e527333d50538312a8d683d1d828c",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08481659996323287
+    },
+    {
+      "path": "candle/test/good/0967.JPG",
+      "score": 0.07541869580745697,
+      "map": "maps/0195.npz",
+      "map_sha256": "c861050c4533695eec9f1cacf33b7611a60ad0bc4383fd3690c31cf360cfdc58",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.0900518000125885
+    },
+    {
+      "path": "candle/test/good/0974.JPG",
+      "score": 0.06688960641622543,
+      "map": "maps/0196.npz",
+      "map_sha256": "1e7d87a8d2624b8919c391a853139f87081e0bb2ab5a005adf8926b30d008ddc",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.07298920000903308
+    },
+    {
+      "path": "candle/test/good/0985.JPG",
+      "score": 0.07362470030784607,
+      "map": "maps/0197.npz",
+      "map_sha256": "800a2f15b07e60792a5610e2096cb66008b97916f8ea4eb8d7381f6a11a759ce",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08803129999432713
+    },
+    {
+      "path": "candle/test/good/0994.JPG",
+      "score": 0.08337319642305374,
+      "map": "maps/0198.npz",
+      "map_sha256": "6e2ceec8cbe7949830d532c131729942dfe1010f2dd348244dd9f019502dc650",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08234319998882711
+    },
+    {
+      "path": "candle/test/good/0996.JPG",
+      "score": 0.07603002339601517,
+      "map": "maps/0199.npz",
+      "map_sha256": "e0f4cf901c285d04fefccfeeba5eef0e2b7f8e065164a4d5cb21eca73f0ddfcb",
+      "native_shape": [
+        1168,
+        1284
+      ],
+      "input_shape": [
+        448,
+        490
+      ],
+      "inference_seconds": 0.08907709998311475
+    }
+  ],
+  "resources": {
+    "training_seconds_including_read_preprocess": 116.40277159999823,
+    "training_peak_gpu_allocated_mb": 457.16943359375,
+    "training_count": 880,
+    "epochs": 12,
+    "training_shapes": [
+      {
+        "height": 448,
+        "width": 490,
+        "count": 880
+      }
+    ],
+    "parameter_count": 93283,
+    "training_loss_by_epoch": [
+      0.01938345081236383,
+      0.00106245429540815,
+      0.0008213883339935406,
+      0.0007298661972692406,
+      0.0006965971800540997,
+      0.0006403497690123252,
+      0.0006055251504717903,
+      0.0006198416445510124,
+      0.0005844452606238933,
+      0.0005754606388191778,
+      0.0005459325546822088,
+      0.000538172613861124
+    ],
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "gpu_used": true,
+    "peak_gpu_allocated_mb": 23.16455078125,
+    "peak_process_rss_mb": 1052.5078125,
+    "inference_seconds_mean": 0.08472854550054762,
+    "timing_includes": "image reading, resize/crop, AE forward, smoothing, top1% score, native interpolation, CUDA synchronization",
+    "timing_excludes": "training, calibration, warmup, NPZ compression and verification, evaluation",
+    "warmup_images": 3
+  },
+  "checkpoint_sha256": "b7c717776fc615e2112d02b2778bbba3ff626e103fa9987dd650363b81943f73"
+}

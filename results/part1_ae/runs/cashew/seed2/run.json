@@ -1,0 +1,2858 @@
+{
+  "method": "compact_normal_ae",
+  "experiment_mode": "normal_training",
+  "shots": null,
+  "reference_paths": [],
+  "seed": 2,
+  "seed_role": "training_initialization_and_shuffle",
+  "category": "cashew",
+  "protocol_id": "visa6_sorted20_official_refs_native_v2",
+  "config_id": "normal_ae_63c8f0a676cf",
+  "run_config": {
+    "method": "compact_normal_ae",
+    "experiment_mode": "normal_training",
+    "training_pool": "entire manifest normal_training_pool; excludes all 20 calibration images",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "epochs": 12,
+    "batch_size": 8,
+    "learning_rate": 0.001,
+    "optimizer": "Adam",
+    "loss": "mean RGB squared reconstruction error",
+    "architecture": "four stride2 Conv3x3 encoder blocks 16/32/48/64; nearest-upsample Conv3x3 decoder 48/32/16/3; ReLU, final sigmoid",
+    "augmentation": "independent horizontal and vertical flips p=.5 per training image; no synthetic defects",
+    "input_geometry": "same short-edge448 bicubic and bottom/right crop to14 as Template; reflection pad bottom/right to16 for AE, crop reconstruction back",
+    "map": "mean absolute RGB reconstruction error, Gaussian sigma2 on input grid; no morphology",
+    "image_score": "mean largest floor(1% of unpadded input-map pixels), at least1",
+    "native_map": "OpenCV linear resize to original size; original GT unchanged",
+    "threshold": "linear 95th percentile of exactly20 held-out normal calibration scores",
+    "selection": "fixed architecture/12 final epochs a priori; no test-label selection, no calibration fitting or early stopping",
+    "precision": "float32; no AMP; native maps stored losslessly as float32 compressed NPZ",
+    "determinism": "fixed seeds; cudnn deterministic true; benchmark false; torch threads4",
+    "comparison_scope": "normal-training extension, not a K-shot experiment; training counts reported separately",
+    "algorithm_source_sha256": {
+      "methods/part1/run_ae.py": "fc84159135cd4994750236d843d08e981e5464a63743bfd1a0ed1aff5ed68a1a",
+      "methods/part1/ae.py": "3fdb6e09243f95214404c479aa6f18849b581072abd48574f7e9979cc0c27315",
+      "methods/part1/template.py": "0d450ec1efbef004a905d21e69d587dc7f08fbfa750f2637fe14318f983ad704",
+      "methods/normal_training.py": "4eebe335deadb9377d258eb8573c7ec51ab56d58cf1b1e3b4876119c2ef68b81"
+    },
+    "python": "3.10.20 | packaged by Anaconda, Inc. | (main, Jun 11 2026, 15:13:20) [MSC v.1942 64 bit (AMD64)]",
+    "dependencies": {
+      "torch": "2.5.1+cu121",
+      "numpy": "2.1.3",
+      "scipy": "1.15.3",
+      "scikit-learn": "1.6.1",
+      "Pillow": "12.2.0",
+      "opencv-python-headless": "4.11.0.86"
+    },
+    "config_id": "normal_ae_63c8f0a676cf"
+  },
+  "integration_only": false,
+  "training_paths": [
+    "cashew/train/good/024.JPG",
+    "cashew/train/good/025.JPG",
+    "cashew/train/good/026.JPG",
+    "cashew/train/good/027.JPG",
+    "cashew/train/good/028.JPG",
+    "cashew/train/good/029.JPG",
+    "cashew/train/good/030.JPG",
+    "cashew/train/good/031.JPG",
+    "cashew/train/good/032.JPG",
+    "cashew/train/good/033.JPG",
+    "cashew/train/good/034.JPG",
+    "cashew/train/good/035.JPG",
+    "cashew/train/good/036.JPG",
+    "cashew/train/good/037.JPG",
+    "cashew/train/good/038.JPG",
+    "cashew/train/good/039.JPG",
+    "cashew/train/good/040.JPG",
+    "cashew/train/good/041.JPG",
+    "cashew/train/good/042.JPG",
+    "cashew/train/good/043.JPG",
+    "cashew/train/good/044.JPG",
+    "cashew/train/good/045.JPG",
+    "cashew/train/good/046.JPG",
+    "cashew/train/good/047.JPG",
+    "cashew/train/good/048.JPG",
+    "cashew/train/good/049.JPG",
+    "cashew/train/good/051.JPG",
+    "cashew/train/good/052.JPG",
+    "cashew/train/good/053.JPG",
+    "cashew/train/good/054.JPG",
+    "cashew/train/good/055.JPG",
+    "cashew/train/good/056.JPG",
+    "cashew/train/good/057.JPG",
+    "cashew/train/good/058.JPG",
+    "cashew/train/good/059.JPG",
+    "cashew/train/good/060.JPG",
+    "cashew/train/good/061.JPG",
+    "cashew/train/good/062.JPG",
+    "cashew/train/good/063.JPG",
+    "cashew/train/good/064.JPG",
+    "cashew/train/good/065.JPG",
+    "cashew/train/good/066.JPG",
+    "cashew/train/good/067.JPG",
+    "cashew/train/good/068.JPG",
+    "cashew/train/good/069.JPG",
+    "cashew/train/good/070.JPG",
+    "cashew/train/good/071.JPG",
+    "cashew/train/good/072.JPG",
+    "cashew/train/good/073.JPG",
+    "cashew/train/good/074.JPG",
+    "cashew/train/good/075.JPG",
+    "cashew/train/good/076.JPG",
+    "cashew/train/good/077.JPG",
+    "cashew/train/good/078.JPG",
+    "cashew/train/good/079.JPG",
+    "cashew/train/good/080.JPG",
+    "cashew/train/good/081.JPG",
+    "cashew/train/good/082.JPG",
+    "cashew/train/good/083.JPG",
+    "cashew/train/good/085.JPG",
+    "cashew/train/good/086.JPG",
+    "cashew/train/good/088.JPG",
+    "cashew/train/good/090.JPG",
+    "cashew/train/good/091.JPG",
+    "cashew/train/good/092.JPG",
+    "cashew/train/good/094.JPG",
+    "cashew/train/good/095.JPG",
+    "cashew/train/good/096.JPG",
+    "cashew/train/good/097.JPG",
+    "cashew/train/good/099.JPG",
+    "cashew/train/good/100.JPG",
+    "cashew/train/good/101.JPG",
+    "cashew/train/good/102.JPG",
+    "cashew/train/good/103.JPG",
+    "cashew/train/good/105.JPG",
+    "cashew/train/good/106.JPG",
+    "cashew/train/good/107.JPG",
+    "cashew/train/good/108.JPG",
+    "cashew/train/good/109.JPG",
+    "cashew/train/good/110.JPG",
+    "cashew/train/good/111.JPG",
+    "cashew/train/good/112.JPG",
+    "cashew/train/good/113.JPG",
+    "cashew/train/good/114.JPG",
+    "cashew/train/good/115.JPG",
+    "cashew/train/good/116.JPG",
+    "cashew/train/good/117.JPG",
+    "cashew/train/good/118.JPG",
+    "cashew/train/good/119.JPG",
+    "cashew/train/good/120.JPG",
+    "cashew/train/good/121.JPG",
+    "cashew/train/good/122.JPG",
+    "cashew/train/good/123.JPG",
+    "cashew/train/good/124.JPG",
+    "cashew/train/good/125.JPG",
+    "cashew/train/good/126.JPG",
+    "cashew/train/good/127.JPG",
+    "cashew/train/good/128.JPG",
+    "cashew/train/good/129.JPG",
+    "cashew/train/good/131.JPG",
+    "cashew/train/good/132.JPG",
+    "cashew/train/good/133.JPG",
+    "cashew/train/good/134.JPG",
+    "cashew/train/good/135.JPG",
+    "cashew/train/good/136.JPG",
+    "cashew/train/good/137.JPG",
+    "cashew/train/good/138.JPG",
+    "cashew/train/good/139.JPG",
+    "cashew/train/good/140.JPG",
+    "cashew/train/good/141.JPG",
+    "cashew/train/good/142.JPG",
+    "cashew/train/good/144.JPG",
+    "cashew/train/good/145.JPG",
+    "cashew/train/good/146.JPG",
+    "cashew/train/good/147.JPG",
+    "cashew/train/good/149.JPG",
+    "cashew/train/good/150.JPG",
+    "cashew/train/good/151.JPG",
+    "cashew/train/good/152.JPG",
+    "cashew/train/good/153.JPG",
+    "cashew/train/good/154.JPG",
+    "cashew/train/good/155.JPG",
+    "cashew/train/good/156.JPG",
+    "cashew/train/good/157.JPG",
+    "cashew/train/good/158.JPG",
+    "cashew/train/good/159.JPG",
+    "cashew/train/good/160.JPG",
+    "cashew/train/good/161.JPG",
+    "cashew/train/good/162.JPG",
+    "cashew/train/good/163.JPG",
+    "cashew/train/good/164.JPG",
+    "cashew/train/good/165.JPG",
+    "cashew/train/good/167.JPG",
+    "cashew/train/good/168.JPG",
+    "cashew/train/good/169.JPG",
+    "cashew/train/good/170.JPG",
+    "cashew/train/good/171.JPG",
+    "cashew/train/good/172.JPG",
+    "cashew/train/good/173.JPG",
+    "cashew/train/good/174.JPG",
+    "cashew/train/good/175.JPG",
+    "cashew/train/good/176.JPG",
+    "cashew/train/good/177.JPG",
+    "cashew/train/good/178.JPG",
+    "cashew/train/good/179.JPG",
+    "cashew/train/good/180.JPG",
+    "cashew/train/good/182.JPG",
+    "cashew/train/good/183.JPG",
+    "cashew/train/good/184.JPG",
+    "cashew/train/good/185.JPG",
+    "cashew/train/good/186.JPG",
+    "cashew/train/good/187.JPG",
+    "cashew/train/good/188.JPG",
+    "cashew/train/good/189.JPG",
+    "cashew/train/good/190.JPG",
+    "cashew/train/good/191.JPG",
+    "cashew/train/good/192.JPG",
+    "cashew/train/good/193.JPG",
+    "cashew/train/good/194.JPG",
+    "cashew/train/good/195.JPG",
+    "cashew/train/good/196.JPG",
+    "cashew/train/good/197.JPG",
+    "cashew/train/good/198.JPG",
+    "cashew/train/good/199.JPG",
+    "cashew/train/good/200.JPG",
+    "cashew/train/good/201.JPG",
+    "cashew/train/good/202.JPG",
+    "cashew/train/good/203.JPG",
+    "cashew/train/good/204.JPG",
+    "cashew/train/good/205.JPG",
+    "cashew/train/good/206.JPG",
+    "cashew/train/good/207.JPG",
+    "cashew/train/good/208.JPG",
+    "cashew/train/good/209.JPG",
+    "cashew/train/good/210.JPG",
+    "cashew/train/good/211.JPG",
+    "cashew/train/good/212.JPG",
+    "cashew/train/good/214.JPG",
+    "cashew/train/good/215.JPG",
+    "cashew/train/good/216.JPG",
+    "cashew/train/good/217.JPG",
+    "cashew/train/good/218.JPG",
+    "cashew/train/good/219.JPG",
+    "cashew/train/good/220.JPG",
+    "cashew/train/good/221.JPG",
+    "cashew/train/good/222.JPG",
+    "cashew/train/good/223.JPG",
+    "cashew/train/good/224.JPG",
+    "cashew/train/good/225.JPG",
+    "cashew/train/good/226.JPG",
+    "cashew/train/good/227.JPG",
+    "cashew/train/good/229.JPG",
+    "cashew/train/good/230.JPG",
+    "cashew/train/good/231.JPG",
+    "cashew/train/good/232.JPG",
+    "cashew/train/good/233.JPG",
+    "cashew/train/good/234.JPG",
+    "cashew/train/good/235.JPG",
+    "cashew/train/good/236.JPG",
+    "cashew/train/good/237.JPG",
+    "cashew/train/good/238.JPG",
+    "cashew/train/good/240.JPG",
+    "cashew/train/good/241.JPG",
+    "cashew/train/good/242.JPG",
+    "cashew/train/good/243.JPG",
+    "cashew/train/good/246.JPG",
+    "cashew/train/good/247.JPG",
+    "cashew/train/good/248.JPG",
+    "cashew/train/good/249.JPG",
+    "cashew/train/good/250.JPG",
+    "cashew/train/good/251.JPG",
+    "cashew/train/good/252.JPG",
+    "cashew/train/good/253.JPG",
+    "cashew/train/good/254.JPG",
+    "cashew/train/good/255.JPG",
+    "cashew/train/good/256.JPG",
+    "cashew/train/good/257.JPG",
+    "cashew/train/good/258.JPG",
+    "cashew/train/good/259.JPG",
+    "cashew/train/good/261.JPG",
+    "cashew/train/good/262.JPG",
+    "cashew/train/good/263.JPG",
+    "cashew/train/good/264.JPG",
+    "cashew/train/good/265.JPG",
+    "cashew/train/good/266.JPG",
+    "cashew/train/good/267.JPG",
+    "cashew/train/good/268.JPG",
+    "cashew/train/good/269.JPG",
+    "cashew/train/good/270.JPG",
+    "cashew/train/good/271.JPG",
+    "cashew/train/good/273.JPG",
+    "cashew/train/good/274.JPG",
+    "cashew/train/good/275.JPG",
+    "cashew/train/good/277.JPG",
+    "cashew/train/good/278.JPG",
+    "cashew/train/good/279.JPG",
+    "cashew/train/good/280.JPG",
+    "cashew/train/good/281.JPG",
+    "cashew/train/good/282.JPG",
+    "cashew/train/good/283.JPG",
+    "cashew/train/good/285.JPG",
+    "cashew/train/good/286.JPG",
+    "cashew/train/good/287.JPG",
+    "cashew/train/good/288.JPG",
+    "cashew/train/good/289.JPG",
+    "cashew/train/good/290.JPG",
+    "cashew/train/good/291.JPG",
+    "cashew/train/good/292.JPG",
+    "cashew/train/good/293.JPG",
+    "cashew/train/good/294.JPG",
+    "cashew/train/good/295.JPG",
+    "cashew/train/good/296.JPG",
+    "cashew/train/good/297.JPG",
+    "cashew/train/good/298.JPG",
+    "cashew/train/good/299.JPG",
+    "cashew/train/good/300.JPG",
+    "cashew/train/good/301.JPG",
+    "cashew/train/good/302.JPG",
+    "cashew/train/good/303.JPG",
+    "cashew/train/good/304.JPG",
+    "cashew/train/good/305.JPG",
+    "cashew/train/good/306.JPG",
+    "cashew/train/good/308.JPG",
+    "cashew/train/good/310.JPG",
+    "cashew/train/good/311.JPG",
+    "cashew/train/good/312.JPG",
+    "cashew/train/good/313.JPG",
+    "cashew/train/good/314.JPG",
+    "cashew/train/good/315.JPG",
+    "cashew/train/good/316.JPG",
+    "cashew/train/good/317.JPG",
+    "cashew/train/good/318.JPG",
+    "cashew/train/good/319.JPG",
+    "cashew/train/good/320.JPG",
+    "cashew/train/good/321.JPG",
+    "cashew/train/good/322.JPG",
+    "cashew/train/good/323.JPG",
+    "cashew/train/good/325.JPG",
+    "cashew/train/good/326.JPG",
+    "cashew/train/good/327.JPG",
+    "cashew/train/good/328.JPG",
+    "cashew/train/good/329.JPG",
+    "cashew/train/good/330.JPG",
+    "cashew/train/good/331.JPG",
+    "cashew/train/good/332.JPG",
+    "cashew/train/good/333.JPG",
+    "cashew/train/good/334.JPG",
+    "cashew/train/good/335.JPG",
+    "cashew/train/good/336.JPG",
+    "cashew/train/good/338.JPG",
+    "cashew/train/good/339.JPG",
+    "cashew/train/good/340.JPG",
+    "cashew/train/good/341.JPG",
+    "cashew/train/good/343.JPG",
+    "cashew/train/good/345.JPG",
+    "cashew/train/good/346.JPG",
+    "cashew/train/good/347.JPG",
+    "cashew/train/good/348.JPG",
+    "cashew/train/good/349.JPG",
+    "cashew/train/good/350.JPG",
+    "cashew/train/good/351.JPG",
+    "cashew/train/good/353.JPG",
+    "cashew/train/good/354.JPG",
+    "cashew/train/good/355.JPG",
+    "cashew/train/good/356.JPG",
+    "cashew/train/good/357.JPG",
+    "cashew/train/good/358.JPG",
+    "cashew/train/good/359.JPG",
+    "cashew/train/good/360.JPG",
+    "cashew/train/good/361.JPG",
+    "cashew/train/good/362.JPG",
+    "cashew/train/good/363.JPG",
+    "cashew/train/good/364.JPG",
+    "cashew/train/good/365.JPG",
+    "cashew/train/good/366.JPG",
+    "cashew/train/good/368.JPG",
+    "cashew/train/good/370.JPG",
+    "cashew/train/good/371.JPG",
+    "cashew/train/good/372.JPG",
+    "cashew/train/good/373.JPG",
+    "cashew/train/good/374.JPG",
+    "cashew/train/good/375.JPG",
+    "cashew/train/good/376.JPG",
+    "cashew/train/good/378.JPG",
+    "cashew/train/good/379.JPG",
+    "cashew/train/good/380.JPG",
+    "cashew/train/good/381.JPG",
+    "cashew/train/good/382.JPG",
+    "cashew/train/good/383.JPG",
+    "cashew/train/good/385.JPG",
+    "cashew/train/good/386.JPG",
+    "cashew/train/good/387.JPG",
+    "cashew/train/good/388.JPG",
+    "cashew/train/good/390.JPG",
+    "cashew/train/good/391.JPG",
+    "cashew/train/good/393.JPG",
+    "cashew/train/good/394.JPG",
+    "cashew/train/good/395.JPG",
+    "cashew/train/good/396.JPG",
+    "cashew/train/good/397.JPG",
+    "cashew/train/good/399.JPG",
+    "cashew/train/good/401.JPG",
+    "cashew/train/good/403.JPG",
+    "cashew/train/good/404.JPG",
+    "cashew/train/good/406.JPG",
+    "cashew/train/good/407.JPG",
+    "cashew/train/good/408.JPG",
+    "cashew/train/good/409.JPG",
+    "cashew/train/good/410.JPG",
+    "cashew/train/good/411.JPG",
+    "cashew/train/good/412.JPG",
+    "cashew/train/good/413.JPG",
+    "cashew/train/good/414.JPG",
+    "cashew/train/good/415.JPG",
+    "cashew/train/good/416.JPG",
+    "cashew/train/good/417.JPG",
+    "cashew/train/good/418.JPG",
+    "cashew/train/good/419.JPG",
+    "cashew/train/good/420.JPG",
+    "cashew/train/good/421.JPG",
+    "cashew/train/good/422.JPG",
+    "cashew/train/good/423.JPG",
+    "cashew/train/good/424.JPG",
+    "cashew/train/good/425.JPG",
+    "cashew/train/good/426.JPG",
+    "cashew/train/good/427.JPG",
+    "cashew/train/good/428.JPG",
+    "cashew/train/good/429.JPG",
+    "cashew/train/good/430.JPG",
+    "cashew/train/good/431.JPG",
+    "cashew/train/good/432.JPG",
+    "cashew/train/good/433.JPG",
+    "cashew/train/good/434.JPG",
+    "cashew/train/good/436.JPG",
+    "cashew/train/good/437.JPG",
+    "cashew/train/good/438.JPG",
+    "cashew/train/good/439.JPG",
+    "cashew/train/good/440.JPG",
+    "cashew/train/good/441.JPG",
+    "cashew/train/good/442.JPG",
+    "cashew/train/good/443.JPG",
+    "cashew/train/good/444.JPG",
+    "cashew/train/good/445.JPG",
+    "cashew/train/good/447.JPG",
+    "cashew/train/good/448.JPG",
+    "cashew/train/good/449.JPG",
+    "cashew/train/good/450.JPG",
+    "cashew/train/good/451.JPG",
+    "cashew/train/good/452.JPG",
+    "cashew/train/good/453.JPG",
+    "cashew/train/good/454.JPG",
+    "cashew/train/good/455.JPG",
+    "cashew/train/good/456.JPG",
+    "cashew/train/good/457.JPG",
+    "cashew/train/good/458.JPG",
+    "cashew/train/good/459.JPG",
+    "cashew/train/good/462.JPG",
+    "cashew/train/good/463.JPG",
+    "cashew/train/good/464.JPG",
+    "cashew/train/good/465.JPG",
+    "cashew/train/good/466.JPG",
+    "cashew/train/good/468.JPG",
+    "cashew/train/good/469.JPG",
+    "cashew/train/good/470.JPG",
+    "cashew/train/good/471.JPG",
+    "cashew/train/good/472.JPG",
+    "cashew/train/good/473.JPG",
+    "cashew/train/good/474.JPG",
+    "cashew/train/good/475.JPG",
+    "cashew/train/good/476.JPG",
+    "cashew/train/good/477.JPG",
+    "cashew/train/good/478.JPG",
+    "cashew/train/good/479.JPG",
+    "cashew/train/good/480.JPG",
+    "cashew/train/good/481.JPG",
+    "cashew/train/good/483.JPG",
+    "cashew/train/good/485.JPG",
+    "cashew/train/good/486.JPG",
+    "cashew/train/good/488.JPG",
+    "cashew/train/good/489.JPG",
+    "cashew/train/good/490.JPG",
+    "cashew/train/good/491.JPG",
+    "cashew/train/good/492.JPG",
+    "cashew/train/good/493.JPG",
+    "cashew/train/good/494.JPG",
+    "cashew/train/good/495.JPG",
+    "cashew/train/good/496.JPG",
+    "cashew/train/good/497.JPG",
+    "cashew/train/good/498.JPG",
+    "cashew/train/good/499.JPG"
+  ],
+  "training_count": 430,
+  "calibration": [
+    {
+      "path": "cashew/train/good/000.JPG",
+      "score": 0.12239950895309448
+    },
+    {
+      "path": "cashew/train/good/001.JPG",
+      "score": 0.11243985593318939
+    },
+    {
+      "path": "cashew/train/good/002.JPG",
+      "score": 0.11083659529685974
+    },
+    {
+      "path": "cashew/train/good/003.JPG",
+      "score": 0.1194368451833725
+    },
+    {
+      "path": "cashew/train/good/004.JPG",
+      "score": 0.11786717176437378
+    },
+    {
+      "path": "cashew/train/good/005.JPG",
+      "score": 0.11163477599620819
+    },
+    {
+      "path": "cashew/train/good/007.JPG",
+      "score": 0.10958525538444519
+    },
+    {
+      "path": "cashew/train/good/008.JPG",
+      "score": 0.1080576479434967
+    },
+    {
+      "path": "cashew/train/good/009.JPG",
+      "score": 0.1149759367108345
+    },
+    {
+      "path": "cashew/train/good/010.JPG",
+      "score": 0.11447498947381973
+    },
+    {
+      "path": "cashew/train/good/011.JPG",
+      "score": 0.11971479654312134
+    },
+    {
+      "path": "cashew/train/good/014.JPG",
+      "score": 0.11998607218265533
+    },
+    {
+      "path": "cashew/train/good/015.JPG",
+      "score": 0.10807878524065018
+    },
+    {
+      "path": "cashew/train/good/016.JPG",
+      "score": 0.13167402148246765
+    },
+    {
+      "path": "cashew/train/good/017.JPG",
+      "score": 0.1255747675895691
+    },
+    {
+      "path": "cashew/train/good/018.JPG",
+      "score": 0.12113242596387863
+    },
+    {
+      "path": "cashew/train/good/019.JPG",
+      "score": 0.1274479627609253
+    },
+    {
+      "path": "cashew/train/good/020.JPG",
+      "score": 0.11675780266523361
+    },
+    {
+      "path": "cashew/train/good/021.JPG",
+      "score": 0.12416122108697891
+    },
+    {
+      "path": "cashew/train/good/022.JPG",
+      "score": 0.12164875119924545
+    }
+  ],
+  "test": [
+    {
+      "path": "cashew/test/bad/000.JPG",
+      "score": 0.1431153267621994,
+      "map": "maps/0000.npz",
+      "map_sha256": "c9213952f5e8e9604dc002da45b2f7ff1489f4426e8bb7d9bd04bbef61cb5a52",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.048204799997620285
+    },
+    {
+      "path": "cashew/test/bad/001.JPG",
+      "score": 0.13451796770095825,
+      "map": "maps/0001.npz",
+      "map_sha256": "e1eb3bb4ae8f3cf2bca83c7c4a914fcd76f6661fdfb9960aa2644a696ec9da17",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.049993199994787574
+    },
+    {
+      "path": "cashew/test/bad/002.JPG",
+      "score": 0.13847699761390686,
+      "map": "maps/0002.npz",
+      "map_sha256": "18c7bfc0fc8f9097bf6c0370aae038095be3d69419c91b08a2a70d3aee64dd59",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.054026099969632924
+    },
+    {
+      "path": "cashew/test/bad/003.JPG",
+      "score": 0.13299250602722168,
+      "map": "maps/0003.npz",
+      "map_sha256": "f85dd76c46485dfbd6d83811caa380b25f8c5c403e1ed705799989826e378f96",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05804889998398721
+    },
+    {
+      "path": "cashew/test/bad/004.JPG",
+      "score": 0.13350149989128113,
+      "map": "maps/0004.npz",
+      "map_sha256": "a4fd8822aaef7a3936dff3d2698bd7a4c6286353f103a1e2bd5e673464ddd0c4",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.04994170001009479
+    },
+    {
+      "path": "cashew/test/bad/005.JPG",
+      "score": 0.11714145541191101,
+      "map": "maps/0005.npz",
+      "map_sha256": "dbbaa53d6e064dcfbbfc1097080f012a9274a212fd0303df1993a05fd76d2f7b",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05191280000144616
+    },
+    {
+      "path": "cashew/test/bad/006.JPG",
+      "score": 0.1332966834306717,
+      "map": "maps/0006.npz",
+      "map_sha256": "e6784929df4eacc27e134aa1d8e1b30c0de80b80faf4d241df5cdc6268f1823a",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.054771199997048825
+    },
+    {
+      "path": "cashew/test/bad/007.JPG",
+      "score": 0.13040661811828613,
+      "map": "maps/0007.npz",
+      "map_sha256": "965e5dd72bd676d8d8f3b1ccae807fb72e8202ffe485c4a26dab7dcc18554a59",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.0568908000132069
+    },
+    {
+      "path": "cashew/test/bad/008.JPG",
+      "score": 0.13662074506282806,
+      "map": "maps/0008.npz",
+      "map_sha256": "1324635d6ff4d93b1e089c0bf7eba5a69defa333b9eddd565b337c89fcad6e7e",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05815269995946437
+    },
+    {
+      "path": "cashew/test/bad/009.JPG",
+      "score": 0.12499981373548508,
+      "map": "maps/0009.npz",
+      "map_sha256": "d8b79c0a3f3c861ad115f46357da26a1caad25f6ad50a2803982bd972cf45ec1",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05934849998448044
+    },
+    {
+      "path": "cashew/test/bad/010.JPG",
+      "score": 0.1319446712732315,
+      "map": "maps/0010.npz",
+      "map_sha256": "70be9463af8dd51ddd5f655d1c5361e893318ca0c8b514c704bee86943bea992",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.058325699996203184
+    },
+    {
+      "path": "cashew/test/bad/011.JPG",
+      "score": 0.13911718130111694,
+      "map": "maps/0011.npz",
+      "map_sha256": "dc649ab2dfa561a300448fe9ec434e07510ca7359702c57f5e98cca7bd0eecd2",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06261759996414185
+    },
+    {
+      "path": "cashew/test/bad/012.JPG",
+      "score": 0.12609703838825226,
+      "map": "maps/0012.npz",
+      "map_sha256": "adeb1bb5cbf02efb5cb0611232f29c2b37882ce643d22ccba40fe6590b2b4552",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06553899997379631
+    },
+    {
+      "path": "cashew/test/bad/013.JPG",
+      "score": 0.12525758147239685,
+      "map": "maps/0013.npz",
+      "map_sha256": "c91a018f1aa417c9e3f85cf55a32a3708d474ef528448c1bf773f294eea20bb4",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06275100004859269
+    },
+    {
+      "path": "cashew/test/bad/014.JPG",
+      "score": 0.1382206380367279,
+      "map": "maps/0014.npz",
+      "map_sha256": "9e6e4bacefbfea892ac3557d0a9ae92dd93830bd4040923e862642b7718f5d93",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05717399995774031
+    },
+    {
+      "path": "cashew/test/bad/015.JPG",
+      "score": 0.13474999368190765,
+      "map": "maps/0015.npz",
+      "map_sha256": "8404b7729fa7d1326d00955ff7f39c69ab72b51185e9f48024293cc95c83d9a9",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.24621539999498054
+    },
+    {
+      "path": "cashew/test/bad/016.JPG",
+      "score": 0.12722617387771606,
+      "map": "maps/0016.npz",
+      "map_sha256": "4c9cf8fff4fb0f82a07a907a76fbb6df446507d8efc20eb47e453601ca1cac93",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.054486699984408915
+    },
+    {
+      "path": "cashew/test/bad/017.JPG",
+      "score": 0.13839727640151978,
+      "map": "maps/0017.npz",
+      "map_sha256": "96211824e838728063092aecc71e5a837384a2d6d61279b7077d15699353cf44",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05270480003673583
+    },
+    {
+      "path": "cashew/test/bad/018.JPG",
+      "score": 0.14014771580696106,
+      "map": "maps/0018.npz",
+      "map_sha256": "c00e0858bf328bbeee03d7962fbacac9020e5898bcf550b3d9884128597f759c",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.050862799980677664
+    },
+    {
+      "path": "cashew/test/bad/019.JPG",
+      "score": 0.14433617889881134,
+      "map": "maps/0019.npz",
+      "map_sha256": "3aa5daf313b8847a8e7eb0cb0a18ef27a4341807e49329ff90f23404e1068e2f",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.059090199996717274
+    },
+    {
+      "path": "cashew/test/bad/020.JPG",
+      "score": 0.14410904049873352,
+      "map": "maps/0020.npz",
+      "map_sha256": "00f1b78565c56ff06800c9f0ad9b6c7d9002fe0cab2aceb9e7f379791cad46dc",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06447410001419485
+    },
+    {
+      "path": "cashew/test/bad/021.JPG",
+      "score": 0.12118460237979889,
+      "map": "maps/0021.npz",
+      "map_sha256": "4b2a679fa0042ce9117d237dcd8f768ae31557498e8f2122f6c8648ccb4d5b83",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05647239997051656
+    },
+    {
+      "path": "cashew/test/bad/022.JPG",
+      "score": 0.1168692409992218,
+      "map": "maps/0022.npz",
+      "map_sha256": "6ad97e98ec25c1197d5a424e988fcb4168702b9b0a6a37cfda15ffe8f0c4977f",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.055590400006622076
+    },
+    {
+      "path": "cashew/test/bad/023.JPG",
+      "score": 0.12148863077163696,
+      "map": "maps/0023.npz",
+      "map_sha256": "2e85b5e5fb1aee47c1ff2cf2f923a7284d46bbb5e9974d9dbacbcd2806b098f1",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.24210400000447407
+    },
+    {
+      "path": "cashew/test/bad/024.JPG",
+      "score": 0.1347224861383438,
+      "map": "maps/0024.npz",
+      "map_sha256": "39efc0e3d17c1c1816b860127f0e8f2c74e329e2ebde9d027fa9857b5d357079",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.044401300023309886
+    },
+    {
+      "path": "cashew/test/bad/025.JPG",
+      "score": 0.1386270970106125,
+      "map": "maps/0025.npz",
+      "map_sha256": "960aa6450af67d226db35f93ec799bfc857f4f453fa6eb075d145818a6546ec8",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05253769998671487
+    },
+    {
+      "path": "cashew/test/bad/026.JPG",
+      "score": 0.14496979117393494,
+      "map": "maps/0026.npz",
+      "map_sha256": "adb0200ccfa99230444adfbe914186e1283cb20803bcfefb608c7617a073180a",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.04722780000884086
+    },
+    {
+      "path": "cashew/test/bad/027.JPG",
+      "score": 0.13414010405540466,
+      "map": "maps/0027.npz",
+      "map_sha256": "5b6673c890379a83fa52843aa51be14c20fc9d805a89cad894382e2583c5539a",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.04740709997713566
+    },
+    {
+      "path": "cashew/test/bad/028.JPG",
+      "score": 0.1286008656024933,
+      "map": "maps/0028.npz",
+      "map_sha256": "aa79df37143a464a6c3a3def066fed24539c34cfa0404e4937a354c2d158f7bc",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.046097899961750954
+    },
+    {
+      "path": "cashew/test/bad/029.JPG",
+      "score": 0.15673109889030457,
+      "map": "maps/0029.npz",
+      "map_sha256": "0649b033e65aaab7eb38d0d9a44af5c3b39d1604ab6c212e2ae07fbaa5ee47bd",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.062274099967908114
+    },
+    {
+      "path": "cashew/test/bad/030.JPG",
+      "score": 0.1453741192817688,
+      "map": "maps/0030.npz",
+      "map_sha256": "515125c15a44b2e1271dde0bbd0e37b12353340e00a1ea4fd62141adf21972c4",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.056919599999673665
+    },
+    {
+      "path": "cashew/test/bad/031.JPG",
+      "score": 0.13340671360492706,
+      "map": "maps/0031.npz",
+      "map_sha256": "f4ddac04b035c624e92549a983f638769f9f9728b3e41a9961ae86c45de17b12",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.26126810000278056
+    },
+    {
+      "path": "cashew/test/bad/032.JPG",
+      "score": 0.13638615608215332,
+      "map": "maps/0032.npz",
+      "map_sha256": "a22087c6907080ddf04f05fd199d6c67c3d9e16c9f06f36b178cbd236317192b",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.061158499971497804
+    },
+    {
+      "path": "cashew/test/bad/033.JPG",
+      "score": 0.11676666885614395,
+      "map": "maps/0033.npz",
+      "map_sha256": "a2b4765b00e8cf59af2591082d2e64675eb05a7cd7e4e45e87e71608c5c6bdb0",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05379520001588389
+    },
+    {
+      "path": "cashew/test/bad/034.JPG",
+      "score": 0.1256241798400879,
+      "map": "maps/0034.npz",
+      "map_sha256": "5abc5fa0d77e45d4618369016821e629117ba9c574d28d4f243820d53dc9cfc0",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.054250999994110316
+    },
+    {
+      "path": "cashew/test/bad/035.JPG",
+      "score": 0.14276356995105743,
+      "map": "maps/0035.npz",
+      "map_sha256": "e524592ebbf03fe4ceb037fc55ef2ace092d58a647cb1e8c870c8e525d4b90ba",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.32250039995415136
+    },
+    {
+      "path": "cashew/test/bad/036.JPG",
+      "score": 0.12289932370185852,
+      "map": "maps/0036.npz",
+      "map_sha256": "bbed2af2f908fa8ba31dbebcb8e6ddb98c6b642decfcc981d95a3721322d1c35",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06006780004827306
+    },
+    {
+      "path": "cashew/test/bad/037.JPG",
+      "score": 0.13657842576503754,
+      "map": "maps/0037.npz",
+      "map_sha256": "b2fac92b3a971fea21ca1e55cbfb2f856e96e789661169ddbbba791d4a72c695",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05174159997841343
+    },
+    {
+      "path": "cashew/test/bad/038.JPG",
+      "score": 0.13855554163455963,
+      "map": "maps/0038.npz",
+      "map_sha256": "76f12b870357b7e1aff3231a521738f3e3a744dc0d1b2db98a24e5f867b57b9b",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.052606399985961616
+    },
+    {
+      "path": "cashew/test/bad/039.JPG",
+      "score": 0.14385654032230377,
+      "map": "maps/0039.npz",
+      "map_sha256": "92bd66095ef578efc622a7acce866a559dd617184baf21e25e0e498b9dec1e1f",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.047275800025090575
+    },
+    {
+      "path": "cashew/test/bad/040.JPG",
+      "score": 0.14216527342796326,
+      "map": "maps/0040.npz",
+      "map_sha256": "0e21f86b7108b248ee980c62b2a24ac5b69bd9258cb774a7d073428202ea0b95",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.04819850000785664
+    },
+    {
+      "path": "cashew/test/bad/041.JPG",
+      "score": 0.13702784478664398,
+      "map": "maps/0041.npz",
+      "map_sha256": "7378911b1b01394763a4cd6560f01b55aef85927383d2bbeaf1a8f543e4775b1",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.048406999965664
+    },
+    {
+      "path": "cashew/test/bad/042.JPG",
+      "score": 0.1362912952899933,
+      "map": "maps/0042.npz",
+      "map_sha256": "d5f47418cd8da99fe2c86d59dfa7a62384c8f9a9814a50cf69bdca1c9b0721e2",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.052236299961805344
+    },
+    {
+      "path": "cashew/test/bad/043.JPG",
+      "score": 0.12340817600488663,
+      "map": "maps/0043.npz",
+      "map_sha256": "4dd50b5f13900394a35930958e09e1655ca58cdc39808cfa1e35abf85a02d738",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05552900000475347
+    },
+    {
+      "path": "cashew/test/bad/044.JPG",
+      "score": 0.12873084843158722,
+      "map": "maps/0044.npz",
+      "map_sha256": "82b0a1eafd4b1a5e829eb1c1f274919500ef70b8b9607e049cd5bce57b8150ab",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05997110001044348
+    },
+    {
+      "path": "cashew/test/bad/045.JPG",
+      "score": 0.13321854174137115,
+      "map": "maps/0045.npz",
+      "map_sha256": "b586cccd0ea9e5e967c24894b9e1beacda231332b23097f9b3e58eb462d21555",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05825230001937598
+    },
+    {
+      "path": "cashew/test/bad/046.JPG",
+      "score": 0.1351313441991806,
+      "map": "maps/0046.npz",
+      "map_sha256": "e06e41ec71ab5d58fa9770e167a32a25d6e24cc3e31f5fcfe9e979e76163d605",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06266820000018924
+    },
+    {
+      "path": "cashew/test/bad/047.JPG",
+      "score": 0.12614817917346954,
+      "map": "maps/0047.npz",
+      "map_sha256": "8cd15c290f028b76574532e4d17209f8e12fc8354cbd2a6b18031ac96362d6b4",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06209979997947812
+    },
+    {
+      "path": "cashew/test/bad/048.JPG",
+      "score": 0.1242787316441536,
+      "map": "maps/0048.npz",
+      "map_sha256": "3d16a5282d9154ce5748bd615e759325ab6850a99efe8b47d82e0a0a6a0355a9",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05908460001228377
+    },
+    {
+      "path": "cashew/test/bad/049.JPG",
+      "score": 0.12393513321876526,
+      "map": "maps/0049.npz",
+      "map_sha256": "045b3366b4a5d1f09d0b6e9f23090bf40b04253abd1bc8a40fd409adef5091e8",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05891770002199337
+    },
+    {
+      "path": "cashew/test/bad/050.JPG",
+      "score": 0.12949389219284058,
+      "map": "maps/0050.npz",
+      "map_sha256": "b74b713d427bd8735a97390f4132990e8a771a0fd6870956b0b761e04371b294",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.059900699998252094
+    },
+    {
+      "path": "cashew/test/bad/051.JPG",
+      "score": 0.12655417621135712,
+      "map": "maps/0051.npz",
+      "map_sha256": "05eda840adddcdd9d42dcee2d4c8f5bf10904a6d6ced2a6393ad2c885bd83daa",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.059724299993831664
+    },
+    {
+      "path": "cashew/test/bad/052.JPG",
+      "score": 0.1443767249584198,
+      "map": "maps/0052.npz",
+      "map_sha256": "7077abb650f2ca9fb67897fa8872db85fa3102e62aeefd8c2197c6cc0ef5f4e9",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.07238179998239502
+    },
+    {
+      "path": "cashew/test/bad/053.JPG",
+      "score": 0.13533829152584076,
+      "map": "maps/0053.npz",
+      "map_sha256": "9551b3dafda45eb5276329a064eae46b235adc0eda2e5aa96b9a9016620f04aa",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.058808500005397946
+    },
+    {
+      "path": "cashew/test/bad/054.JPG",
+      "score": 0.13745862245559692,
+      "map": "maps/0054.npz",
+      "map_sha256": "36c4f526eaf12dea0ddde504a8e2b06105ade698a3a58957df0292f3987daf8b",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06237569998484105
+    },
+    {
+      "path": "cashew/test/bad/055.JPG",
+      "score": 0.13099631667137146,
+      "map": "maps/0055.npz",
+      "map_sha256": "12d0dd2ddc9d6331f1d3d261514fd25cf647f159880e84052201d913f9bca15a",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06002570001874119
+    },
+    {
+      "path": "cashew/test/bad/056.JPG",
+      "score": 0.12892940640449524,
+      "map": "maps/0056.npz",
+      "map_sha256": "0a5205a58c4bae10900f5854c89155009f24cc8de7f58fab6cfee5208bba4ee7",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06627230002777651
+    },
+    {
+      "path": "cashew/test/bad/057.JPG",
+      "score": 0.1271614283323288,
+      "map": "maps/0057.npz",
+      "map_sha256": "3b88ec35160b49349eb263b05e8acca34be040c154a0ffcdcfc440d6b93b1676",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05980220000492409
+    },
+    {
+      "path": "cashew/test/bad/058.JPG",
+      "score": 0.1232459545135498,
+      "map": "maps/0058.npz",
+      "map_sha256": "52e92f938b89b24046afd5170e716dee616c8d71037a3a7d9747192107f841bb",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.07254839997040108
+    },
+    {
+      "path": "cashew/test/bad/059.JPG",
+      "score": 0.12124613672494888,
+      "map": "maps/0059.npz",
+      "map_sha256": "4811309df8ac01047bca8ef53cde23ec22c20535e64d46ddac38cb945d937dbf",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06603190000168979
+    },
+    {
+      "path": "cashew/test/bad/060.JPG",
+      "score": 0.12888109683990479,
+      "map": "maps/0060.npz",
+      "map_sha256": "2ab59c32abff15f1dda94b4bc377b9569eb5ce718165a124c9517aca51722a97",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06372219999320805
+    },
+    {
+      "path": "cashew/test/bad/061.JPG",
+      "score": 0.1343708485364914,
+      "map": "maps/0061.npz",
+      "map_sha256": "4c43b047b09f514129b64886296d9c2cd1134672f9968c2fda386314a6ea326c",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.0611955999629572
+    },
+    {
+      "path": "cashew/test/bad/062.JPG",
+      "score": 0.1275143325328827,
+      "map": "maps/0062.npz",
+      "map_sha256": "7ba96dc72502f4c6ce8724d1acb5de2377ff2b3dd28dabf904ec21d3edeb2f0a",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.07552610000129789
+    },
+    {
+      "path": "cashew/test/bad/063.JPG",
+      "score": 0.13451045751571655,
+      "map": "maps/0063.npz",
+      "map_sha256": "74de950bfc0a6291b14f200d1cdba922ac7e11bd81434c11a967080c7708d6d3",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06099130003713071
+    },
+    {
+      "path": "cashew/test/bad/064.JPG",
+      "score": 0.12868674099445343,
+      "map": "maps/0064.npz",
+      "map_sha256": "8c86e6c66d227ebf69a28108d64d4d05d8f3fb6527722758d2d4f14ef19e2b70",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06589710002299398
+    },
+    {
+      "path": "cashew/test/bad/065.JPG",
+      "score": 0.14319314062595367,
+      "map": "maps/0065.npz",
+      "map_sha256": "ac9096682251a1dba844fbb741de174e57f5d39c1ccff1138657e11fbe49d1e1",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06690840004011989
+    },
+    {
+      "path": "cashew/test/bad/066.JPG",
+      "score": 0.14400869607925415,
+      "map": "maps/0066.npz",
+      "map_sha256": "647088dc96380d9236d2b38197f946d468f683e3d74d424022d1f594c2d4029c",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06648229999700561
+    },
+    {
+      "path": "cashew/test/bad/067.JPG",
+      "score": 0.13284392654895782,
+      "map": "maps/0067.npz",
+      "map_sha256": "d93b4bd1636ae6a5b94dbaf18cc60b3a618517ca5dee7c1dc611803627492278",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.07088000001385808
+    },
+    {
+      "path": "cashew/test/bad/068.JPG",
+      "score": 0.1381440907716751,
+      "map": "maps/0068.npz",
+      "map_sha256": "fc11f71d2a5903a901b52b589fe957f6def540e7b8a43ea70380617125fac4e4",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06480590003775433
+    },
+    {
+      "path": "cashew/test/bad/069.JPG",
+      "score": 0.13593462109565735,
+      "map": "maps/0069.npz",
+      "map_sha256": "e80118e86e038291f37c147797750d7ce681be2c3c1b994c46c42a3c6a9c7db4",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.055335699988063425
+    },
+    {
+      "path": "cashew/test/bad/070.JPG",
+      "score": 0.12965597212314606,
+      "map": "maps/0070.npz",
+      "map_sha256": "c23408e381f94443f8fb9ea4e2c1532187977b402fd8b4b636cacb73b5c5d3a1",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05934249999700114
+    },
+    {
+      "path": "cashew/test/bad/071.JPG",
+      "score": 0.12571220099925995,
+      "map": "maps/0071.npz",
+      "map_sha256": "ce0e2935730d1d6a45819aebfac7c4e86f3c5fd977f31b70c8a99bee2be9d6ae",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06360880000283942
+    },
+    {
+      "path": "cashew/test/bad/072.JPG",
+      "score": 0.13234010338783264,
+      "map": "maps/0072.npz",
+      "map_sha256": "e4444e1d5a73fa036d9945e4298ea955617e398073178646ee54133f35221b15",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.059001400019042194
+    },
+    {
+      "path": "cashew/test/bad/073.JPG",
+      "score": 0.13288994133472443,
+      "map": "maps/0073.npz",
+      "map_sha256": "b2b3d356bbed0150e9aa2241db315e24c8b9971d2c07a95905037f1c3ca2848f",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05605670000659302
+    },
+    {
+      "path": "cashew/test/bad/074.JPG",
+      "score": 0.1285981386899948,
+      "map": "maps/0074.npz",
+      "map_sha256": "6597e2c278b550533543f698b99572ba29706252cba0fefe1ea0c46aee549721",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05952650000108406
+    },
+    {
+      "path": "cashew/test/bad/075.JPG",
+      "score": 0.1371486932039261,
+      "map": "maps/0075.npz",
+      "map_sha256": "6854172465cea359772bf391aabb973df10b28fcccca0db412bf2ca300360ee4",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.057932900032028556
+    },
+    {
+      "path": "cashew/test/bad/076.JPG",
+      "score": 0.14148178696632385,
+      "map": "maps/0076.npz",
+      "map_sha256": "6eb385f5a867ea97c72cc0aa8d3276ce9db9fb496088ef3f7b676ebe5c4e933f",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05610709998290986
+    },
+    {
+      "path": "cashew/test/bad/077.JPG",
+      "score": 0.13202595710754395,
+      "map": "maps/0077.npz",
+      "map_sha256": "c48f4810c91ebe5e1f840613e4be35b66b06acb408da7fe94e39335b1f91c6bb",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06443770002806559
+    },
+    {
+      "path": "cashew/test/bad/078.JPG",
+      "score": 0.15423260629177094,
+      "map": "maps/0078.npz",
+      "map_sha256": "78a0188f401c1171af496fc35bcee97d029a6be0707d72996df3a849adf37d31",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05943109997315332
+    },
+    {
+      "path": "cashew/test/bad/079.JPG",
+      "score": 0.13523811101913452,
+      "map": "maps/0079.npz",
+      "map_sha256": "82a7d422e6ed3219c773b1aae87a5ce9798e5c9c5e24c8142b3359d881bd8e90",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06210469995858148
+    },
+    {
+      "path": "cashew/test/bad/080.JPG",
+      "score": 0.13073217868804932,
+      "map": "maps/0080.npz",
+      "map_sha256": "371090b75d059e28433583251bf001d1a9582e565df5cdec95a4a92c2b46053a",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05629490001592785
+    },
+    {
+      "path": "cashew/test/bad/081.JPG",
+      "score": 0.12633030116558075,
+      "map": "maps/0081.npz",
+      "map_sha256": "bc2d3abe2dd917e33c36da5b7613b396db0c3006cb9662f2986dcf1b5864cb37",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06370009999955073
+    },
+    {
+      "path": "cashew/test/bad/082.JPG",
+      "score": 0.13103926181793213,
+      "map": "maps/0082.npz",
+      "map_sha256": "8334bc9e8bfeb469ce8fb6d6d46176409fcf0acae4341e34faf7c0044840d3c2",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06259129999671131
+    },
+    {
+      "path": "cashew/test/bad/083.JPG",
+      "score": 0.11906665563583374,
+      "map": "maps/0083.npz",
+      "map_sha256": "da32cdc34dc02f2bb8f2b9f633f530590c0e57911660520f452528fb62140493",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.2845734999864362
+    },
+    {
+      "path": "cashew/test/bad/084.JPG",
+      "score": 0.12257176637649536,
+      "map": "maps/0084.npz",
+      "map_sha256": "d46d4a248cd862d69c005b1dc862a3f1333b36dec890eb90945bfd816b700d76",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05449890001909807
+    },
+    {
+      "path": "cashew/test/bad/085.JPG",
+      "score": 0.12878486514091492,
+      "map": "maps/0085.npz",
+      "map_sha256": "c7ee3ab4c66a164d7a81e8e74a9425084c456f5f0b8fed0b4de6eb45cff045e2",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.04870320000918582
+    },
+    {
+      "path": "cashew/test/bad/086.JPG",
+      "score": 0.12587077915668488,
+      "map": "maps/0086.npz",
+      "map_sha256": "7753abad0fecf3f77ee6bf8abe410e41df022697c50db0a533a04c4f391dcc44",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.0551782000111416
+    },
+    {
+      "path": "cashew/test/bad/087.JPG",
+      "score": 0.13278013467788696,
+      "map": "maps/0087.npz",
+      "map_sha256": "6533e5b5fc08f4345bc919391ea6f0c044880aa9202a38d460f24d38c317a7b2",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.0762692000134848
+    },
+    {
+      "path": "cashew/test/bad/088.JPG",
+      "score": 0.14518247544765472,
+      "map": "maps/0088.npz",
+      "map_sha256": "83ebf372b09ddd07a9856adf20341d3a42d1e3c2ffa1d7c62610113934d2c472",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06091469997772947
+    },
+    {
+      "path": "cashew/test/bad/089.JPG",
+      "score": 0.13957123458385468,
+      "map": "maps/0089.npz",
+      "map_sha256": "5d4a143cfbb4465a12136528189fa25fb54c318be0c2b7b23a2beda27fc740d4",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.055657099990639836
+    },
+    {
+      "path": "cashew/test/bad/090.JPG",
+      "score": 0.13278958201408386,
+      "map": "maps/0090.npz",
+      "map_sha256": "e9cdee9c036e97dbc10a9701ce215d4ba409841073f7ba5485ef10265e18a8ab",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06035480002174154
+    },
+    {
+      "path": "cashew/test/bad/091.JPG",
+      "score": 0.1312103271484375,
+      "map": "maps/0091.npz",
+      "map_sha256": "89694840963b44cfbfefead8a8d23a8b899cfe36279444efc88a9df51dcd9d29",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.2904945000191219
+    },
+    {
+      "path": "cashew/test/bad/092.JPG",
+      "score": 0.13100481033325195,
+      "map": "maps/0092.npz",
+      "map_sha256": "412e73751ba05ccd856177c3f0620ebc8086783eadfeae71d6e7a7bc884d808d",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.055169600003864616
+    },
+    {
+      "path": "cashew/test/bad/093.JPG",
+      "score": 0.12974943220615387,
+      "map": "maps/0093.npz",
+      "map_sha256": "7415aed9d816572ab684bf8284f20a6d5293af5c762ff09ca4806ea1a3612bcc",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.04874019999988377
+    },
+    {
+      "path": "cashew/test/bad/094.JPG",
+      "score": 0.13087575137615204,
+      "map": "maps/0094.npz",
+      "map_sha256": "11973d22562966628eca2d3d15a9b3d50d0a0b1df9f5a628809b651e843e15ef",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06358369998633862
+    },
+    {
+      "path": "cashew/test/bad/095.JPG",
+      "score": 0.1331636756658554,
+      "map": "maps/0095.npz",
+      "map_sha256": "674d53a8ad255617c5113f694de9808b83e50337cac08b058208dc8e7bc5493b",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05572170001687482
+    },
+    {
+      "path": "cashew/test/bad/096.JPG",
+      "score": 0.12214623391628265,
+      "map": "maps/0096.npz",
+      "map_sha256": "f646d8e7365c3e5d12f975d51268e612e2e66550eaa526bcd4b796866b35e937",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.04950929997721687
+    },
+    {
+      "path": "cashew/test/bad/097.JPG",
+      "score": 0.1227927878499031,
+      "map": "maps/0097.npz",
+      "map_sha256": "f72e6c1c1376d34a757b4d47041b9db851af5a5ae9d29250b4a873659e89de3e",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.056719600048381835
+    },
+    {
+      "path": "cashew/test/bad/098.JPG",
+      "score": 0.11262834817171097,
+      "map": "maps/0098.npz",
+      "map_sha256": "d1de2d572be690203bcaeb5153688efd2b54f26af72bdf056618d685f610e86e",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05524810001952574
+    },
+    {
+      "path": "cashew/test/bad/099.JPG",
+      "score": 0.13669085502624512,
+      "map": "maps/0099.npz",
+      "map_sha256": "40c2c7a61c01112c371fc59cb3e5b10cb6daf0d38ffed83352343ed6128b602c",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05457049998221919
+    },
+    {
+      "path": "cashew/test/good/006.JPG",
+      "score": 0.11378481984138489,
+      "map": "maps/0100.npz",
+      "map_sha256": "3a2ad8485c9e6038fe801b2b3cfcca0f0d4f559d3fb92c7ceae2aceb856aec89",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06352060002973303
+    },
+    {
+      "path": "cashew/test/good/012.JPG",
+      "score": 0.11413054913282394,
+      "map": "maps/0101.npz",
+      "map_sha256": "e794f8c473eae50ebd28f15d6aa2ad5ce9b3a420c38a077c6c0568703ce8e14e",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06622360000619665
+    },
+    {
+      "path": "cashew/test/good/013.JPG",
+      "score": 0.10786140710115433,
+      "map": "maps/0102.npz",
+      "map_sha256": "50c2f4da14ed9c8f44a4f9a24e45e195618460b5ec391e26d29274aadf4700d1",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05951729998923838
+    },
+    {
+      "path": "cashew/test/good/023.JPG",
+      "score": 0.11307007819414139,
+      "map": "maps/0103.npz",
+      "map_sha256": "c2c6b80a3c3d0494983a1b898ded7316dccfd2b68dc053dae964f0b09385069b",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06085240002721548
+    },
+    {
+      "path": "cashew/test/good/050.JPG",
+      "score": 0.11280711740255356,
+      "map": "maps/0104.npz",
+      "map_sha256": "31b47008588938de08ba1621eb393949bebc1ab39801ca2a242fd6a7bdcdb93e",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.059036899998318404
+    },
+    {
+      "path": "cashew/test/good/084.JPG",
+      "score": 0.11325152963399887,
+      "map": "maps/0105.npz",
+      "map_sha256": "942274acc827cb0274b4dee03a4402232beffbc5e64b62245e5fd10bff12b0e7",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.29418600001372397
+    },
+    {
+      "path": "cashew/test/good/087.JPG",
+      "score": 0.11638020724058151,
+      "map": "maps/0106.npz",
+      "map_sha256": "8aaea8fdbe31aa3d0b9d17cf2943048bfa3047d4f5e882d7b8d77b12fc7ad007",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05738949996884912
+    },
+    {
+      "path": "cashew/test/good/089.JPG",
+      "score": 0.12294387072324753,
+      "map": "maps/0107.npz",
+      "map_sha256": "eaa10ef815c4828e801dc3e5dbd2af46b8c166955c24c9be9cba8f305483bc9f",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.060740599990822375
+    },
+    {
+      "path": "cashew/test/good/093.JPG",
+      "score": 0.1201825886964798,
+      "map": "maps/0108.npz",
+      "map_sha256": "593bd8e850caae09342ca3378cfbfd96be9ce506b92e58aba626abf239190516",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05344749998766929
+    },
+    {
+      "path": "cashew/test/good/098.JPG",
+      "score": 0.10456417500972748,
+      "map": "maps/0109.npz",
+      "map_sha256": "20f2fb4dc363d344a711b8e82eb8500070814ec5818757d5792f61c3ad192a13",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06530419999035075
+    },
+    {
+      "path": "cashew/test/good/104.JPG",
+      "score": 0.12326204031705856,
+      "map": "maps/0110.npz",
+      "map_sha256": "df719ca820808a6565214a65316d6fb9e30d6e3c076366e2519152ac0a86e18c",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.0615506999893114
+    },
+    {
+      "path": "cashew/test/good/130.JPG",
+      "score": 0.11322419345378876,
+      "map": "maps/0111.npz",
+      "map_sha256": "68b424689ec311e9d549a61f2ca10ba7b9f840bd2d976cae166c05346cc10ad7",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05917980003869161
+    },
+    {
+      "path": "cashew/test/good/143.JPG",
+      "score": 0.10540833324193954,
+      "map": "maps/0112.npz",
+      "map_sha256": "5983f540012dec7c389969fabae52795462ebad4d7afca8ac8c1dc47cc391b09",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.060842800012324005
+    },
+    {
+      "path": "cashew/test/good/148.JPG",
+      "score": 0.10742927342653275,
+      "map": "maps/0113.npz",
+      "map_sha256": "462e6d9342ce222a2e4a441ccd1c7f956cdd31d2b40ffb46709b81c29e1092f4",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06627120001940057
+    },
+    {
+      "path": "cashew/test/good/166.JPG",
+      "score": 0.11052979528903961,
+      "map": "maps/0114.npz",
+      "map_sha256": "ebeb6e10ea2b636e083bce4ce4ffdabc6b8b26d46f006db1caa106aff0cf00ed",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.061736400006338954
+    },
+    {
+      "path": "cashew/test/good/181.JPG",
+      "score": 0.10647141933441162,
+      "map": "maps/0115.npz",
+      "map_sha256": "a0dc6760b55c79fa4e03a7fe410cd77f505eb907d8ca6492e1f1504846d52407",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06646250002086163
+    },
+    {
+      "path": "cashew/test/good/213.JPG",
+      "score": 0.11351978033781052,
+      "map": "maps/0116.npz",
+      "map_sha256": "00cb72a1446dbd06441d5fdf12c7fb874bd7dda05e8d0a299720066c5dc9f98c",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.24489219998940825
+    },
+    {
+      "path": "cashew/test/good/228.JPG",
+      "score": 0.1120118647813797,
+      "map": "maps/0117.npz",
+      "map_sha256": "910152cb00d75a71ec2a7ade7c8dccd39a3e6f7b5b400c4facc8b660ada4f17e",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06616909999866039
+    },
+    {
+      "path": "cashew/test/good/239.JPG",
+      "score": 0.11933762580156326,
+      "map": "maps/0118.npz",
+      "map_sha256": "e05402c97530510d46aa2f43b4b319fd9a104e95eb8dbb82678e4cb88fea911a",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.04840590001549572
+    },
+    {
+      "path": "cashew/test/good/244.JPG",
+      "score": 0.11810579150915146,
+      "map": "maps/0119.npz",
+      "map_sha256": "012068b2fda63707d90b4668e6dfebfd7c4ede8d81f83f2c666db2421f93f4ba",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.053879300015978515
+    },
+    {
+      "path": "cashew/test/good/245.JPG",
+      "score": 0.10910098999738693,
+      "map": "maps/0120.npz",
+      "map_sha256": "36dfa834c71024ee42856dd7a4b334df0876d2871671705b5b510112d3ab1678",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05408410000381991
+    },
+    {
+      "path": "cashew/test/good/260.JPG",
+      "score": 0.12144846469163895,
+      "map": "maps/0121.npz",
+      "map_sha256": "0c3b89abf302feb35f4406cdb4209bc2817e948ceae82b2bbb76aab46d7682ff",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.057601300009991974
+    },
+    {
+      "path": "cashew/test/good/272.JPG",
+      "score": 0.12597855925559998,
+      "map": "maps/0122.npz",
+      "map_sha256": "7ff809aec74c6fa4ba4c0be5664596eef24790c6a6c78b114f8bbe3d850032e2",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05823930003680289
+    },
+    {
+      "path": "cashew/test/good/276.JPG",
+      "score": 0.12317273765802383,
+      "map": "maps/0123.npz",
+      "map_sha256": "095fb6441745061bfba2ae23e111deab3a0d8c1db39c70febd35c163bee8f838",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.055895800003781915
+    },
+    {
+      "path": "cashew/test/good/284.JPG",
+      "score": 0.11932460963726044,
+      "map": "maps/0124.npz",
+      "map_sha256": "1336a38c9044b41715c26db21d1cbf35863aba9f2dcf7939786655cf95100b01",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06767380004748702
+    },
+    {
+      "path": "cashew/test/good/307.JPG",
+      "score": 0.1259518265724182,
+      "map": "maps/0125.npz",
+      "map_sha256": "726b6e0482ea5dbfb99c51fbd746327b86c4f366e545207728b1b15a23113efd",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05986169999232516
+    },
+    {
+      "path": "cashew/test/good/309.JPG",
+      "score": 0.1089889407157898,
+      "map": "maps/0126.npz",
+      "map_sha256": "a6c74d507ba72d202b28d3210e0b060e6809b78f7dd23686164e19d229b08a0d",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.0601858000154607
+    },
+    {
+      "path": "cashew/test/good/324.JPG",
+      "score": 0.10833658277988434,
+      "map": "maps/0127.npz",
+      "map_sha256": "ba575bc64fede34e71d8b1b34b8f32c0aae21caa43a1a8644463babd3918a135",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06246879999525845
+    },
+    {
+      "path": "cashew/test/good/337.JPG",
+      "score": 0.11955009400844574,
+      "map": "maps/0128.npz",
+      "map_sha256": "a9c9ca51733a7b87d901931e87f7651556ecf4282935ae04d2f69e3f2cb80fce",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06294209999032319
+    },
+    {
+      "path": "cashew/test/good/342.JPG",
+      "score": 0.11839468032121658,
+      "map": "maps/0129.npz",
+      "map_sha256": "0ea4ab1c3b380753081230e335c60ba85cff4b73bf2280cd484fc6fa75d459f1",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.07164219999685884
+    },
+    {
+      "path": "cashew/test/good/344.JPG",
+      "score": 0.12047465145587921,
+      "map": "maps/0130.npz",
+      "map_sha256": "03f2fec7d940da381de6f836ec4e1d20dd4f884dba0d0488de7e99363aa11846",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06337659998098388
+    },
+    {
+      "path": "cashew/test/good/352.JPG",
+      "score": 0.11067826300859451,
+      "map": "maps/0131.npz",
+      "map_sha256": "9b9d36ea89fd223967a37b6eaf1795fcf7a20929459e56e411407043b48026e6",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.0627777999616228
+    },
+    {
+      "path": "cashew/test/good/367.JPG",
+      "score": 0.11637569218873978,
+      "map": "maps/0132.npz",
+      "map_sha256": "d217e66dbd8b844b1590646960595ade7b0b63132e12ba8c83bbd3efc6e66dd5",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06788839999353513
+    },
+    {
+      "path": "cashew/test/good/369.JPG",
+      "score": 0.11626555770635605,
+      "map": "maps/0133.npz",
+      "map_sha256": "8722cb9289f2cc832f8afebc755e16f156a1b811d45542df9f6a9149469a8d91",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06799929996486753
+    },
+    {
+      "path": "cashew/test/good/377.JPG",
+      "score": 0.11945819109678268,
+      "map": "maps/0134.npz",
+      "map_sha256": "be807200d73b1782fe4ef506d9d8c4e89e445203053e4eac130441d845535034",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.0650376999983564
+    },
+    {
+      "path": "cashew/test/good/384.JPG",
+      "score": 0.11511161923408508,
+      "map": "maps/0135.npz",
+      "map_sha256": "f0dece384d33d9626c28c446827aff767e54500a40e872597b84035c08c836af",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06521540001267567
+    },
+    {
+      "path": "cashew/test/good/389.JPG",
+      "score": 0.12227194011211395,
+      "map": "maps/0136.npz",
+      "map_sha256": "cf7eb741e7e894ee89160fb74c7a00bfd94bec2070267c6856e6a483ddaa1dea",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.0642616999684833
+    },
+    {
+      "path": "cashew/test/good/392.JPG",
+      "score": 0.11771596968173981,
+      "map": "maps/0137.npz",
+      "map_sha256": "5d112f9bd5cab85b21f91714cc67a36d97e85ee8ad0bde60152458dd8383546a",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06212780001806095
+    },
+    {
+      "path": "cashew/test/good/398.JPG",
+      "score": 0.12656255066394806,
+      "map": "maps/0138.npz",
+      "map_sha256": "10096d1663db4786296dd416d80071f05dd3a7b40c977768ef1f2bc0c14c5c24",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05954139999812469
+    },
+    {
+      "path": "cashew/test/good/400.JPG",
+      "score": 0.12016582489013672,
+      "map": "maps/0139.npz",
+      "map_sha256": "c3ad9c8590ba0854bc20398728d7364198506cb03eb1e2a69958cf70faaaeb57",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06126470002345741
+    },
+    {
+      "path": "cashew/test/good/402.JPG",
+      "score": 0.1116328313946724,
+      "map": "maps/0140.npz",
+      "map_sha256": "9663a3122b7b6f47c4f7c7758ff834b4289be98cbbe4d3718cdd2058bb5f14f5",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06018400000175461
+    },
+    {
+      "path": "cashew/test/good/405.JPG",
+      "score": 0.12454824894666672,
+      "map": "maps/0141.npz",
+      "map_sha256": "eb512c7a22d9684b7e99b18982c5f4f5da24be0deed728395ed6ba51bbc50337",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06080049998126924
+    },
+    {
+      "path": "cashew/test/good/435.JPG",
+      "score": 0.1097966805100441,
+      "map": "maps/0142.npz",
+      "map_sha256": "aff14e284c3531c5c1b1ed24bef6456ad4520ed6349a3a3fd3749152de2b6b9d",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.0618619000306353
+    },
+    {
+      "path": "cashew/test/good/446.JPG",
+      "score": 0.12288535386323929,
+      "map": "maps/0143.npz",
+      "map_sha256": "986dff6ae55fa98901adf811882071aa7a1b8c23b2f1a6a0c871e4acc549a8c8",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.05865500000072643
+    },
+    {
+      "path": "cashew/test/good/460.JPG",
+      "score": 0.11976826936006546,
+      "map": "maps/0144.npz",
+      "map_sha256": "6c91e72a0ee48195cf9fd71b20228b365c93b1ace12d23fd56c2eaa3191ba245",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06418879999546334
+    },
+    {
+      "path": "cashew/test/good/461.JPG",
+      "score": 0.12281741946935654,
+      "map": "maps/0145.npz",
+      "map_sha256": "209ffbd6319e1cabdf521dad744510e92010c4300ca3137b0cc0be1b4683c4de",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06517840002197772
+    },
+    {
+      "path": "cashew/test/good/467.JPG",
+      "score": 0.13338495790958405,
+      "map": "maps/0146.npz",
+      "map_sha256": "9d4245d61effba0e19e1e71b97a16fedea343b334dcfb447c4d143b6b61b5e58",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06502789998194203
+    },
+    {
+      "path": "cashew/test/good/482.JPG",
+      "score": 0.12153824418783188,
+      "map": "maps/0147.npz",
+      "map_sha256": "a2bef103478de4812bdcfa75045bce8bac905a9f50807c71952f0ca69157da1a",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.061245599994435906
+    },
+    {
+      "path": "cashew/test/good/484.JPG",
+      "score": 0.1319197565317154,
+      "map": "maps/0148.npz",
+      "map_sha256": "da4268f4b3e10be45718766747d9a27fc7ca6c41bac9341786684b65e758410d",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.06710660003591329
+    },
+    {
+      "path": "cashew/test/good/487.JPG",
+      "score": 0.13327346742153168,
+      "map": "maps/0149.npz",
+      "map_sha256": "88a1e01d0b3dbb01d2254f63245e1caf155b662a19b0c65f1078c9f066e4aa84",
+      "native_shape": [
+        1176,
+        1274
+      ],
+      "input_shape": [
+        448,
+        476
+      ],
+      "inference_seconds": 0.060657499998342246
+    }
+  ],
+  "resources": {
+    "training_seconds_including_read_preprocess": 75.34105350001482,
+    "training_peak_gpu_allocated_mb": 444.75146484375,
+    "training_count": 430,
+    "epochs": 12,
+    "training_shapes": [
+      {
+        "height": 448,
+        "width": 476,
+        "count": 430
+      }
+    ],
+    "parameter_count": 93283,
+    "training_loss_by_epoch": [
+      0.041991176378241804,
+      0.009626396656642819,
+      0.0058227724287399025,
+      0.005108357905301937,
+      0.004821784833316193,
+      0.0046872622420101664,
+      0.004627366944454437,
+      0.0046184681182683904,
+      0.004504692896680777,
+      0.004489611745487119,
+      0.004459572020311688,
+      0.004437647616967212
+    ],
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "gpu_used": true,
+    "peak_gpu_allocated_mb": 22.9013671875,
+    "peak_process_rss_mb": 1124.02734375,
+    "inference_seconds_mean": 0.070779017333795,
+    "timing_includes": "image reading, resize/crop, AE forward, smoothing, top1% score, native interpolation, CUDA synchronization",
+    "timing_excludes": "training, calibration, warmup, NPZ compression and verification, evaluation",
+    "warmup_images": 3
+  },
+  "checkpoint_sha256": "8c4bbaaee783b2df26c09b3772c8ef6121e88997ca21cd43b1f82ce438d8cb87"
+}

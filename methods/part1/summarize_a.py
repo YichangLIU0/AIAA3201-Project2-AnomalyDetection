@@ -1,0 +1,77 @@
+"""A's handoff, distinguishing implemented code, real evidence and B dependencies."""
+from pathlib import Path
+import json
+import numpy as np
+from shared_protocol.protocol import CATEGORIES,save_json
+
+ROOT=Path(__file__).resolve().parents[2]
+
+
+def main():
+    ae=json.loads((ROOT/'results/part1_ae/reported_summary.json').read_text(encoding='utf-8'))
+    audit=json.loads((ROOT/'results/part1_ae/completion_audit.json').read_text(encoding='utf-8'))
+    quality=json.loads((ROOT/'results/part1_ae/training_quality_audit.json').read_text(encoding='utf-8'))
+    if audit['n_runs']!=18 or audit['test_predictions']!=2880:raise ValueError('AE not complete')
+    for method,expected in [('template',72),('ecc',72),('ae',18)]:
+        f_audit=json.loads((ROOT/f'results/part3_f_{method}/independent_count_audit.json').read_text(encoding='utf-8'))
+        if f_audit['checked_cells']!=expected:raise ValueError('F count audit incomplete')
+    methods=[]
+    for name,title in [('template','Template'),('ecc_full','ECC')]:
+        rows=[json.loads(p.read_text(encoding='utf-8')) for p in (ROOT/f'results/part1_{name}').glob('runs/*/*/metrics.json')]
+        if len(rows)!=72:raise ValueError('Baseline grid incomplete')
+        selected=[r for r in rows if r['shots']==8]
+        entry={'method':title,'setting':'8-shot, seed0/1/2','device':'CPU',
+               'image_auroc':float(np.mean([r['image_auroc'] for r in selected])),
+               'pixel_auroc':float(np.mean([r['pixel_auroc'] for r in selected])),
+               'image_fpr':float(np.mean([r['image_fpr'] for r in selected])),
+               'image_fnr':float(np.mean([r['image_fnr'] for r in selected])),
+               'inference_ms_mean':float(np.mean([r['resources']['inference_seconds_mean']*1000 for r in selected]))}
+        methods.append(entry)
+    methods.append({'method':'AE','setting':'entire normal training pool; training seed0/1/2','device':'RTX4060 Laptop GPU',
+        **{k:ae['macro'][k]['mean'] for k in ['image_auroc','pixel_auroc','image_fpr','image_fnr']},
+        'inference_ms_mean':ae['inference_ms_mean']})
+    save_json(ROOT/'results/a_handoff_summary.json',{'part1_required_complete':True,'template_cells':72,'ecc_cells':72,
+        'ae_cells':18,'ae_black_collapse_flags':sum(r['black_collapse_flag'] for r in quality['runs']),
+        'selective_cells_on_existing_detectors':162,'part3_c_dino_formal_complete':False,
+        'part3_f_dino_formal_complete':False,'comparison_disclosure':'AE has a larger training pool and GPU; not equal-data or equal-device comparison',
+        'main_comparison':methods,'shared_protocol_unchanged':True})
+    text=['# A 本轮完成情况（2026-11-14）','',
+        '大白话：不依赖 B 的这部分已经做成实际结果；A 的 Part1 已完成。Part3 还不能宣布全部完成，缺的是接 B 的新版 DINO 做正式对照，不是把代码文件放好就算完成。','',
+        '|任务|实际完成情况|能否作为正式结果|','|---|---|---|',
+        '|公共协议、数据、指标|保持既有冻结版；本轮再次检查六类文件哈希；26项公共检查通过|公共基础已完成|',
+        '|Template|六类×四shot×三seed，72组，完整原尺寸评价和困难案例|可以|',
+        '|ECC|同清单72组配对对照，含回退、成本和负面案例|可以|',
+        '|AE|六类×三个训练初始化，18组；2880张原尺寸测试预测，逐组训练/阈值/指标/模型|可以，但效果不稳，训练退化也计入|',
+        '|F：已有检测器|Template72、ECC72、AE18，共162组；风险覆盖、固定FPR、消融、随机控制、逐图决策|可以用于这些检测器，不能改名为DINO|',
+        '|C：合成缺陷|两种生成器、真实变化mask、轻量头、冻结检查、六类训练图预览|仅准备；尚未训练真实DINO头|',
+        '|C/F：DINO正式改进|待B提供固定DINO接口及新版完整分数|未完成|',
+        '|最终CVPR报告、Demo/视频、Canvas提交|原计划另行安排，不把实验完成视为提交完成|尚未完成|','',
+        '老师的课堂提醒要求11月18/25日进度汇报至少完成Part1，最好也有Part2，并提交4分钟汇报视频。本轮Part1实验材料已齐；汇报视频、最终课程报告和Canvas提交仍需另行完成。项目具体说明中的Demo要求也保留，不因通用提醒的可选字样自行取消。','',
+        '## 模型效果怎么样','',
+        '下面是六类三seed均值。Template/ECC展示8-shot，AE使用完整正常训练池；设备也不同，因此只能描述结果，不能宣称公平预算或公平设备下谁更优。标准差、各类结果、AP/AUPRO和四shot见各自完整报告。','',
+        '|方法|输入数据预算|设备|Image AUROC|Pixel AUROC|误报率|漏报率|ms/图|',
+        '|---|---|---|---:|---:|---:|---:|---:|']
+    for row in methods:
+        text.append(f"|{row['method']}|{row['setting']}|{row['device']}|{row['image_auroc']:.4f}|{row['pixel_auroc']:.4f}|{row['image_fpr']:.2%}|{row['image_fnr']:.2%}|{row['inference_ms_mean']:.2f}|")
+    text.extend(['',
+        '“实验完整”与“检测可靠”是两件事。ECC只是有限改善，AE也存在训练初始化导致的重建退化；全部结果保留，不挑最好seed。F只让部分图进入人工复核，没有改变原模型识别能力；复核的异常不算自动检测成功。',
+        '可以改进的方向：用正常训练池内部验证研究AE稳定训练；在固定协议下接真实DINO特征后研究合成缺陷迁移及更好的不确定性。不要按测试成绩调阈值、删seed或改图像分数。','',
+        '## 最有用的阅读入口','',
+        '- [AE完整结果、训练退化和六个案例](results/part1_ae/AE正式结果与分析.md)',
+        '- [Template的复核结果](results/part3_f_template/选择性预测结果与限制.md)',
+        '- [ECC的复核结果](results/part3_f_ecc/选择性预测结果与限制.md)',
+        '- [AE的复核结果](results/part3_f_ae/选择性预测结果与限制.md)',
+        '- [合成缺陷准备与示例](results/part3_c_preparation/说明.md)',
+        '- [给B的明确交接清单](A剩余任务与B交接清单.md)','',
+        '## 下一步找B要什么','',
+        'C先要：新版官方DINO在一个类别跑通后的**冻结特征提取代码、权重加载及配置**，能够处理A新生成的合成RGB图，明确patch网格与预处理；只有旧正常图缓存不够。一组即可联调，不必等B全部改进。',
+        'F要：新版DINO六类×1/2/4/8-shot×seed0/1/2的**完整逐图原始图像分数、20张指定校准图分数、实际参考路径和配置**。不要只给AUROC，不用先传巨大的热图。正式72组齐全后才能汇总，先交一组可以提前检查格式。',
+        '不用等B的CLIP、多尺度、背景抑制、融合或内存压缩。C/F都先和未改DINO比较。','',
+        '## 保存和复现','',
+        '代码与轻量结果保存在本仓库；原始热图在本机outputs，不上传Git。AE全部18个小模型在results/part1_ae/checkpoints，可按训练/评价说明复现。AE无损压缩、SHA256核对和串行全测试重推已完成，未删除此前数据或结果。',
+        '共享协议未修改；新增normal_training适配只复用既有清单/指标，明确shots=null，不伪装成zero-shot。GPU训练、首次并行耗时与最终串行复测分开记录。'])
+    (ROOT/'A本轮完成情况.md').write_text('\n'.join(text)+'\n',encoding='utf-8')
+    print('A_HANDOFF_REPORT_READY',flush=True)
+
+
+if __name__=='__main__':main()
